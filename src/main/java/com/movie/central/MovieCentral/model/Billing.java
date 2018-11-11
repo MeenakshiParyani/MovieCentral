@@ -1,5 +1,6 @@
-package model;
+package com.movie.central.MovieCentral.model;
 
+import com.movie.central.MovieCentral.enums.SubscriptionType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,9 +9,9 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "play_history")
+@Table(name = "billing")
 @Getter @Setter @NoArgsConstructor
-public class PlayHistory {
+public class Billing {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,14 +20,17 @@ public class PlayHistory {
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name="customer_id")
-    private Customer customer;
+    Customer customer;
 
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JoinColumn(name="movie_id")
-    private Movie movie;
-
-    @Column(name="play_time")
+    @Column(name="billing_time")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date playTime;
+    private Date billingTime;
+
+    @Column(name="price")
+    private Double price;
+
+    @Column(name="subscription_type", nullable = false)
+    private SubscriptionType subscriptionType;
+
 
 }

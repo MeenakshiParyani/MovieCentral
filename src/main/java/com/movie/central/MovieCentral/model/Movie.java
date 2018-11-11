@@ -1,9 +1,9 @@
-package model;
+package com.movie.central.MovieCentral.model;
 
 
-import enums.Genre;
-import enums.MpaaRating;
-import enums.MovieType;
+import com.movie.central.MovieCentral.enums.Genre;
+import com.movie.central.MovieCentral.enums.MpaaRating;
+import com.movie.central.MovieCentral.enums.MovieType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

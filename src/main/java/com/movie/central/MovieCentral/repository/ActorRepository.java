@@ -1,6 +1,6 @@
-package repository;
+package com.movie.central.MovieCentral.repository;
 
-import model.Actor;
+import com.movie.central.MovieCentral.model.Actor;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ActorRepository extends JpaRepository<Actor, Integer> {

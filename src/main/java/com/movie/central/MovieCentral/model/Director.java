@@ -1,4 +1,4 @@
-package model;
+package com.movie.central.MovieCentral.model;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

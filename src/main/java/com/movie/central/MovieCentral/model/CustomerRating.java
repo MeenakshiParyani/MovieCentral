@@ -1,12 +1,10 @@
-package model;
+package com.movie.central.MovieCentral.model;
 
-import com.sun.xml.internal.bind.v2.TODO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
 
 @Entity
 @Table(name = "customer_rating")

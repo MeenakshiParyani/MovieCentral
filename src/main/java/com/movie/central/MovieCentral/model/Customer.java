@@ -1,7 +1,7 @@
-package model;
+package com.movie.central.MovieCentral.model;
 
-import enums.AuthType;
-import enums.UserRole;
+import com.movie.central.MovieCentral.enums.AuthType;
+import com.movie.central.MovieCentral.enums.UserRole;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
