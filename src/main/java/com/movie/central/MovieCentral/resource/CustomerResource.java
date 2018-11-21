@@ -11,12 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.Map;
 
 @RequestMapping("/api/customer")
@@ -56,6 +55,14 @@ public class CustomerResource {
         customerService.subscribe(customerId, noOfMonths,price);
         Response response = new Response("Subscription was successful", HttpStatus.OK);
         return new ResponseEntity(response, response.getStatus());
+    }
+
+    @RequestMapping(value = "/subscription-status", method = RequestMethod.GET)
+    public ResponseEntity<?> getBillingStatus(@RequestParam Long customerId, HttpSession session) throws Exception{
+        LocalDateTime subEndTime = customerService.getBillingStatus(customerId);
+        Map<String,String> response = new HashMap<>();
+        response.put("result" , subEndTime==null ? "Not Subscribed" : subEndTime.toString());
+        return new ResponseEntity<Object>(response, HttpStatus.OK);
     }
 
 

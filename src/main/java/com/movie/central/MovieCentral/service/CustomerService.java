@@ -30,11 +30,12 @@ public class CustomerService {
     }
 
     private LocalDateTime getSubscriptionEndDate(LocalDateTime startTime, Integer months) {
-        LocalDateTime endDate = startTime.plusMonths(months).withHour(0).withMinute(0).withSecond(0);
+        LocalDateTime endDate = startTime.plusMonths(months).withHour(0).withMinute(0).withSecond(0).withNano(0);
         System.out.println(endDate + " " + ZoneId.systemDefault());
         return endDate;
     }
 
+    // TODO - Apply aspect to change customer subscription end date
     public void subscribe(Long customerId, Integer months, Double totalAmount) throws Exception{
         Optional<Customer> customer = customerRepository.findById(customerId);
         customer.ifPresent((c) -> {
@@ -44,8 +45,18 @@ public class CustomerService {
             Billing userBilling = Billing.builder().customer(c).endTime(endTime).totalAmount(totalAmount).
                     startTime(startTime).subscriptionType(SubscriptionType.SUBSCRIPTION).build();
             billingRepository.save(userBilling);
+            customerRepository.save(c);
         });
         customer.orElseThrow(CustomerNotFoundException::new);
+    }
+
+    public LocalDateTime getBillingStatus(Long customerId) throws Exception{
+        Optional<Customer> customer = customerRepository.findById(customerId);
+       if(customer.isPresent()){
+           return customer.get().getSubscriptionEndTime();
+       }else{
+           throw new CustomerNotFoundException();
+       }
     }
 
 }
