@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "play_history")
@@ -26,7 +26,6 @@ public class PlayHistory {
     private Movie movie;
 
     @Column(name="play_time")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date playTime;
+    private LocalDateTime playTime;
 
 }

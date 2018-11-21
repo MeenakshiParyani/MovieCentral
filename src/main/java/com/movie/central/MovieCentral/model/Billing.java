@@ -1,16 +1,18 @@
 package com.movie.central.MovieCentral.model;
 
 import com.movie.central.MovieCentral.enums.SubscriptionType;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.movie.central.MovieCentral.util.LocalDateTimeConverter;
+import lombok.*;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "billing")
-@Getter @Setter @NoArgsConstructor
+@Builder
+@Data
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Billing {
 
     @Id
@@ -22,15 +24,16 @@ public class Billing {
     @JoinColumn(name="customer_id")
     Customer customer;
 
-    @Column(name="billing_time")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date billingTime;
+    @Column(name="start_time")
+    private LocalDateTime startTime;
 
-    @Column(name="price")
-    private Double price;
+    @Column(name="end_time")
+    private LocalDateTime endTime;
+
+    @Column(name="total_amount")
+    private Double totalAmount;
 
     @Column(name="subscription_type", nullable = false)
+    @Enumerated(EnumType.STRING)
     private SubscriptionType subscriptionType;
-
-
 }

@@ -2,17 +2,19 @@ package com.movie.central.MovieCentral.model;
 
 import com.movie.central.MovieCentral.enums.AuthType;
 import com.movie.central.MovieCentral.enums.UserRole;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "customer")
-@Getter @Setter @NoArgsConstructor
+@Data
+@Builder
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Customer {
 
     @Id
@@ -23,7 +25,7 @@ public class Customer {
     @Column(name="name", nullable = false)
     private String name;
 
-    @Column(name="email", nullable = false)
+    @Column(name="email", nullable = false, unique = true)
     private String email;
 
     @Column(name="screen_name")
@@ -34,25 +36,26 @@ public class Customer {
     private String password;
 
     @Column(name="auth_type", nullable = false)
+    @Enumerated(EnumType.STRING)
     private AuthType authType;
 
-    @Column(name="subscription_start_time")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date subscriptionStartTime;
+//    @Column(name="subscription_start_time")
+//    private LocalDateTime subscriptionStartTime;
 
     @Column(name="subscription_end_time")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date subscriptionENDTime;
+    private LocalDateTime subscriptionEndTime;
 
     @Column(name="user_role")
+    @Enumerated(EnumType.STRING)
     private UserRole userRole;
 
-    @Column(name="is_account_verified")
-    private Boolean isAccountVerified;
+    @Column(name="is_account_verified", columnDefinition = "tinyint(1) default 0")
+    private boolean isAccountVerified;
 
-    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
     @JoinColumn(name="rating_id")
     private List<CustomerRating> ratings;
 
 
 }
+
