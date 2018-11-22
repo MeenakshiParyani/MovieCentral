@@ -1,0 +1,104 @@
+{
+	"id": "3f9345ca-1f74-4930-0f19-57a3177e40e8",
+	"name": "MovieCentral",
+	"description": "",
+	"order": [
+		"0bf8348c-2e93-5ae1-49d6-d154e68806fa",
+		"c162c605-fa97-34a8-46ca-565cc6d7d4b1",
+		"c0110c4c-6f16-b262-208a-a47362b8dd6a"
+	],
+	"folders": [],
+	"folders_order": [],
+	"timestamp": 1542773787800,
+	"owner": "2819220",
+	"public": false,
+	"requests": [
+		{
+			"id": "0bf8348c-2e93-5ae1-49d6-d154e68806fa",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/api/customer/subscribe",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1542797794886,
+			"name": "subscribe customer",
+			"description": "",
+			"collectionId": "3f9345ca-1f74-4930-0f19-57a3177e40e8",
+			"responses": [],
+			"rawModeData": "{\n\t\"customerId\" : \"1\",\n\t\"months\" : \"3\",\n\t\"price\" : \"20\"\n}"
+		},
+		{
+			"id": "c0110c4c-6f16-b262-208a-a47362b8dd6a",
+			"headers": "",
+			"headerData": [],
+			"url": "http://localhost:8080/api/customer/subscription-status?customerId=1",
+			"queryParams": [
+				{
+					"key": "customerId",
+					"value": "1",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				}
+			],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": null,
+			"dataMode": "params",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1542797168780,
+			"name": "subscription-status",
+			"description": "",
+			"collectionId": "3f9345ca-1f74-4930-0f19-57a3177e40e8",
+			"responses": []
+		},
+		{
+			"id": "c162c605-fa97-34a8-46ca-565cc6d7d4b1",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/api/customer/register",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1542777887216,
+			"name": "register customer",
+			"description": "",
+			"collectionId": "3f9345ca-1f74-4930-0f19-57a3177e40e8",
+			"responses": [],
+			"rawModeData": "{\n\t\"name\" : \"Meenakshi Paryani\",\n\t\"email\" : \"meenakshi.paryani@gmail.com\",\n\t\"screenName\" : \"MeenakshiP\",\n\t\"password\" : \"password\",\n\t\"authType\" : \"local\"\n}"
+		}
+	]
+}
