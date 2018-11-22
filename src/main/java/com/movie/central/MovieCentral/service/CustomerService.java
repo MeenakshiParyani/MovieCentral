@@ -2,7 +2,8 @@ package com.movie.central.MovieCentral.service;
 
 import com.movie.central.MovieCentral.enums.SubscriptionType;
 import com.movie.central.MovieCentral.enums.UserRole;
-import com.movie.central.MovieCentral.exceptions.CustomerNotFoundException;
+import com.movie.central.MovieCentral.exceptions.Error;
+import com.movie.central.MovieCentral.exceptions.MovieCentralException;
 import com.movie.central.MovieCentral.model.Billing;
 import com.movie.central.MovieCentral.model.Customer;
 import com.movie.central.MovieCentral.repository.BillingRepository;
@@ -38,16 +39,19 @@ public class CustomerService {
     // TODO - Apply aspect to change customer subscription end date
     public void subscribe(Long customerId, Integer months, Double totalAmount) throws Exception{
         Optional<Customer> customer = customerRepository.findById(customerId);
-        customer.ifPresent((c) -> {
-            LocalDateTime startTime = LocalDateTime.now(ZoneId.systemDefault());
-            LocalDateTime endTime = getSubscriptionEndDate(startTime, months).withHour(0).withMinute(0).withSecond(0);
-            c.setSubscriptionEndTime(endTime);
-            Billing userBilling = Billing.builder().customer(c).endTime(endTime).totalAmount(totalAmount).
-                    startTime(startTime).subscriptionType(SubscriptionType.SUBSCRIPTION).build();
-            billingRepository.save(userBilling);
-            customerRepository.save(c);
-        });
-        customer.orElseThrow(CustomerNotFoundException::new);
+        if(customer.isPresent()){
+                Customer c = customer.get();
+                LocalDateTime startTime = LocalDateTime.now(ZoneId.systemDefault());
+                LocalDateTime endTime = getSubscriptionEndDate(startTime, months).withHour(0).withMinute(0).withSecond(0);
+                c.setSubscriptionEndTime(endTime);
+                Billing userBilling = Billing.builder().customer(c).endTime(endTime).totalAmount(totalAmount).
+                        startTime(startTime).subscriptionType(SubscriptionType.SUBSCRIPTION).build();
+                billingRepository.save(userBilling);
+                customerRepository.save(c);
+        }else{
+            throw new MovieCentralException(Error.USER_NOT_FOUND);
+        }
+
     }
 
     public LocalDateTime getBillingStatus(Long customerId) throws Exception{
@@ -55,7 +59,7 @@ public class CustomerService {
        if(customer.isPresent()){
            return customer.get().getSubscriptionEndTime();
        }else{
-           throw new CustomerNotFoundException();
+           throw new MovieCentralException(Error.USER_NOT_FOUND);
        }
     }
 

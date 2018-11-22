@@ -1,9 +1,8 @@
 package com.movie.central.MovieCentral.resource;
 
 import com.movie.central.MovieCentral.enums.AuthType;
-import com.movie.central.MovieCentral.enums.SubscriptionType;
-import com.movie.central.MovieCentral.exceptions.CustomerAlreadyExistsException;
-import com.movie.central.MovieCentral.exceptions.InvalidSubscriptionMonthsException;
+import com.movie.central.MovieCentral.exceptions.Error;
+import com.movie.central.MovieCentral.exceptions.MovieCentralException;
 import com.movie.central.MovieCentral.model.Customer;
 import com.movie.central.MovieCentral.response.Response;
 import com.movie.central.MovieCentral.service.CustomerService;
@@ -40,7 +39,7 @@ public class CustomerResource {
             Response response = new Response("Customer Registered Successfully", HttpStatus.CREATED);
             return new ResponseEntity(response, response.getStatus());
         }catch(DataIntegrityViolationException ex){
-            throw new CustomerAlreadyExistsException();
+            throw new MovieCentralException(Error.DUPLICATE_USER);
         }
 
     }
@@ -50,7 +49,7 @@ public class CustomerResource {
         Long customerId = Long.valueOf(input.get("customerId"));
         Integer noOfMonths = Integer.valueOf(input.get("months"));
         if(noOfMonths < 1)
-            throw new InvalidSubscriptionMonthsException();
+            throw new MovieCentralException(Error.INVALID_SUBSCRIPTION_MONTHS);
         Double price = Double.valueOf(input.get("price"));
         customerService.subscribe(customerId, noOfMonths,price);
         Response response = new Response("Subscription was successful", HttpStatus.OK);

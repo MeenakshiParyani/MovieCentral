@@ -4,4 +4,6 @@ import com.movie.central.MovieCentral.model.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface AdminRepository extends JpaRepository<Customer, Long>{
+
+
 }
