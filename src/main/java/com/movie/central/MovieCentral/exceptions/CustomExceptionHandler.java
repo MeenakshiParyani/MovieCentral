@@ -33,6 +33,12 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
 
+    @ExceptionHandler(value = {InvalidSubscriptionMonthsException.class})
+    public final org.springframework.http.ResponseEntity handleInvalidSubscriptionMonthsException(Exception ex, WebRequest request) {
+        Response errorDetails = new Response(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        return new org.springframework.http.ResponseEntity(errorDetails, errorDetails.getStatus());
+    }
+
     @ExceptionHandler(value = {Exception.class})
     public final org.springframework.http.ResponseEntity handleAllExceptions(Exception ex, WebRequest request) {
         Response errorDetails = new Response(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
