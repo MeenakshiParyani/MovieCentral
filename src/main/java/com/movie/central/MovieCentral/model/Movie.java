@@ -81,5 +81,9 @@ public class Movie implements Serializable{
     @JoinColumn(name="rating_id")
     private List<CustomerRating> ratings;
 
-
+    @Override
+    public boolean equals(Object obj) {
+        Movie movie = (Movie) obj;
+        return movie.getId().equals(this.getId());
+    }
 }
