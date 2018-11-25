@@ -28,8 +28,8 @@ public class MovieResource {
     @Autowired
     MovieService movieService;
 
-    @RequestMapping(value = "/filter", method = RequestMethod.GET)
-    public ResponseEntity<?> getBillingStatus(@RequestParam String searchString, HttpSession session) throws Exception{
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
+    public ResponseEntity<?> searchMovies(@RequestParam String searchString, HttpSession session) throws Exception{
         String[] keywords = searchString.split(" ");
         Set<Movie> movies = movieService.filterMoviesByKeywords(keywords);
         Actor actor1 = new Actor("Deepika Padukone");

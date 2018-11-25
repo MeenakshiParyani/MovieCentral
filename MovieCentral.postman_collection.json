@@ -47,11 +47,11 @@
 			"id": "27b46275-3c13-20d8-0b3b-d7c8eac43f65",
 			"headers": "",
 			"headerData": [],
-			"url": "http://localhost:8080/api/movie/filter?searchString= ranbir deepika 2013",
+			"url": "http://localhost:8080/api/movie/search?searchString=deepika ranbir 2013",
 			"queryParams": [
 				{
 					"key": "searchString",
-					"value": " ranbir deepika 2013",
+					"value": "deepika ranbir 2013",
 					"equals": true,
 					"description": "",
 					"enabled": true
@@ -67,8 +67,8 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1543139796748,
-			"name": "filter",
+			"time": 1543177908647,
+			"name": "search movies",
 			"description": "",
 			"collectionId": "3f9345ca-1f74-4930-0f19-57a3177e40e8",
 			"responses": [
