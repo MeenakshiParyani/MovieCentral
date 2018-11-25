@@ -5,17 +5,19 @@ import com.movie.central.MovieCentral.enums.UserRole;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "customer")
-@Data
 @Builder
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class Customer {
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+public class Customer implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

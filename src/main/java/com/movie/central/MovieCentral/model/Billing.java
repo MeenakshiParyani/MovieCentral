@@ -11,8 +11,8 @@ import java.time.LocalDateTime;
 @Table(name = "billing")
 @Builder
 @Data
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor
+@AllArgsConstructor
 public class Billing {
 
     @Id

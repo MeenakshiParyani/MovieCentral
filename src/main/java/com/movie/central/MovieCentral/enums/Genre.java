@@ -1,8 +1,16 @@
 package com.movie.central.MovieCentral.enums;
 
-public enum Genre {
+import java.io.Serializable;
+
+public enum Genre implements Serializable {
 
     ACTION,
     ADVENTURE,
-    COMEDY
+    COMEDY,
+    DRAMA,
+    CRIME,
+    EPICS,
+    HORROR,
+    SCIENCE_FICTION,
+    WAR
 }

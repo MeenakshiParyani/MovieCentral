@@ -3,6 +3,15 @@ package com.movie.central.MovieCentral.repository;
 import com.movie.central.MovieCentral.model.Movie;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
+
 public interface MovieRepository extends JpaRepository<Movie, Long>{
 
+
+    List<Movie> findDistinctByTitleContainingOrSynopsysContainingOrGenreContainingOrCountryContainingOrReleaseYearContainingOrStudioContainingAllIgnoreCase(String title, String synopsys, String genre, String country, String releaseYear, String studio);
+
+
+    default List<Movie> findMoviesByAttributes(String title, String synopsys, String genre, String country, String releaseYear, String studio){
+        return findDistinctByTitleContainingOrSynopsysContainingOrGenreContainingOrCountryContainingOrReleaseYearContainingOrStudioContainingAllIgnoreCase(title, synopsys, genre, country, releaseYear, studio);
+    }
 }

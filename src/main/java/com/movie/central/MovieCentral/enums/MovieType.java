@@ -1,6 +1,8 @@
 package com.movie.central.MovieCentral.enums;
 
-public enum MovieType {
+import java.io.Serializable;
+
+public enum MovieType implements Serializable{
 
     PAY_PER_VIEW,
     SUBSCRIPTION_ONLY,

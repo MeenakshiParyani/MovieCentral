@@ -5,11 +5,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "customer_rating")
 @Getter @Setter @NoArgsConstructor
-public class CustomerRating {
+public class CustomerRating implements Serializable{
 
 //    TODO - check cascade types and generated type
 

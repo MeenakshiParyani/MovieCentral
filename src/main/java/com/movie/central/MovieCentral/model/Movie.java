@@ -1,20 +1,25 @@
 package com.movie.central.MovieCentral.model;
 
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.movie.central.MovieCentral.enums.Genre;
 import com.movie.central.MovieCentral.enums.MpaaRating;
 import com.movie.central.MovieCentral.enums.MovieType;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Table(name = "movie")
-@Getter @Setter @NoArgsConstructor
-public class Movie {
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+public class Movie implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,6 +30,7 @@ public class Movie {
     private String title;
 
     @Column(name="genre", nullable = false)
+    @Enumerated(EnumType.STRING)
     private Genre genre;
 
     @Column(name="release_year", nullable = false)
@@ -33,7 +39,7 @@ public class Movie {
     @Column(name="studio", nullable = false)
     private String studio;
 
-    @Column(name="synopsys", nullable = false)
+    @Column(name="synopsys", nullable = false, length = 60000)
     private String synopsys;
 
     @Column(name="image_url", nullable = false)
@@ -49,31 +55,31 @@ public class Movie {
     private Double averageRating;
 
     @Column(name="type", nullable = false)
+    @Enumerated(EnumType.STRING)
     private MovieType type;
 
     @Column(name="price", nullable = false)
     private Double price;
 
     @Column(name="mpaa_rating", nullable = false)
+    @Enumerated(EnumType.STRING)
     private MpaaRating mpaaRating;
 
     @ManyToMany
     @JoinTable(name="movie_actor",
             joinColumns = { @JoinColumn(name="MOVIE_ID", referencedColumnName = "ID")},
             inverseJoinColumns = {@JoinColumn(name="ACTOR_ID", referencedColumnName = "ID")})
+    @JsonManagedReference
     private List<Actor> actors;
 
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name="director_id")
+    @JsonManagedReference
     private Director director;
 
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name="rating_id")
     private List<CustomerRating> ratings;
-
-
-
-
 
 
 }
