@@ -1,4 +1,4 @@
-package com.movie.central.MovieCentral.config;
+package com.movie.central.MovieCentral.data;
 
 import com.movie.central.MovieCentral.enums.Genre;
 import com.movie.central.MovieCentral.enums.MovieType;
