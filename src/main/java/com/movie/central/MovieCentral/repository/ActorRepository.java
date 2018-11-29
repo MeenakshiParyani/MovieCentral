@@ -25,4 +25,21 @@ public interface ActorRepository extends JpaRepository<Actor, Integer> {
         return movies;
     }
 
+    default Set<Movie> findMoviesByActors(List<String> actorNames){
+        Set<Movie> movies = new HashSet<>();
+        Set<Actor> actors = new HashSet<>();
+        for(String actorName : actorNames){
+            actors.addAll(findDistinctByNameContainingIgnoreCase(actorName));
+        }
+
+        for(Actor actor : actors){
+            movies.addAll(actor.getMovies());
+        }
+        return movies;
+    }
+
+
+
+
+
 }

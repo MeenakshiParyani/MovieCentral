@@ -21,4 +21,17 @@ public interface DirectorRepository extends JpaRepository<Director, Long>{
         }
         return movies;
     }
+
+    default Set<Movie> findMoviesByDirectors(List<String> directorNames){
+        Set<Movie> movies = new HashSet<>();
+        Set<Director> directors = new HashSet<>();
+        for(String directorName : directorNames){
+            directors.addAll(findDistinctByNameContainingIgnoreCase(directorName));
+        }
+
+        for(Director director : directors){
+            movies.addAll(director.getMovies());
+        }
+        return movies;
+    }
 }
