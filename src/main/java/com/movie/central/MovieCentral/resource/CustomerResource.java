@@ -4,6 +4,7 @@ import com.movie.central.MovieCentral.enums.AuthType;
 import com.movie.central.MovieCentral.exceptions.Error;
 import com.movie.central.MovieCentral.exceptions.MovieCentralException;
 import com.movie.central.MovieCentral.model.Customer;
+import com.movie.central.MovieCentral.model.CustomerRating;
 import com.movie.central.MovieCentral.response.Response;
 import com.movie.central.MovieCentral.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RequestMapping("/api/customer")
@@ -64,5 +66,21 @@ public class CustomerResource {
         return new ResponseEntity<Object>(response, HttpStatus.OK);
     }
 
+
+    @RequestMapping(value = "/searchAll", method = RequestMethod.GET)
+    public ResponseEntity<?> findAllCustomers(HttpSession session) throws Exception{
+        Map<String,List<Customer>> response = new HashMap<>();
+        List<Customer> customers = customerService.findAllCustomers();
+        response.put("result" , customers);
+        return new ResponseEntity<Object>(response, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/reviews", method = RequestMethod.GET)
+    public ResponseEntity<?> getAllReviews(@RequestParam Long customerId, HttpSession session) throws Exception{
+        List<CustomerRating> ratings = customerService.getAllCustomerRatings(customerId);
+        Map<String, List<CustomerRating>> response = new HashMap<>();
+        response.put("result", ratings);
+        return new ResponseEntity<Object>(response, HttpStatus.OK);
+    }
 
 }

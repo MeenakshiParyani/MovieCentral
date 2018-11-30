@@ -15,6 +15,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = {MovieCentralException.class})
     public org.springframework.http.ResponseEntity handleConflict(MovieCentralException ex) {
         Response errorDetails = new Response(ex.getError().getDescription(), ex.getError().getCode());
+        System.out.println(ex.getMessage());
         return new org.springframework.http.ResponseEntity(errorDetails, errorDetails.getStatus());
     }
 
@@ -22,6 +23,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = {Exception.class})
     public final org.springframework.http.ResponseEntity handleAllExceptions(Exception ex, WebRequest request) {
         Response errorDetails = new Response(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        ex.printStackTrace();
         return new org.springframework.http.ResponseEntity(errorDetails, errorDetails.getStatus());
     }
 

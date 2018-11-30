@@ -2,11 +2,8 @@ package com.movie.central.MovieCentral.service;
 
 import com.movie.central.MovieCentral.enums.Genre;
 import com.movie.central.MovieCentral.enums.MpaaRating;
-import com.movie.central.MovieCentral.model.Movie;
-import com.movie.central.MovieCentral.model.MovieFilter;
-import com.movie.central.MovieCentral.repository.ActorRepository;
-import com.movie.central.MovieCentral.repository.DirectorRepository;
-import com.movie.central.MovieCentral.repository.MovieRepository;
+import com.movie.central.MovieCentral.model.*;
+import com.movie.central.MovieCentral.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +20,12 @@ public class MovieService {
 
     @Autowired
     DirectorRepository directorRepository;
+
+    @Autowired
+    CustomerRepository customerRepository;
+
+    @Autowired
+    CustomerRatingRepository customerRatingRepository;
 
 
     public Set<Movie> searchMoviesByKeywords(String[] keywords){
@@ -145,10 +148,45 @@ public class MovieService {
         return result;
     }
 
+    public void reviewMovie(Long customerId, Long movieId, Integer rating, String comment){
 
+        Optional<Customer> customer = customerRepository.findById(customerId);
+        Optional<Movie> movie = movieRepository.findById(movieId);
+        if(customer.isPresent() && movie.isPresent()){
+            Customer c = customer.get();
+            Movie m = movie.get();
+            boolean alreadyReviewed = customerAlreadyReviewed(c,m);
 
+            // Update the average rating of the movie
+            if(!alreadyReviewed){
+                CustomerRatingId customerRatingId = new CustomerRatingId(c, m);
+                CustomerRating customerRating = CustomerRating.builder().customerRatingId(customerRatingId)
+                        .rating(rating).ratingComment(comment).build();
+                Integer previousRatingCount = m.getRatings().size();
+                customerRating.setReviewerScreenName(c.getScreenName());
+                Double newAverageRating = (m.getAverageRating()+rating)/(previousRatingCount+1);
+                m.setAverageRating(newAverageRating);
+                movieRepository.save(m);
+                customerRatingRepository.save(customerRating);
+            }
 
+        }
+    }
 
+    public boolean customerAlreadyReviewed(Customer c, Movie m){
+        List<CustomerRating> ratings = customerRatingRepository.
+                findDistinctByCustomerRatingIdCustomerAndCustomerRatingIdMovie(c,m);
+        return ratings!= null && ratings.size() >0;
+    }
+
+    public List<CustomerRating> getAllMovieRatings(Long movieId){
+        Optional<Movie> movie = movieRepository.findById(movieId);
+        List<CustomerRating> ratings = new ArrayList<>();
+        if(movie.isPresent()){
+            ratings = movie.get().getRatings();
+        }
+        return ratings;
+    }
 
 
 }

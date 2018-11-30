@@ -1,31 +1,19 @@
 package com.movie.central.MovieCentral.model;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "customer_rating")
-@Getter @Setter @NoArgsConstructor
+@Getter @Setter @NoArgsConstructor @Builder @AllArgsConstructor
 public class CustomerRating implements Serializable{
 
-//    TODO - check cascade types and generated type
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private Long id;
-
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JoinColumn(name="customer_id")
-    Customer customer;
-
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JoinColumn(name="movie_id")
-    Movie movie;
+    @EmbeddedId
+    @JsonUnwrapped
+    CustomerRatingId customerRatingId;
 
     @Column(name="rating")
     private Integer rating;
@@ -33,6 +21,9 @@ public class CustomerRating implements Serializable{
     @Column(name="rating_comment")
     private String ratingComment;
 
-
+    @Column(name="reviewer_screenname")
+    private String reviewerScreenName;
 
 }
+
+

@@ -2,11 +2,15 @@ package com.movie.central.MovieCentral.model;
 
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.movie.central.MovieCentral.enums.Genre;
 import com.movie.central.MovieCentral.enums.MpaaRating;
 import com.movie.central.MovieCentral.enums.MovieType;
 import lombok.*;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -77,8 +81,9 @@ public class Movie implements Serializable{
     @JsonManagedReference
     private Director director;
 
-    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JoinColumn(name="rating_id")
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "customerRatingId.movie")
+    @JsonManagedReference
+    @JsonUnwrapped
     private List<CustomerRating> ratings;
 
     @Override

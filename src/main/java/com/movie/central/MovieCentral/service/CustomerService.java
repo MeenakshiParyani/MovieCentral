@@ -6,13 +6,18 @@ import com.movie.central.MovieCentral.exceptions.Error;
 import com.movie.central.MovieCentral.exceptions.MovieCentralException;
 import com.movie.central.MovieCentral.model.Billing;
 import com.movie.central.MovieCentral.model.Customer;
+import com.movie.central.MovieCentral.model.CustomerRating;
+import com.movie.central.MovieCentral.model.Movie;
 import com.movie.central.MovieCentral.repository.BillingRepository;
+import com.movie.central.MovieCentral.repository.CustomerRatingRepository;
 import com.movie.central.MovieCentral.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -24,6 +29,9 @@ public class CustomerService {
 
     @Autowired
     private BillingRepository billingRepository;
+
+    @Autowired
+    CustomerRatingRepository customerRatingRepository;
 
     public void register(Customer customer) throws Exception {
         customer.setUserRole(UserRole.CUSTOMER);
@@ -61,6 +69,19 @@ public class CustomerService {
        }else{
            throw new MovieCentralException(Error.USER_NOT_FOUND);
        }
+    }
+
+    public List<Customer> findAllCustomers(){
+        return customerRepository.findAll();
+    }
+
+    public List<CustomerRating> getAllCustomerRatings(Long customerId){
+        Optional<Customer> customer = customerRepository.findById(customerId);
+        List<CustomerRating> ratings = new ArrayList<>();
+        if(customer.isPresent()){
+            ratings = customer.get().getRatings();
+        }
+        return ratings;
     }
 
 }

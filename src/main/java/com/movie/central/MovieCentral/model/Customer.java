@@ -1,8 +1,13 @@
 package com.movie.central.MovieCentral.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.movie.central.MovieCentral.enums.AuthType;
 import com.movie.central.MovieCentral.enums.UserRole;
 import lombok.*;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -54,8 +59,9 @@ public class Customer implements Serializable{
     @Column(name="is_account_verified", columnDefinition = "tinyint(1) default 0")
     private boolean isAccountVerified;
 
-    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
-    @JoinColumn(name="rating_id")
+    @JsonManagedReference
+    @JsonUnwrapped
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "customerRatingId.customer")
     private List<CustomerRating> ratings;
 
 
