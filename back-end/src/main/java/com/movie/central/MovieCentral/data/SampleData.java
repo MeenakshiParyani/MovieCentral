@@ -137,4 +137,5 @@ public class SampleData implements ApplicationRunner {
                 .screenName("meenu").name("Meenakshi Paryani").userRole(UserRole.CUSTOMER).build();
         customerRepository.save(customer);
     }
+
 }
