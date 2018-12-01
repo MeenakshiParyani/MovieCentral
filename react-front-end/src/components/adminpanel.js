@@ -111,19 +111,19 @@ class AdminPanel extends Component {
                 <div style={{backgroundColor:'black'}}>
                 <Nav/>
                 </div>
-                <ul className="nav nav-tabs nav-justified red" role="tablist">
+                <ul className="nav nav-tabs nav-justified indigo" role="tablist">
                     <li className="nav-item">
-                         <a className="nav-link active" data-toggle="tab" href="#dashboard" role="tab"><i className="fa fa-user"></i> User Activity</a>
+                         <a className="nav-link active" data-toggle="tab" href="#dashboard" role="tab"><i className="fa fa-line-chart"></i> Dashboard</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" data-toggle="tab" href="#user" role="tab" onClick={()=>{this.userdetails()}}><i className="fa fa-table"></i> Movie Activity</a>
+                        <a className="nav-link" data-toggle="tab" href="#user" role="tab" onClick={()=>{this.userdetails()}}><i className="fa fa-user"></i> User</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" data-toggle="tab" href="#booking" role="tab" onClick={()=>{this.billingDetails()}}><i className="fa  fa-line-chart"></i> Financial Reports</a>
+                        <a className="nav-link" data-toggle="tab" href="#booking" role="tab" onClick={()=>{this.billingDetails()}}><i className="fa fa-table"></i> Booking</a>
                     </li>
-        {/*<li className="nav-item">
+                    <li className="nav-item">
                         <a className="nav-link" data-toggle="tab" href="#vendor" role="tab" onClick={()=>{this.vendorDetails()}}><i className="fa fa-users"></i> Vendor</a>
-                    </li>*/}
+                    </li>
                 </ul>
 
                 <div className="tab-content">
