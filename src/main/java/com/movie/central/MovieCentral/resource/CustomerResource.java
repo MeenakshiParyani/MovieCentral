@@ -1,10 +1,18 @@
 package com.movie.central.MovieCentral.resource;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.movie.central.MovieCentral.enums.AuthType;
 import com.movie.central.MovieCentral.exceptions.Error;
 import com.movie.central.MovieCentral.exceptions.MovieCentralException;
 import com.movie.central.MovieCentral.model.Customer;
+
 import com.movie.central.MovieCentral.model.CustomerRating;
+import com.movie.central.MovieCentral.model.Movie;
+import com.movie.central.MovieCentral.model.PlayHistory;
+import com.movie.central.MovieCentral.response.PlayDetails;
+
 import com.movie.central.MovieCentral.response.Response;
 import com.movie.central.MovieCentral.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +23,11 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @RequestMapping("/api/customer")
 @RestController
@@ -66,6 +76,33 @@ public class CustomerResource {
         return new ResponseEntity<Object>(response, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/get-customer-details", method = RequestMethod.GET)
+    public ResponseEntity<?> getCustomerDetails(@RequestParam String id, HttpSession session) throws Exception{
+        Long customerId = Long.parseLong(id);
+        Customer customer = customerService.getCustomerDetails(customerId);
+        Map<String,Customer> response = new HashMap<>();
+        response.put("result" , customer);
+        return new ResponseEntity<Object>(response, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/get-customer-watch-history", method = RequestMethod.GET)
+    public ResponseEntity<?> getCustomerWatchHistory(@RequestParam String id, HttpSession session) throws Exception{
+        Long customerId = Long.parseLong(id);
+        List<PlayHistory> watchHistory = customerService.getCustomerWatchHistory(customerId);
+        Map<String,List<PlayHistory>> response = new HashMap<>();
+        response.put("result" , watchHistory);
+        return new ResponseEntity<Object>(response, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/get_most_active_customers", method = RequestMethod.GET)
+    public ResponseEntity<?> getMostActiveCustomers(HttpSession session) throws Exception{
+
+        List<PlayDetails> play_details = customerService.getMostActiveCustomers();
+
+        Map<String,List<PlayDetails>> response = new HashMap<>();
+        response.put("result" , play_details);
+        return new ResponseEntity<Object>(response, HttpStatus.OK);
+    }
 
     @RequestMapping(value = "/searchAll", method = RequestMethod.GET)
     public ResponseEntity<?> findAllCustomers(HttpSession session) throws Exception{

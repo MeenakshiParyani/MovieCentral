@@ -6,16 +6,26 @@ import com.movie.central.MovieCentral.exceptions.Error;
 import com.movie.central.MovieCentral.exceptions.MovieCentralException;
 import com.movie.central.MovieCentral.model.Billing;
 import com.movie.central.MovieCentral.model.Customer;
+
 import com.movie.central.MovieCentral.model.CustomerRating;
 import com.movie.central.MovieCentral.model.Movie;
+
+import com.movie.central.MovieCentral.model.PlayHistory;
+
 import com.movie.central.MovieCentral.repository.BillingRepository;
 import com.movie.central.MovieCentral.repository.CustomerRatingRepository;
 import com.movie.central.MovieCentral.repository.CustomerRepository;
+import com.movie.central.MovieCentral.repository.PlayHistoryRepository;
+import com.movie.central.MovieCentral.response.PlayDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+
+import java.time.format.DateTimeFormatter;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -26,6 +36,8 @@ public class CustomerService {
     @Autowired
     private CustomerRepository customerRepository;
 
+    @Autowired
+    private PlayHistoryRepository playHistoryRepository;
 
     @Autowired
     private BillingRepository billingRepository;
@@ -35,6 +47,11 @@ public class CustomerService {
 
     public void register(Customer customer) throws Exception {
         customer.setUserRole(UserRole.CUSTOMER);
+        //Do Not Check In
+        LocalDateTime startTime = LocalDateTime.now(ZoneId.systemDefault());
+        LocalDateTime endTime = getSubscriptionEndDate(startTime, 1).withHour(0).withMinute(0).withSecond(0);
+        // Till Here
+        customer.setSubscriptionEndTime(endTime);
         customerRepository.save(customer);
     }
 
@@ -71,6 +88,7 @@ public class CustomerService {
        }
     }
 
+
     public List<Customer> findAllCustomers(){
         return customerRepository.findAll();
     }
@@ -82,6 +100,56 @@ public class CustomerService {
             ratings = customer.get().getRatings();
         }
         return ratings;
+    }
+
+    public Customer getCustomerDetails(Long customerId) throws Exception{
+        Optional<Customer> customer = customerRepository.findById(customerId);
+        if(customer.isPresent()){
+            Customer c = customer.get();
+            return c;
+        }else{
+            throw new MovieCentralException(Error.USER_NOT_FOUND);
+        }
+    }
+
+    public List<PlayHistory> getCustomerWatchHistory(Long customerId) throws Exception{
+        Optional<Customer> customer = customerRepository.findById(customerId);
+        if(customer.isPresent()){
+            Customer c = customer.get();
+            List<PlayHistory> playHistory = playHistoryRepository.findMovieAndPlayHistoryByCustomer_Id(customerId);
+            List<PlayHistory> responsePlayHistory = new ArrayList<PlayHistory>();
+            //List<PlayHistory> playHistory = playHistoryRepository.findMovieAndPlayHistoryByCustomer_IdCheck(customerId);
+
+            for (PlayHistory history: playHistory) {
+                PlayHistory updatedHistory = new PlayHistory();
+                updatedHistory = history;
+                updatedHistory.getCustomer().setPassword("");
+                responsePlayHistory.add(updatedHistory);
+            }
+            return responsePlayHistory;
+        }else{
+            throw new MovieCentralException(Error.USER_NOT_FOUND);
+        }
+    }
+
+    public List<PlayDetails> getMostActiveCustomers() throws Exception {
+        List<Object[]> playDetails = playHistoryRepository.getMostActiveCustomers();
+        List<PlayDetails> playDetailsNew = new ArrayList<PlayDetails>();
+
+        try {
+            if (playDetails != null && playDetails.size() > 0) {
+                for (Object[] obj : playDetails) {
+                    PlayDetails playDet = new PlayDetails();
+                    playDet.setId((BigInteger)obj[0]);
+                    playDet.setName((String) obj[1]);
+                    playDet.setPlayCount((BigInteger)obj[2]);
+                    playDetailsNew.add(playDet);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return playDetailsNew;
     }
 
 }

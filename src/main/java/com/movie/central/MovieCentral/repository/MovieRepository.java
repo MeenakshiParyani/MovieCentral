@@ -9,7 +9,8 @@ import java.util.List;
 
 public interface MovieRepository extends JpaRepository<Movie, Long>{
 
-
+    public Movie findByTitleAndReleaseYear(String title, Integer releaseYear);
+    public Movie findMovieById(Long id);
     List<Movie> findDistinctByTitleContainingOrSynopsysContainingOrGenreContainingOrCountryContainingOrReleaseYearContainingOrStudioContainingAllIgnoreCase(String title, String synopsys, String genre, String country, String releaseYear, String studio);
 
 

@@ -7,6 +7,6 @@ public enum MovieType implements Serializable{
     PAY_PER_VIEW,
     SUBSCRIPTION_ONLY,
     FREE,
-//    PAID
+    PAID
 
 }

@@ -1,14 +1,23 @@
 package com.movie.central.MovieCentral.data;
 
 import com.movie.central.MovieCentral.enums.*;
+import com.movie.central.MovieCentral.enums.Genre;
+import com.movie.central.MovieCentral.enums.MovieType;
+import com.movie.central.MovieCentral.enums.MpaaRating;
+import com.movie.central.MovieCentral.enums.Status;
+
 import com.movie.central.MovieCentral.model.Actor;
 import com.movie.central.MovieCentral.model.Customer;
 import com.movie.central.MovieCentral.model.Director;
 import com.movie.central.MovieCentral.model.Movie;
+
 import com.movie.central.MovieCentral.repository.ActorRepository;
 import com.movie.central.MovieCentral.repository.CustomerRepository;
 import com.movie.central.MovieCentral.repository.DirectorRepository;
 import com.movie.central.MovieCentral.repository.MovieRepository;
+
+import com.movie.central.MovieCentral.repository.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -29,6 +38,9 @@ public class SampleData implements ApplicationRunner {
 
     @Autowired
     private ActorRepository actorRepository;
+
+    @Autowired
+    private PlayHistoryRepository playHistoryRepository;
 
     @Autowired
     private CustomerRepository customerRepository;
@@ -57,7 +69,7 @@ public class SampleData implements ApplicationRunner {
 
         movieRepository.save(Movie.builder().title("Ramleela").synopsys(synopsys).country("India").averageRating(0.0)
                 .director(director).actors(actors).genre(Genre.DRAMA).imageUrl("").movieUrl("").mpaaRating(MpaaRating.G)
-                .price(0.0).releaseYear(2015).studio("abc").type(MovieType.FREE).build());
+                .price(0.0).releaseYear(2015).studio("abc").status(Status.ACTIVE).type(MovieType.FREE).build());
     }
 
     public void saveMovie2(){
@@ -77,7 +89,7 @@ public class SampleData implements ApplicationRunner {
 
         movieRepository.save(Movie.builder().title("Fashion").synopsys(synopsys).country("India").averageRating(0.0)
                 .director(director).actors(actors).genre(Genre.DRAMA).imageUrl("").movieUrl("").mpaaRating(MpaaRating.PG)
-                .price(0.0).releaseYear(2008).studio("def").type(MovieType.FREE).build());
+                .price(0.0).releaseYear(2008).studio("def").status(Status.ACTIVE).type(MovieType.FREE).build());
     }
 
     public void saveMovie3(){
@@ -95,7 +107,7 @@ public class SampleData implements ApplicationRunner {
 
         movieRepository.save(Movie.builder().title("Yeh Jawaani Hai Deewani").synopsys(synopsys).country("India").averageRating(0.0)
                 .director(director).actors(actors).genre(Genre.COMEDY).imageUrl("").movieUrl("").mpaaRating(MpaaRating.PG_13)
-                .price(0.0).releaseYear(2013).studio("geh").type(MovieType.FREE).build());
+                .price(0.0).releaseYear(2013).studio("geh").status(Status.ACTIVE).type(MovieType.FREE).build());
     }
 
 
@@ -116,7 +128,7 @@ public class SampleData implements ApplicationRunner {
 
         movieRepository.save(Movie.builder().title("Titanic").synopsys(synopsys).country("USA").averageRating(0.0)
                 .director(director).actors(actors).genre(Genre.ADVENTURE).imageUrl("").movieUrl("").mpaaRating(MpaaRating.PG_13)
-                .price(0.0).releaseYear(1997).studio("Hollywood").type(MovieType.FREE).build());
+                .price(0.0).releaseYear(1997).studio("Hollywood").status(Status.ACTIVE).type(MovieType.FREE).build());
 
     }
 

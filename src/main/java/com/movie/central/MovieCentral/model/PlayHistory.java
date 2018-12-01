@@ -1,16 +1,18 @@
 package com.movie.central.MovieCentral.model;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "play_history")
-@Getter @Setter @NoArgsConstructor
-public class PlayHistory {
+@Getter @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class PlayHistory  implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

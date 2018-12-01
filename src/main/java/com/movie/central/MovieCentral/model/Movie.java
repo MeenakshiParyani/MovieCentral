@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.movie.central.MovieCentral.enums.Genre;
 import com.movie.central.MovieCentral.enums.MpaaRating;
 import com.movie.central.MovieCentral.enums.MovieType;
+import com.movie.central.MovieCentral.enums.Status;
 import lombok.*;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -18,6 +19,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "movie")
+@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -64,6 +66,10 @@ public class Movie implements Serializable{
 
     @Column(name="price", nullable = false)
     private Double price;
+
+    @Column(name="status", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
     @Column(name="mpaa_rating", nullable = false)
     @Enumerated(EnumType.STRING)

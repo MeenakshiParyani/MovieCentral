@@ -12,6 +12,8 @@ import java.util.Set;
 @Repository
 public interface ActorRepository extends JpaRepository<Actor, Integer> {
 
+	public Actor findActorByName(String name);
+    public Actor findById(Long id);
     Actor findOneByName(String name);
 
     List<Actor> findDistinctByNameContainingIgnoreCase(String name);

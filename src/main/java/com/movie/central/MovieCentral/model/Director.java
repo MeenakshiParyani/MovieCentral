@@ -10,6 +10,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "director")
+@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -21,7 +22,7 @@ public class Director implements Serializable{
     @Column(name="id")
     private Long id;
 
-    @Column(name="name")
+    @Column(name="name", nullable = false)
     private String name;
 
     @OneToMany(mappedBy = "director")
