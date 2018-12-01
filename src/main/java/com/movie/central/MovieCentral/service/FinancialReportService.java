@@ -29,15 +29,50 @@ public class FinancialReportService {
 
 
     public List<Billing> getUniqueSubscription(int month, int year) throws Exception {
-        LocalDateTime startDateTime = LocalDateTime.now().withMonth(month).withYear(year).withHour(0).withMinute(0).withSecond(0);
+        LocalDateTime startDateTime = LocalDateTime.now(ZoneId.systemDefault()).withMonth(month).withYear(year).withHour(0).withMinute(0).withSecond(0).withNano(0);
         startDateTime = startDateTime.with(TemporalAdjusters.firstDayOfMonth());
 
         LocalDateTime endDateTime = startDateTime.withHour(23).withMinute(59).withSecond(59);
         endDateTime = endDateTime.with(TemporalAdjusters.lastDayOfMonth());
 
-        List<Billing> subscriptionList = billingRepository.findDistinctBySubscriptionTypeAndStartTimeIsAfterAndEndTimeIsBefore( SubscriptionType.SUBSCRIPTION, startDateTime, endDateTime);
+        List<Billing> subscriptionList = billingRepository.findDistinctBySubscriptionTypeAndStartTimeGreaterThanEqualAndStartTimeLessThanEqual( SubscriptionType.SUBSCRIPTION, startDateTime, endDateTime);
         return subscriptionList;
     }
+
+    public List<Billing> getUniquePayPerView(int month, int year) throws Exception {
+        LocalDateTime startDateTime = LocalDateTime.now(ZoneId.systemDefault()).withMonth(month).withYear(year).withHour(0).withMinute(0).withSecond(0).withNano(0);
+        startDateTime = startDateTime.with(TemporalAdjusters.firstDayOfMonth());
+
+        LocalDateTime endDateTime = startDateTime.withHour(23).withMinute(59).withSecond(59);
+        endDateTime = endDateTime.with(TemporalAdjusters.lastDayOfMonth());
+
+        List<Billing> payperviewList = billingRepository.findDistinctBySubscriptionTypeAndStartTimeGreaterThanEqualAndStartTimeLessThanEqual( SubscriptionType.PAY_PER_VIEW, startDateTime, endDateTime);
+        return payperviewList;
+    }
+
+    public List<Billing> getUniqueAll(int month, int year) throws Exception {
+        LocalDateTime startDateTime = LocalDateTime.now(ZoneId.systemDefault()).withMonth(month).withYear(year).withHour(0).withMinute(0).withSecond(0).withNano(0);
+        startDateTime = startDateTime.with(TemporalAdjusters.firstDayOfMonth());
+
+        LocalDateTime endDateTime = startDateTime.withHour(23).withMinute(59).withSecond(59);
+        endDateTime = endDateTime.with(TemporalAdjusters.lastDayOfMonth());
+
+        List<Billing> allList = billingRepository.findDistinctBySubscriptionTypeAndStartTimeGreaterThanEqualAndStartTimeLessThanEqual( SubscriptionType.PAY_PER_VIEW, SubscriptionType.SUBSCRIPTION, startDateTime, endDateTime);
+        return allList;
+    }
+
+    public List<Billing> getSubscriptionIncome(int month, int year) throws Exception {
+        LocalDateTime startDateTime = LocalDateTime.now(ZoneId.systemDefault()).withMonth(month).withYear(year).withHour(0).withMinute(0).withSecond(0).withNano(0);
+        startDateTime = startDateTime.with(TemporalAdjusters.firstDayOfMonth());
+
+        LocalDateTime endDateTime = startDateTime.withHour(23).withMinute(59).withSecond(59);
+        endDateTime = endDateTime.with(TemporalAdjusters.lastDayOfMonth());
+
+        List<Billing> subscriptionList = billingRepository.findDistinctBySubscriptionTypeAndStartTimeGreaterThanEqualAndStartTimeLessThanEqual(SubscriptionType.SUBSCRIPTION, startDateTime, endDateTime);
+        return subscriptionList;
+    }
+
+
 
 //   public List<Billing> getUniquePayPerView() throws Exception {
 //        List<Billing> payperviewList = billingRepository.findDistinctBySubscriptionTypePayPerViewAndAndStartTimeIsAfterAndEndTimeBefore(LocalDateTime startDateTime, LocalDateTime endLocalDateTime);

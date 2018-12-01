@@ -29,8 +29,8 @@ public class AdminResource {
     @Autowired
     private FinancialReportService financialReportService;
 
-    @RequestMapping(value = "/uniqueSubscriptions", method = RequestMethod.GET)
-    public ResponseEntity<?> getUniqueSubscription(Map<String, String> input , HttpSession session) throws Exception {
+    @RequestMapping(value = "/uniqueSubscriptions", method = RequestMethod.POST)
+    public ResponseEntity<?> getUniqueSubscription(@RequestBody Map<String, String> input , HttpSession session) throws Exception {
         int month = Integer.valueOf(input.get("month"));
         int year = Integer.valueOf(input.get("year"));
         List<Billing> subscriptionList = financialReportService.getUniqueSubscription(month, year);
@@ -39,6 +39,35 @@ public class AdminResource {
         return new ResponseEntity<Object>(response, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/uniquePayperview", method = RequestMethod.POST)
+    public ResponseEntity<?> getUniquePayperview(@RequestBody Map<String, String> input , HttpSession session) throws Exception {
+        int month = Integer.valueOf(input.get("month"));
+        int year = Integer.valueOf(input.get("year"));
+        List<Billing> payperviewList = financialReportService.getUniquePayPerView(month, year);
+        Map<String, List<Billing>> response = new HashMap<>();
+        response.put("result", payperviewList);
+        return new ResponseEntity<Object>(response, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/uniqueAll", method = RequestMethod.POST)
+    public ResponseEntity<?> getUniqueAll(@RequestBody Map<String, String> input , HttpSession session) throws Exception {
+        int month = Integer.valueOf(input.get("month"));
+        int year = Integer.valueOf(input.get("year"));
+        List<Billing> allList = financialReportService.getUniqueAll(month, year);
+        Map<String, List<Billing>> response = new HashMap<>();
+        response.put("result", allList);
+        return new ResponseEntity<Object>(response, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/subscriptionsIncome", method = RequestMethod.POST)
+    public ResponseEntity<?> getSubscriptionIncome(@RequestBody Map<String, String> input , HttpSession session) throws Exception {
+        int month = Integer.valueOf(input.get("month"));
+        int year = Integer.valueOf(input.get("year"));
+        List<Billing> subscriptionList = financialReportService.getSubscriptionIncome(month, year);
+        Map<String, List<Billing>> response = new HashMap<>();
+        response.put("result", subscriptionList);
+        return new ResponseEntity<Object>(response, HttpStatus.OK);
+    }
 //    @RequestMapping(value = "/uniquePayperview", method = RequestMethod.GET)
 //    public ResponseEntity<?> getUniquePayperview( HttpSession session) throws Exception {
 //        List<Billing> payperviewList = financialReportService.getUniquePayPerView();
