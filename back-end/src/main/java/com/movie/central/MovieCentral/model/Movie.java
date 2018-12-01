@@ -45,7 +45,7 @@ public class Movie implements Serializable{
     @Column(name="studio", nullable = false)
     private String studio;
 
-    @Column(name="synopsys", nullable = false, length = 16000)
+    @Column(name="synopsys", nullable = false, length = 1000)
     private String synopsys;
 
     @Column(name="image_url", nullable = false)

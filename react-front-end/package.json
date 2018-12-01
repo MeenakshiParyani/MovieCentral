@@ -1,0 +1,32 @@
+{
+  "name": "react-front-end",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "axios": "^0.17.1",
+    "gapi": "0.0.3",
+    "jquery": "^3.3.1",
+    "material-ui": "^0.19.4",
+    "moment": "^2.22.2",
+    "multi-slider": "^4.1.0",
+    "prop-types": "^15.6.2",
+    "react": "^15.6.2",
+    "react-alert": "^2.4.0",
+    "react-dom": "^15.6.2",
+    "react-file-input": "^0.2.5",
+    "react-google-charts": "^1.6.6",
+    "react-grid-layout": "^0.16.6",
+    "react-panels": "^2.5.1",
+    "react-redux": "^5.1.1",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "^1.0.13",
+    "redux": "^3.7.2",
+    "regex": "^0.1.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}

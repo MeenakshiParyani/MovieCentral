@@ -1,27 +1,26 @@
 import {combineReducers} from 'redux';
 
 export const data = (state =  {
-    movieInfo:{},
-	message:"",
-	playPerViewList:[],
-	topTenMovies:[]
+    customerInfo:{},
+	moviePlayingHistory:[],
+	topTenCustomers:[]
 }, action) =>{
 
 	switch (action.type) {
-		case "MOVIE_ADD":
-			console.log("In movie add"+action.payload.message);
+		case "CUSTOMER_INFO":
+			console.log("In customer info"+action.payload);
 			state = {
 				...state,
-				message: action.payload.message
+				customerInfo: action.payload
 			  };
 			  break;
-		case "MOVIE_PLAY_PER_VIEW":
+		case "MOVIE_PLAYING_HISTORY":
 			state = {
 				...state,
 				playPerViewList: action.payload
 			  };
 			  break;
-		case "TOP_TEN_MOVIES":
+		case "TOP_TEN_CUSTOMER":
 			state = {
 				...state,
 				topTenMovies: action.payload

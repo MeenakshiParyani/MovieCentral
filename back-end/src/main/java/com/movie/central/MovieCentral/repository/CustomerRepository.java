@@ -9,10 +9,9 @@ import java.util.List;
 
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
-<<<<<<< Updated upstream
-=======
+
 
 
    // List<Object[]> findMovieAndPlayHistoryByCustomer_Id(Long id);
->>>>>>> Stashed changes
+
 }
