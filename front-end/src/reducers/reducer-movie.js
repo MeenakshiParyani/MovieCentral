@@ -16,9 +16,10 @@ export const data = (state =  {
 			  };
 			  break;
 		case "MOVIE_PLAY_PER_VIEW":
+            console.log("In movie add"+action.payload.result);
 			state = {
 				...state,
-				playPerViewList: action.payload
+				playPerViewList: action.payload.result
 			  };
 			  break;
 		case "TOP_TEN_MOVIES":
@@ -31,6 +32,7 @@ export const data = (state =  {
 		default:
             return state;
 	}
+    return state;
 }
 export default combineReducers({
     data

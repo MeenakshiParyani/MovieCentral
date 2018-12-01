@@ -11,8 +11,9 @@ export function newMovie(movie){
 
 export function getPlaysPerMovie() {
   return dispatch => {
-    return axios.get('/api/movie/no_of_play_per_movie').then(response => {
-      dispatch(playsPerView(response.data));
+    return axios.get('/api/movie/no_of_play_per_movie').then((response) => {
+        console.log(response);
+        dispatch(playsPerView(response.data));
     });
   };
 }

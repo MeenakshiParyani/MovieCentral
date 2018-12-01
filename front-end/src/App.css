@@ -30,3 +30,22 @@
     transform: rotate(360deg);
   }
 }
+
+.MuiAppBar-colorPrimary-18{
+  color: #fff !important;
+  background-color: #d67612 !important;
+}
+
+.MuiFormLabel-root-178 .MuiFormLabel-focused-179, .MuiFormLabel-root-178,
+.MuiInputBase-input-114,
+.MuiOutlined-Input-root185 .MuiOutlinedInput-focused-186 .MuiOutlinedInput-notchedOutline-192,
+.MuiOutlinedInput-root-185 .MuiOutlinedInput-notchedOutline-192,
+[class*="MuiOutlinedInput-"],[class*="MuiFormLabel-"],[class*="MuiInputBase-"],[class*="MuiOutlined-"]
+{
+  color: #d67612 !important;
+  border-color: #d67612 !important;
+}
+[class*="MuiButton-"],[class*="MuiButtonBase-"],.MuiButton-containedPrimary-213{
+  background-color: #d67612 !important;
+}
+

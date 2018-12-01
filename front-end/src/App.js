@@ -5,6 +5,7 @@ import Home from "./components/home";
 import "./App.css";
 import {NavLink, BrowserRouter, Route, Link} from 'react-router-dom';
 import AddNewMovie from './components/AddNewMovie';
+import AdminDashboard from './components/AdminDashboard';
 
 class App extends Component {
   render() {
@@ -13,7 +14,7 @@ class App extends Component {
 	
 	<BrowserRouter>
 	<div>
-		<Home/>
+        {/*<Home/>*/}
 		<PrimarySearchAppBar>
 			<div className="App">
 				<header className="App-header">
@@ -34,6 +35,7 @@ class App extends Component {
 		</PrimarySearchAppBar>
 
                 <Route path={`/addMovie`} component={AddNewMovie}></Route>
+        		<Route path={`/adminDashboard`} component={AdminDashboard}></Route>
 				</div>
           </BrowserRouter>
       

@@ -6,6 +6,18 @@ import {Redirect} from 'react-router-dom';
 import * as getData from '../actions/movieAction';
 import {BrowserRouter, Route, Link} from 'react-router-dom';
 import {bindActionCreators} from "redux";
+import { withStyles } from '@material-ui/core/styles';
+import MenuItem from '@material-ui/core/MenuItem';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+
+const styles = {
+    container: {
+        textAlign: "center"
+    }
+};
+
+
 
 
 class AddNewMovie extends React.Component{
@@ -57,7 +69,8 @@ class AddNewMovie extends React.Component{
         }
 
     }
-	
+
+
 	    componentWillReceiveProps(nextProps){
         console.log(nextProps);
         if(nextProps.moviesData){
@@ -83,7 +96,7 @@ class AddNewMovie extends React.Component{
     }
 	
 	    componentWillMount(){
-        let movie_id = this.props.match.params.movie_id;
+        //let movie_id = this.props.match.params.movie_id;
         //this.props.getMovieDetails(movie_id);
     }
 	
@@ -96,165 +109,172 @@ class AddNewMovie extends React.Component{
 	
 	addMovie(e){
 		e.preventDefault();
-		var movie = {
-		"title":"kkhh",
-		"genre":"ACTION",
-		"releaseYear":1994,
-		"studio":"Ramoji",
-		"synopsys":"romantic good movie",
-		"imageUrl":"data:image/png;base64",
-		"movieUrl":"data:image/png;base64iVBORw0KGgoA",
-		"averageRating":5,
-		"country":"India",
-		"type":"PAID",
-		"price":100,
-		"mpaaRating":"PG",
-		"actors":"aaaa bbbb,ssss Ddff,aefrgf sgrth",
-		"director":"Sanjay Leela Bhansali",
-		"status":"ACTIVE"
-		};
-		
-		this.props.newMovie(movie);
+
+		// var movie = {
+		// "title":"kkhh",
+		// "genre":"ACTION",
+		// "releaseYear":1994,
+		// "studio":"Ramoji",
+		// "synopsys":"romantic good movie",
+		// "imageUrl":"data:image/png;base64",
+		// "movieUrl":"data:image/png;base64iVBORw0KGgoA",
+		// "averageRating":5,
+		// "country":"India",
+		// "type":"PAID",
+		// "price":100,
+		// "mpaaRating":"PG",
+		// "actors":"aaaa bbbb,ssss Ddff,aefrgf sgrth",
+		// "director":"Sanjay Leela Bhansali",
+		// "status":"ACTIVE"
+		// };
+		//
+		// this.props.newMovie(movie);
 	}
+
+
         
 	
 	render(){
+        const { classes } = this.props;
+
 		return(
-            <div className="container-fluid">
-                <h1 className="text-center">Add New Movie</h1>
-				<form className="col-md-offset-3 col-md-6 add-movie-form" style={{marginBottom:'40px'}}>
-                <input
-                    className="form-control"
-                    placeholder="Enter Movie Name"
-                    type="text"
-                    required
-                    label=""
-                    name="title"
-                    value={this.state.title}
-                    onChange={this.onChange.bind(this)}
-                />
-				<input
-                    className="form-control"
-                    placeholder="Add Genre"
-                    type="text"
-                    required
-                    label=""
-                    name="genre"
-                    value={this.state.genre}
-                    onChange={this.onChange.bind(this)}
-                />
-				<input
-                    className="form-control"
-                    placeholder="Add Release Year"
-                    type="text"
-                    required
-                    label=""
-                    name="releaseYear"
-                    value={this.state.releaseYear}
-                    onChange={this.onChange.bind(this)}
-                />
-                <input
-                    className="form-control"
-                    placeholder="Add Synopsys"
-                    type="url"
-                    required
-                    label=""
-                    name="synopsys"
-                    value={this.state.synopsys}
-                    onChange={this.onChange.bind(this)}
-                />
-                <input
-                    className="form-control"
-                    placeholder="Add Movie Characters seperated by comma"
-                    type="text"
-                    required
-                    label=""
-                    name="actors"
-                    value={this.state.actors}
-                    onChange={this.onChange.bind(this)}
-                />
-                <input
-                    className="form-control"
-                    placeholder="Add Studio"
-                    type="text"
-                    required
-                    label=""
-                    name="studio"
-                    value={this.state.studio}
-                    onChange={this.onChange.bind(this)}
-                />
-				<input
-                        className="form-control"
-                        placeholder="Add Movie Image URL"
-                        type="text"
-                        required
-                        label=""
-                        name="imageUrl"
+            <div  style={styles.container}>
+                <h1>Add New Movie</h1>
+				<form style={{marginBottom:'40px'}}>
+                    <TextField
+                        id="outlined-name"
+                        label="Movie Title"
+                        value={this.state.title}
+                        name="title"
+                        onChange={this.onChange.bind(this)}
+                        margin="normal"
+                        variant="outlined"
+                        style = {{width: 500}}
+                    /><br />
+                    <TextField
+                        id="outlined-name"
+                        label="Movie Genre"
+                        value={this.state.genre}
+                        name="genre"
+                        onChange={this.onChange.bind(this)}
+                        margin="normal"
+                        style = {{width: 500}}
+                        variant="outlined"
+                    /><br />
+                    <TextField
+                        id="outlined-name"
+                        label="Release Year"
+                        value={this.state.releaseYear}
+                        name="releaseYear"
+                        onChange={this.onChange.bind(this)}
+                        margin="normal"
+                        style = {{width: 500}}
+                        variant="outlined"
+                    /><br />
+                    <TextField
+                        id="outlined-name"
+                        label="Synopsys"
+                        value={this.state.synopsys}
+                        name="synopsys"
+                        onChange={this.onChange.bind(this)}
+                        margin="normal"
+                        style = {{width: 500}}
+                        variant="outlined"
+                    /><br />
+                    <TextField
+                        id="outlined-name"
+                        label="Movie Actors"
+                        value={this.state.actors}
+                        name="actors"
+                        onChange={this.onChange.bind(this)}
+                        margin="normal"
+                        style = {{width: 500}}
+                        variant="outlined"
+                    /><br />
+                    <TextField
+                        id="outlined-name"
+                        label="Studio"
+                        value={this.state.studio}
+                        name="studio"
+                        onChange={this.onChange.bind(this)}
+                        margin="normal"
+                        style = {{width: 500}}
+                        variant="outlined"
+                    /><br />
+                    <TextField
+                        id="outlined-name"
+                        label="Movie Image URL"
                         value={this.state.imageUrl}
+                        name="imageUrl"
                         onChange={this.onChange.bind(this)}
-                    />
-					<input
-                        className="form-control"
-                        placeholder="Add Movie URL"
-                        type="text"
-                        required
-                        label=""
-                        name="movieUrl"
+                        margin="normal"
+                        style = {{width: 500}}
+                        variant="outlined"
+                    /><br />
+                    <TextField
+                        id="outlined-name"
+                        label="Movie URL"
                         value={this.state.movieUrl}
+                        name="movieUrl"
                         onChange={this.onChange.bind(this)}
-                    />
-                <input
-                    className="form-control"
-                    placeholder="Average rating"
-                    type="text"
-                    required
-                    label=""
-                    name="averageRating"
-                    value={this.state.averageRating}
-                    onChange={this.onChange.bind(this)}
-                />
-                
-                <input
-                    className="form-control"
-                    placeholder="Add Type of movie"
-                    type="text"
-                    required
-                    label=""
-                    name="type"
-                    value={this.state.type}
-                    onChange={this.onChange.bind(this)}
-                />
-                    <input
-                        className="form-control"
-                        placeholder="Add Price"
-                        type="text"
-                        required
-                        label=""
-                        name="price"
+                        margin="normal"
+                        style = {{width: 500}}
+                        variant="outlined"
+                    /><br />
+                    <TextField
+                        id="outlined-name"
+                        label="Average rating"
+                        value={this.state.averageRating}
+                        name="averageRating"
+                        style = {{width: 500}}
+                        onChange={this.onChange.bind(this)}
+                        margin="normal"
+                        variant="outlined"
+                    /><br />
+                    <TextField
+                        id="outlined-name"
+                        label="Type of movie"
+                        value={this.state.type}
+                        name="type"
+                        onChange={this.onChange.bind(this)}
+                        margin="normal"
+                        style = {{width: 500}}
+                        variant="outlined"
+                    /><br />
+                    <TextField
+                        id="outlined-name"
+                        label="Price of movie"
                         value={this.state.price}
+                        name="price"
                         onChange={this.onChange.bind(this)}
-                    />
-					<input
-                        className="form-control"
-                        placeholder="Add MPAA rating"
-                        type="text"
-                        required
-                        label=""
-                        name="mpaaRating"
+                        margin="normal"
+                        style = {{width: 500}}
+                        variant="outlined"
+                    /><br />
+                    <TextField
+                        id="outlined-name"
+                        label="MPAA rating"
                         value={this.state.mpaaRating}
+                        name="mpaaRating"
                         onChange={this.onChange.bind(this)}
-                    />
-                    <input
-                        className="form-control"
-                        placeholder="Add Director"
-                        type="text"
-                        required
-                        label=""
-                        name="director"
+                        margin="normal"
+                        style = {{width: 500}}
+                        variant="outlined"
+                    /><br />
+                    <TextField
+                        id="outlined-name"
+                        label="Director"
                         value={this.state.director}
+                        name="director"
                         onChange={this.onChange.bind(this)}
-                    />
-                <button className="btn btn-warning mt20" onClick={this.addMovie.bind(this)}>Add Movie</button>
+                        margin="normal"
+                        style = {{width: 500}}
+                        variant="outlined"
+                    /><br/>
+                {/*<button className="btn btn-warning mt20" onClick={this.addMovie.bind(this)}>Add Movie</button>*/}
+                    <Button variant="contained" size="large" color="primary"  onClick={this.addMovie.bind(this)}>
+                        Add Movie
+                    </Button>
                 </form>
 			</div>
 		)
