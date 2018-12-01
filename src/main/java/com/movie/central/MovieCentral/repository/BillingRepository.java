@@ -8,10 +8,12 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
+
 import java.util.List;
 
 @Repository
 public interface BillingRepository extends JpaRepository<Billing, Long>, JpaSpecificationExecutor<Billing>{
+
 
 //    List<Billing> findDistinctBySubscriptionType_SubscriptionAndSubscriptionTypePayPerViewAndStartTimeIsAfterAndEndTimeIsBefore(LocalDateTime startDateTime, LocalDateTime endLocalDateTime);
 
@@ -26,4 +28,5 @@ public interface BillingRepository extends JpaRepository<Billing, Long>, JpaSpec
 //    List<Billing> findDistinctBySubscriptionType_SubscriptionAndSubscriptionTypePayPerViewAndTotalAmountAndStartTimeIsAfterAndEndTimeBefore(LocalDateTime startDateTime, LocalDateTime endLocalDateTime);
 //
 //    List<PlayHistory> findDistinctBy
+
 }
