@@ -1,6 +1,7 @@
 package com.movie.central.MovieCentral.service;
 
 import com.movie.central.MovieCentral.enums.Genre;
+import com.movie.central.MovieCentral.enums.MovieType;
 import com.movie.central.MovieCentral.enums.MpaaRating;
 import com.movie.central.MovieCentral.model.*;
 import com.movie.central.MovieCentral.repository.*;
@@ -22,6 +23,8 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.*;
 
 @Service
@@ -44,6 +47,9 @@ public class MovieService {
 
     @Autowired
     PlayHistoryRepository playHistoryRepository;
+
+    @Autowired
+    BillingRepository billingRepository;
 
 
     public void addMovie(Movie movie) throws Exception{
@@ -313,4 +319,31 @@ public class MovieService {
 //        }
 //        return jsonArray;
 //    }
+
+
+
+    public void isMoviePlayAllowedForCustomer(Long customerId, Long movieId) throws Exception{
+        Optional<Movie> movie = movieRepository.findById(movieId);
+        Optional<Customer> customer = customerRepository.findById(customerId);
+
+        if(customer.isPresent() && movie.isPresent()){
+            Customer c = customer.get();
+            Movie m = movie.get();
+            List<Billing> billings = new ArrayList<>();
+            if(m.getType().equals(MovieType.PAY_PER_VIEW)){
+                // check if user paid for the pay per view movie
+                billings = billingRepository.findDistinctByCustomerAndMovieAndPlayCountExhausted(c,m,false);
+                if(billings.size()<=0)
+                    throw new MovieCentralException(Error.MOVIE_NEEDS_PAYPERVIEW);
+
+            }else if(m.getType().equals(MovieType.SUBSCRIPTION_ONLY)) {
+                // Check if customer is subscribed
+                LocalDateTime now = LocalDateTime.now(ZoneId.systemDefault());
+                billings = billingRepository.findDistinctByCustomerAndEndTimeGreaterThan(c, now);
+                if (billings.size() <= 0)
+                    throw new MovieCentralException(Error.MOVIE_NEEDS_SUBSCRIPTION);
+            }
+        }
+
+    }
 }

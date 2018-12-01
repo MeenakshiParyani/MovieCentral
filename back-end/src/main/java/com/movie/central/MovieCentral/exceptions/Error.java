@@ -9,7 +9,10 @@ public enum Error {
     INVALID_SUBSCRIPTION_MONTHS(HttpStatus.BAD_REQUEST, "Please select atleast one month for subscription"),
     INVALID_DATE_EXCEPTION(HttpStatus.BAD_REQUEST, "Please specify valid date"),
     DUPLICATE_MOVIE(HttpStatus.CONFLICT, "Movie already exists"),
-    INVALID_CUSTOMER_OR_MOVIE(HttpStatus.BAD_REQUEST, "Either user or the movie does not exist.");
+    INVALID_CUSTOMER_OR_MOVIE(HttpStatus.BAD_REQUEST, "Either user or the movie does not exist."),
+    MOVIE_NOT_FOUND(HttpStatus.NOT_FOUND, "Movie not found, please select another movie"),
+    MOVIE_NEEDS_SUBSCRIPTION(HttpStatus.FORBIDDEN, "Movie needs subscription, please subscribe to view the movie"),
+    MOVIE_NEEDS_PAYPERVIEW(HttpStatus.FORBIDDEN, "Movie needs pay per view, please pay to view the movie");
 
     private final HttpStatus code;
     private final String description;

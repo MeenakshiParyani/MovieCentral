@@ -36,4 +36,12 @@ public class Billing {
     @Column(name="subscription_type", nullable = false)
     @Enumerated(EnumType.STRING)
     private SubscriptionType subscriptionType;
+
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JoinColumn(name="movie_id")
+    private Movie movie;
+
+    @Column(name="playcount_exhausted", columnDefinition = "tinyint(1) default 0")
+    private boolean playCountExhausted;
+
 }

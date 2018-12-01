@@ -69,7 +69,7 @@ public class SampleData implements ApplicationRunner {
 
         movieRepository.save(Movie.builder().title("Ramleela").synopsys(synopsys).country("India").averageRating(0.0)
                 .director(director).actors(actors).genre(Genre.DRAMA).imageUrl("").movieUrl("").mpaaRating(MpaaRating.G)
-                .price(0.0).releaseYear(2015).studio("abc").status(Status.ACTIVE).type(MovieType.FREE).build());
+                .price(0.0).releaseYear(2015).studio("abc").status(Status.ACTIVE).type(MovieType.SUBSCRIPTION_ONLY).build());
     }
 
     public void saveMovie2(){
@@ -89,7 +89,8 @@ public class SampleData implements ApplicationRunner {
 
         movieRepository.save(Movie.builder().title("Fashion").synopsys(synopsys).country("India").averageRating(0.0)
                 .director(director).actors(actors).genre(Genre.DRAMA).imageUrl("").movieUrl("").mpaaRating(MpaaRating.PG)
-                .price(0.0).releaseYear(2008).studio("def").status(Status.ACTIVE).type(MovieType.FREE).build());
+                .price(0.0).releaseYear(2008).studio("def").status(Status.ACTIVE).type(MovieType.PAY_PER_VIEW).build());
+
     }
 
     public void saveMovie3(){
@@ -107,7 +108,7 @@ public class SampleData implements ApplicationRunner {
 
         movieRepository.save(Movie.builder().title("Yeh Jawaani Hai Deewani").synopsys(synopsys).country("India").averageRating(0.0)
                 .director(director).actors(actors).genre(Genre.COMEDY).imageUrl("").movieUrl("").mpaaRating(MpaaRating.PG_13)
-                .price(0.0).releaseYear(2013).studio("geh").status(Status.ACTIVE).type(MovieType.FREE).build());
+                .price(0.0).releaseYear(2013).studio("geh").status(Status.ACTIVE).type(MovieType.PAY_PER_VIEW).build());
     }
 
 
@@ -128,7 +129,7 @@ public class SampleData implements ApplicationRunner {
 
         movieRepository.save(Movie.builder().title("Titanic").synopsys(synopsys).country("USA").averageRating(0.0)
                 .director(director).actors(actors).genre(Genre.ADVENTURE).imageUrl("").movieUrl("").mpaaRating(MpaaRating.PG_13)
-                .price(0.0).releaseYear(1997).studio("Hollywood").status(Status.ACTIVE).type(MovieType.FREE).build());
+                .price(0.0).releaseYear(1997).studio("Hollywood").status(Status.ACTIVE).type(MovieType.SUBSCRIPTION_ONLY).build());
 
     }
 

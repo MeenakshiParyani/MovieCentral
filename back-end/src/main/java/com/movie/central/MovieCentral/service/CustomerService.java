@@ -12,10 +12,7 @@ import com.movie.central.MovieCentral.model.Movie;
 
 import com.movie.central.MovieCentral.model.PlayHistory;
 
-import com.movie.central.MovieCentral.repository.BillingRepository;
-import com.movie.central.MovieCentral.repository.CustomerRatingRepository;
-import com.movie.central.MovieCentral.repository.CustomerRepository;
-import com.movie.central.MovieCentral.repository.PlayHistoryRepository;
+import com.movie.central.MovieCentral.repository.*;
 import com.movie.central.MovieCentral.response.PlayDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,6 +41,9 @@ public class CustomerService {
 
     @Autowired
     CustomerRatingRepository customerRatingRepository;
+
+    @Autowired
+    MovieRepository movieRepository;
 
     public void register(Customer customer) throws Exception {
         customer.setUserRole(UserRole.CUSTOMER);
@@ -79,6 +79,25 @@ public class CustomerService {
 
     }
 
+    public void subscribePayPerView(Long customerId, Long movieId, Double totalAmount) throws Exception{
+        Optional<Customer> customer = customerRepository.findById(customerId);
+        if(customer.isPresent()){
+            Customer c = customer.get();
+            Optional<Movie> movie = movieRepository.findById(movieId);
+            if(movie.isPresent()){
+                Movie m = movie.get();
+                Billing userBilling = Billing.builder().customer(c).totalAmount(totalAmount).movie(m)
+                        .subscriptionType(SubscriptionType.PAY_PER_VIEW).build();
+                billingRepository.save(userBilling);
+            }else{
+                throw new MovieCentralException(Error.MOVIE_NOT_FOUND);
+            }
+        }else{
+            throw new MovieCentralException(Error.USER_NOT_FOUND);
+        }
+
+    }
+
     public LocalDateTime getBillingStatus(Long customerId) throws Exception{
         Optional<Customer> customer = customerRepository.findById(customerId);
        if(customer.isPresent()){
@@ -90,7 +109,7 @@ public class CustomerService {
 
 
     public List<Customer> findAllCustomers(){
-        return customerRepository.findAll();
+        return customerRepository.findDistinctByUserRole(UserRole.CUSTOMER);
     }
 
     public List<CustomerRating> getAllCustomerRatings(Long customerId){

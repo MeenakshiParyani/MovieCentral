@@ -1,8 +1,6 @@
 package com.movie.central.MovieCentral.resource;
 
-import com.movie.central.MovieCentral.model.CustomerRating;
-import com.movie.central.MovieCentral.model.Movie;
-import com.movie.central.MovieCentral.model.MovieFilter;
+import com.movie.central.MovieCentral.model.*;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
@@ -13,8 +11,6 @@ import com.movie.central.MovieCentral.enums.MpaaRating;
 import com.movie.central.MovieCentral.enums.Status;
 import com.movie.central.MovieCentral.exceptions.Error;
 import com.movie.central.MovieCentral.exceptions.MovieCentralException;
-import com.movie.central.MovieCentral.model.Actor;
-import com.movie.central.MovieCentral.model.Director;
 import com.movie.central.MovieCentral.response.PlayDetails;
 import com.movie.central.MovieCentral.response.Response;
 import com.movie.central.MovieCentral.service.ActorService;
@@ -218,6 +214,13 @@ public class MovieResource {
         Map<String,List<PlayDetails>> response = new HashMap<>();
         response.put("result" , play_details);
         return new ResponseEntity<Object>(response, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/is_movie_play_allowed", method = RequestMethod.GET)
+    public ResponseEntity<?> isMoviePlayAllowedForCustomer(@RequestParam Long customerId, @RequestParam Long movieId, HttpSession session)
+            throws Exception{
+        movieService.isMoviePlayAllowedForCustomer(customerId, movieId);
+        return new ResponseEntity<Object>(HttpStatus.OK);
     }
 
 }

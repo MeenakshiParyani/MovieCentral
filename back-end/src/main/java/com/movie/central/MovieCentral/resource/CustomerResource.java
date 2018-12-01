@@ -68,6 +68,17 @@ public class CustomerResource {
         return new ResponseEntity(response, response.getStatus());
     }
 
+
+    @RequestMapping(value = "/subscribe-payperview", method = RequestMethod.POST)
+    public ResponseEntity<?> subscribeForPayPerView(@RequestBody Map<String,String> input, HttpSession session) throws Exception{
+        Long customerId = Long.valueOf(input.get("customerId"));
+        Long movieId = Long.valueOf(input.get("movieId"));
+        Double price = Double.valueOf(input.get("price"));
+        customerService.subscribePayPerView(customerId, movieId, price);
+        Response response = new Response("Subscription was successful", HttpStatus.OK);
+        return new ResponseEntity(response, response.getStatus());
+    }
+
     @RequestMapping(value = "/subscription-status", method = RequestMethod.GET)
     public ResponseEntity<?> getBillingStatus(@RequestParam Long customerId, HttpSession session) throws Exception{
         LocalDateTime subEndTime = customerService.getBillingStatus(customerId);
