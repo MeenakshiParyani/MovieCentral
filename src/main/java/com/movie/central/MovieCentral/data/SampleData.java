@@ -6,10 +6,9 @@ import com.movie.central.MovieCentral.enums.MovieType;
 import com.movie.central.MovieCentral.enums.MpaaRating;
 import com.movie.central.MovieCentral.enums.Status;
 
-import com.movie.central.MovieCentral.model.Actor;
-import com.movie.central.MovieCentral.model.Customer;
-import com.movie.central.MovieCentral.model.Director;
-import com.movie.central.MovieCentral.model.Movie;
+import com.movie.central.MovieCentral.exceptions.Error;
+import com.movie.central.MovieCentral.exceptions.MovieCentralException;
+import com.movie.central.MovieCentral.model.*;
 
 import com.movie.central.MovieCentral.repository.ActorRepository;
 import com.movie.central.MovieCentral.repository.CustomerRepository;
@@ -18,14 +17,18 @@ import com.movie.central.MovieCentral.repository.MovieRepository;
 
 import com.movie.central.MovieCentral.repository.*;
 
+import com.movie.central.MovieCentral.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class SampleData implements ApplicationRunner {
@@ -44,6 +47,12 @@ public class SampleData implements ApplicationRunner {
 
     @Autowired
     private CustomerRepository customerRepository;
+
+    @Autowired
+    private CustomerService customerService;
+
+    @Autowired
+    private BillingRepository billingRepository;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
@@ -137,4 +146,5 @@ public class SampleData implements ApplicationRunner {
                 .screenName("meenu").name("Meenakshi Paryani").userRole(UserRole.CUSTOMER).build();
         customerRepository.save(customer);
     }
+
 }
