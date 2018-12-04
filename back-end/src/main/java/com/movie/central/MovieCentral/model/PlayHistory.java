@@ -19,11 +19,11 @@ public class PlayHistory  implements Serializable {
     @Column(name="id")
     private Long id;
 
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name="customer_id")
     private Customer customer;
 
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name="movie_id")
     private Movie movie;
 

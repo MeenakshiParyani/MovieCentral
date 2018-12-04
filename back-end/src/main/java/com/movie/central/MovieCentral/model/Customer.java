@@ -64,6 +64,9 @@ public class Customer implements Serializable{
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "customerRatingId.customer")
     private List<CustomerRating> ratings;
 
+    @Column(name="registration_time")
+    private LocalDateTime registrationDateTime;
+
 
 }
 

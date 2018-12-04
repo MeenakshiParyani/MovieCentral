@@ -75,6 +75,9 @@ public class Movie implements Serializable{
     @Enumerated(EnumType.STRING)
     private MpaaRating mpaaRating;
 
+    @Column(name="pay_per_view_price")
+    private Double payPerViewPrice;
+
     @ManyToMany
     @JoinTable(name="movie_actor",
             joinColumns = { @JoinColumn(name="MOVIE_ID", referencedColumnName = "ID")},

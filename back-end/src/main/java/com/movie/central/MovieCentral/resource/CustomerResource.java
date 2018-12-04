@@ -46,7 +46,7 @@ public class CustomerResource {
             String password = input.get("password");
             AuthType authType = AuthType.getByName(input.get("authType"));
             Customer customer = Customer.builder().name(name).email(email).screenName(screenName)
-                    .password(password).authType(authType).build();
+                    .password(password).authType(authType).registrationDateTime(LocalDateTime.now(ZoneId.systemDefault())).build();
             customerService.register(customer);
             Response response = new Response("Customer Registered Successfully", HttpStatus.CREATED);
             return new ResponseEntity(response, response.getStatus());
@@ -83,7 +83,7 @@ public class CustomerResource {
     public ResponseEntity<?> getBillingStatus(@RequestParam Long customerId, HttpSession session) throws Exception{
         LocalDateTime subEndTime = customerService.getBillingStatus(customerId);
         Map<String,String> response = new HashMap<>();
-        response.put("result" , subEndTime==null ? "Not Subscribed" : subEndTime.toString());
+        response.put("result" , subEndTime==null || subEndTime.isBefore(LocalDateTime.now(ZoneId.systemDefault())) ? "Not Subscribed" : subEndTime.toString());
         return new ResponseEntity<Object>(response, HttpStatus.OK);
     }
 

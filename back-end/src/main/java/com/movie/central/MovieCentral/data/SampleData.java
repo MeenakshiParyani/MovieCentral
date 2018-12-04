@@ -6,10 +6,7 @@ import com.movie.central.MovieCentral.enums.MovieType;
 import com.movie.central.MovieCentral.enums.MpaaRating;
 import com.movie.central.MovieCentral.enums.Status;
 
-import com.movie.central.MovieCentral.model.Actor;
-import com.movie.central.MovieCentral.model.Customer;
-import com.movie.central.MovieCentral.model.Director;
-import com.movie.central.MovieCentral.model.Movie;
+import com.movie.central.MovieCentral.model.*;
 
 import com.movie.central.MovieCentral.repository.ActorRepository;
 import com.movie.central.MovieCentral.repository.CustomerRepository;
@@ -23,6 +20,8 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -52,6 +51,9 @@ public class SampleData implements ApplicationRunner {
         saveMovie3();
         saveMovie4();
         saveCustomer1();
+        saveCustomer2();
+        addPlayHistory1();
+        addPlayHistory2();
     }
 
     public void saveMovie1(){
@@ -135,8 +137,42 @@ public class SampleData implements ApplicationRunner {
 
     public void saveCustomer1(){
         Customer customer = Customer.builder().authType(AuthType.LOCAL).password("password").email("meenakshi.paryani@gmail.com")
-                .screenName("meenu").name("Meenakshi Paryani").userRole(UserRole.CUSTOMER).build();
+                .screenName("meenu").name("Meenakshi Paryani").userRole(UserRole.CUSTOMER).registrationDateTime(LocalDateTime.now(ZoneId.systemDefault())).build();
         customerRepository.save(customer);
     }
+
+    public void saveCustomer2(){
+        Customer customer = Customer.builder().authType(AuthType.LOCAL).password("password").email("meenakshi.paryani222@gmail.com")
+                .screenName("meenu222").name("Meenakshi Paryani222").userRole(UserRole.CUSTOMER).registrationDateTime(LocalDateTime.now(ZoneId.systemDefault())).build();
+        customerRepository.save(customer);
+    }
+
+    public void addPlayHistory1(){
+        Customer customer = Customer.builder().authType(AuthType.LOCAL).password("password").email("meenakshi.paryani33@gmail.com")
+                .screenName("meenu33").name("Meenakshi Paryani33").userRole(UserRole.CUSTOMER).registrationDateTime(LocalDateTime.now(ZoneId.systemDefault())).build();
+        customer = customerRepository.save(customer);
+
+        Movie movie = movieRepository.save(Movie.builder().title("abcxyz").synopsys("").country("India").averageRating(0.0)
+                .genre(Genre.DRAMA).imageUrl("").movieUrl("").mpaaRating(MpaaRating.PG)
+                .price(0.0).releaseYear(2008).studio("def55").status(Status.ACTIVE).type(MovieType.PAY_PER_VIEW).build());
+
+        playHistoryRepository.save(PlayHistory.builder().customer(customer).movie(movie).playTime(LocalDateTime.now(ZoneId.systemDefault())).build());
+        playHistoryRepository.save(PlayHistory.builder().customer(customer).movie(movie).playTime(LocalDateTime.now(ZoneId.systemDefault())).build());
+    }
+
+    public void addPlayHistory2(){
+        Customer customer = Customer.builder().authType(AuthType.LOCAL).password("password").email("meenakshi.paryani44@gmail.com")
+                .screenName("meenu44").name("Meenakshi Paryani44").userRole(UserRole.CUSTOMER).registrationDateTime(LocalDateTime.now(ZoneId.systemDefault())).build();
+        customer = customerRepository.save(customer);
+
+        Movie movie = movieRepository.save(Movie.builder().title("abcxyzaa").synopsys("").country("India").averageRating(0.0)
+                .genre(Genre.DRAMA).imageUrl("").movieUrl("").mpaaRating(MpaaRating.PG)
+                .price(0.0).releaseYear(2008).studio("def55").status(Status.ACTIVE).type(MovieType.PAY_PER_VIEW).build());
+
+        playHistoryRepository.save(PlayHistory.builder().customer(customer).movie(movie).playTime(LocalDateTime.now(ZoneId.systemDefault()).minusMonths(1)).build());
+        playHistoryRepository.save(PlayHistory.builder().customer(customer).movie(movie).playTime(LocalDateTime.now(ZoneId.systemDefault()).minusMonths(1)).build());
+    }
+
+
 
 }

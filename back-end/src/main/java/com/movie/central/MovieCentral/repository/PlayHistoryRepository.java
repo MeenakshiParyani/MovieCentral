@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -23,6 +24,6 @@ public interface PlayHistoryRepository extends JpaRepository<PlayHistory, Long> 
     @Query(value = "select p.customer_id, m.name, count(p.customer_id) as playcount from play_history p, customer m where p.customer_id = m.id group by customer_id order by playcount limit 10", nativeQuery = true)
     List<Object[]> getMostActiveCustomers();
 
-    //List<PlayHistory>
-    //List<PlayHistory> getPlayHistoryByCustomerId(Long customerId);
+    @Query(value = "select count(distinct p.customer_id) as playcount from play_history p, customer c where p.customer_id = c.id and p.play_time between ?1 and ?2", nativeQuery = true)
+    Long getActiveCustomersByPlayTime(LocalDateTime startDateTime, LocalDateTime endDateTime);
 }

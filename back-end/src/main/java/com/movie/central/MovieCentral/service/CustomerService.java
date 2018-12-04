@@ -86,7 +86,8 @@ public class CustomerService {
             Optional<Movie> movie = movieRepository.findById(movieId);
             if(movie.isPresent()){
                 Movie m = movie.get();
-                Billing userBilling = Billing.builder().customer(c).totalAmount(totalAmount).movie(m)
+                LocalDateTime startTime = LocalDateTime.now(ZoneId.systemDefault());
+                Billing userBilling = Billing.builder().customer(c).totalAmount(totalAmount).movie(m).startTime(startTime)
                         .subscriptionType(SubscriptionType.PAY_PER_VIEW).build();
                 billingRepository.save(userBilling);
             }else{
