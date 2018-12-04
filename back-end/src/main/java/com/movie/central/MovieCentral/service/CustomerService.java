@@ -47,11 +47,11 @@ public class CustomerService {
 
     public void register(Customer customer) throws Exception {
         customer.setUserRole(UserRole.CUSTOMER);
-        //Do Not Check In
-        LocalDateTime startTime = LocalDateTime.now(ZoneId.systemDefault());
-        LocalDateTime endTime = getSubscriptionEndDate(startTime, 1).withHour(0).withMinute(0).withSecond(0);
-        // Till Here
-        customer.setSubscriptionEndTime(endTime);
+//        //Do Not Check In
+//        LocalDateTime startTime = LocalDateTime.now(ZoneId.systemDefault());
+//        LocalDateTime endTime = getSubscriptionEndDate(startTime, 1).withHour(0).withMinute(0).withSecond(0);
+//        // Till Here
+//        customer.setSubscriptionEndTime(endTime);
         customerRepository.save(customer);
     }
 

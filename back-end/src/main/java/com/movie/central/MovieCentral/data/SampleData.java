@@ -18,6 +18,7 @@ import com.movie.central.MovieCentral.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -43,6 +44,8 @@ public class SampleData implements ApplicationRunner {
 
     @Autowired
     private CustomerRepository customerRepository;
+
+    private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
@@ -136,19 +139,22 @@ public class SampleData implements ApplicationRunner {
     }
 
     public void saveCustomer1(){
-        Customer customer = Customer.builder().authType(AuthType.LOCAL).password("password").email("meenakshi.paryani@gmail.com")
+        String password = bCryptPasswordEncoder.encode("password");
+        Customer customer = Customer.builder().authType(AuthType.LOCAL).password(password).email("meenakshi.paryani@gmail.com")
                 .screenName("meenu").name("Meenakshi Paryani").userRole(UserRole.CUSTOMER).registrationDateTime(LocalDateTime.now(ZoneId.systemDefault())).build();
         customerRepository.save(customer);
     }
 
     public void saveCustomer2(){
-        Customer customer = Customer.builder().authType(AuthType.LOCAL).password("password").email("meenakshi.paryani222@gmail.com")
+        String password = bCryptPasswordEncoder.encode("password");
+        Customer customer = Customer.builder().authType(AuthType.LOCAL).password(password).email("meenakshi.paryani222@gmail.com")
                 .screenName("meenu222").name("Meenakshi Paryani222").userRole(UserRole.CUSTOMER).registrationDateTime(LocalDateTime.now(ZoneId.systemDefault())).build();
         customerRepository.save(customer);
     }
 
     public void addPlayHistory1(){
-        Customer customer = Customer.builder().authType(AuthType.LOCAL).password("password").email("meenakshi.paryani33@gmail.com")
+        String password = bCryptPasswordEncoder.encode("password");
+        Customer customer = Customer.builder().authType(AuthType.LOCAL).password(password).email("meenakshi.paryani33@gmail.com")
                 .screenName("meenu33").name("Meenakshi Paryani33").userRole(UserRole.CUSTOMER).registrationDateTime(LocalDateTime.now(ZoneId.systemDefault())).build();
         customer = customerRepository.save(customer);
 
@@ -161,7 +167,8 @@ public class SampleData implements ApplicationRunner {
     }
 
     public void addPlayHistory2(){
-        Customer customer = Customer.builder().authType(AuthType.LOCAL).password("password").email("meenakshi.paryani44@gmail.com")
+        String password = bCryptPasswordEncoder.encode("password");
+        Customer customer = Customer.builder().authType(AuthType.LOCAL).password(password).email("meenakshi.paryani44@gmail.com")
                 .screenName("meenu44").name("Meenakshi Paryani44").userRole(UserRole.CUSTOMER).registrationDateTime(LocalDateTime.now(ZoneId.systemDefault())).build();
         customer = customerRepository.save(customer);
 

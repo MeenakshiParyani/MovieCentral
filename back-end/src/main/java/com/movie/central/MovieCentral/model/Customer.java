@@ -67,6 +67,20 @@ public class Customer implements Serializable{
     @Column(name="registration_time")
     private LocalDateTime registrationDateTime;
 
+    public Customer(Customer customer){
+        this.id = customer.getId();
+        this.name = customer.getName();
+        this.email = customer.getEmail();
+        this.screenName = customer.getScreenName();
+        this.password = customer.getPassword();
+        this.authType = customer.getAuthType();
+        this.subscriptionEndTime = customer.getSubscriptionEndTime();
+        this.userRole = customer.getUserRole();
+        this.isAccountVerified = customer.isAccountVerified();
+        this.ratings = customer.getRatings();
+        this.registrationDateTime = customer.getRegistrationDateTime();
+    }
+
 
 }
 

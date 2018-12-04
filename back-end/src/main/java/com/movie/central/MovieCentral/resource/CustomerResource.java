@@ -19,6 +19,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -36,6 +42,12 @@ public class CustomerResource {
     @Autowired
     private CustomerService customerService;
 
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private PasswordEncoder bCryptPasswordEncoder;
+
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ResponseEntity<?> register(@RequestBody Map<String, String> input, HttpSession session) throws Exception{
 
@@ -45,6 +57,7 @@ public class CustomerResource {
             String screenName = input.get("screenName");
             String password = input.get("password");
             AuthType authType = AuthType.getByName(input.get("authType"));
+            password = bCryptPasswordEncoder.encode(password);
             Customer customer = Customer.builder().name(name).email(email).screenName(screenName)
                     .password(password).authType(authType).registrationDateTime(LocalDateTime.now(ZoneId.systemDefault())).build();
             customerService.register(customer);
@@ -55,6 +68,44 @@ public class CustomerResource {
         }
 
     }
+
+    @RequestMapping(value = "/login", headers = "Accept=application/json", method = RequestMethod.POST, produces = "application/json")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<?> login(@RequestBody Map<String, String> input, HttpSession session){
+        try{
+            String email = input.get("email");
+            String password = input.get("password");
+            UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(email, password);
+            Authentication authentication = this.authenticationManager.authenticate(token);
+            SecurityContext context = SecurityContextHolder.getContext();
+            SecurityContextHolder.setStrategyName(SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
+            context.setAuthentication(authentication);
+            session.setAttribute("SPRING_SECURITY_CONTEXT", context);
+            return new ResponseEntity<>(authentication.getPrincipal(), HttpStatus.OK);
+
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+
+        }
+        return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+    }
+
+    @RequestMapping(value = "/isLoggedIn", method = RequestMethod.GET)
+    public ResponseEntity<?> isLoggedIn(HttpSession session){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if(authentication.getPrincipal().equals("anonymousUser"))
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+
+    }
+
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void logout(HttpSession session) {
+        session.invalidate();
+    }
+
 
     @RequestMapping(value = "/subscribe", method = RequestMethod.POST)
     public ResponseEntity<?> subscribe(@RequestBody Map<String,String> input, HttpSession session) throws Exception{
