@@ -1,20 +1,20 @@
 import React, { Component } from "react";
 import logo from "./logo.svg";
 import PrimarySearchAppBar from "./components/searchbar";
-import Home from "./components/home";
+// import Home from "./components/home";
 import "./App.css";
 import { NavLink, BrowserRouter, Route, Link } from "react-router-dom";
 import AddNewMovie from "./components/AddNewMovie";
 import AdminDashboard from "./components/AdminDashboard";
 import Register from "./components/register";
 import Login from "./components/login";
-
+import Home from "./home";
+import GetMovieList from "./components/movies";
 class App extends Component {
   render() {
     return (
       <BrowserRouter>
         <div>
-          {/*<Home/>*/}
           <PrimarySearchAppBar>
             <div className="App">
               <header className="App-header">
@@ -38,6 +38,8 @@ class App extends Component {
           <Route path={`/adminDashboard`} component={AdminDashboard} />
           <Route path={"/register"} component={Register} />
           <Route path={"/login"} component={Login} />
+          <Route path={"/home"} component={Home} />
+          <Route path={"/getmovielist"} component={GetMovieList} />
         </div>
       </BrowserRouter>
     );

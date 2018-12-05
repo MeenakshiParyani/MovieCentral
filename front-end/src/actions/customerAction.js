@@ -32,9 +32,9 @@ export function registerUser(user) {
 
 export function loginUser(user) {
   return dispatch => {
-    return axios.post("/api/customer/login", user).then(response => {
-      dispatch(register(response.data));
-    });
+    return axios
+      .post("http://localhost:8080/api/customer/login", user)
+      .then(response => {});
   };
 }
 

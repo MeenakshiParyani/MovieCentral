@@ -27,7 +27,7 @@ export const data = (
       break;
 
     case "LOGIN_USER":
-      console.log("In Register user" + action.payload);
+      console.log("In Login user" + action.payload);
       state = {
         ...state,
         message: action.payload
