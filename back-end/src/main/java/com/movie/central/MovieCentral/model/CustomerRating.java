@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "customer_rating")
@@ -23,6 +24,9 @@ public class CustomerRating implements Serializable{
 
     @Column(name="reviewer_screenname")
     private String reviewerScreenName;
+
+    @Column(name="rating_time")
+    private LocalDateTime ratingTime;
 
 }
 

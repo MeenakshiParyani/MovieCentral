@@ -1,22 +1,23 @@
 package com.movie.central.MovieCentral.service;
 
 import com.movie.central.MovieCentral.enums.SubscriptionType;
-import com.movie.central.MovieCentral.enums.UserRole;
-import com.movie.central.MovieCentral.model.Billing;
-import com.movie.central.MovieCentral.model.PlayHistory;
-import com.movie.central.MovieCentral.model.Customer;
+import com.movie.central.MovieCentral.model.*;
 import com.movie.central.MovieCentral.repository.BillingRepository;
 import com.movie.central.MovieCentral.repository.CustomerRepository;
 import com.movie.central.MovieCentral.repository.PlayHistoryRepository;
+import com.movie.central.MovieCentral.util.LocalDateTimeUtil;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.time.ZoneId;
-import java.time.temporal.TemporalAdjusters;
-import java.util.Date;
-import java.util.Optional;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class FinancialReportService {
@@ -30,61 +31,114 @@ public class FinancialReportService {
     @Autowired
     private PlayHistoryRepository playHistoryRepository;
 
-    private LocalDateTime getFirstDayOfGivenMonth(int month, int year) {
-        LocalDateTime startDateTime = LocalDateTime.now(ZoneId.systemDefault()).withMonth(month).withYear(year).withHour(0).withMinute(0).withSecond(0).withNano(0);
-        startDateTime = startDateTime.with(TemporalAdjusters.firstDayOfMonth());
-        return startDateTime;
-    }
 
-    private LocalDateTime getLastDayOfGivenMonth(LocalDateTime startDateTime) {
-        LocalDateTime endDateTime = startDateTime.withHour(23).withMinute(59).withSecond(59);
-        endDateTime = endDateTime.with(TemporalAdjusters.lastDayOfMonth());
-        return endDateTime;
-    }
+    public Integer getUniqueSubscriptionUsersGivenMonth(int month, int year) throws Exception {
+        LocalDateTime startDateTime = LocalDateTimeUtil.getFirstDayOfGivenMonth(month, year);
 
-
-    public List<Billing> getUniqueSubscriptionGivenMonth(int month, int year) throws Exception {
-        LocalDateTime startDateTime = getFirstDayOfGivenMonth(month, year);
-
-        LocalDateTime endDateTime = getLastDayOfGivenMonth(startDateTime);
+        LocalDateTime endDateTime = LocalDateTimeUtil.getLastDayOfGivenMonth(startDateTime);
 
         List<Billing> subscriptionList = billingRepository.findDistinctBySubscriptionTypeAndStartTimeGreaterThanEqualAndStartTimeLessThanEqual( SubscriptionType.SUBSCRIPTION, startDateTime, endDateTime);
-        return subscriptionList;
+        Set<Customer> uniqueSubscriptionUsers = subscriptionList.stream()
+                .map(elem -> elem.getCustomer())
+                .collect(Collectors.toSet());;
+        return uniqueSubscriptionUsers.size();
     }
 
-    public List<Billing> getUniquePayPerViewGivenMonth(int month, int year) throws Exception {
-        LocalDateTime startDateTime = getFirstDayOfGivenMonth(month, year);
-
-        LocalDateTime endDateTime = getLastDayOfGivenMonth(startDateTime);
+    public Integer getUniquePayPerViewUsersGivenMonth(int month, int year) throws Exception {
+        LocalDateTime startDateTime = LocalDateTimeUtil.getFirstDayOfGivenMonth(month, year);
+        LocalDateTime endDateTime = LocalDateTimeUtil.getLastDayOfGivenMonth(startDateTime);
 
         List<Billing> payPerViewList = billingRepository.findDistinctBySubscriptionTypeAndStartTimeGreaterThanEqualAndStartTimeLessThanEqual( SubscriptionType.PAY_PER_VIEW, startDateTime, endDateTime);
-        return payPerViewList;
+        Set<Customer> uniqueSubscriptionUsers = payPerViewList.stream()
+                .map(elem -> elem.getCustomer())
+                .collect(Collectors.toSet());;
+        return uniqueSubscriptionUsers.size();
     }
 
-    public List<Customer> getAllUniqueRegisteredUsersGivenMonth(int month, int year) throws Exception {
-        LocalDateTime startDateTime = getFirstDayOfGivenMonth(month, year);
+    public Integer getAllUniqueRegisteredUsersGivenMonth(int month, int year) throws Exception {
+        LocalDateTime startDateTime = LocalDateTimeUtil.getFirstDayOfGivenMonth(month, year);
 
-        LocalDateTime endDateTime = getLastDayOfGivenMonth(startDateTime);
+        LocalDateTime endDateTime = LocalDateTimeUtil.getLastDayOfGivenMonth(startDateTime);
 
         List<Customer> allList = customerRepository.findDistinctByRegistrationDateTimeGreaterThanEqualAndRegistrationDateTimeLessThanEqual
                 (startDateTime, endDateTime);
-        return allList;
+        return allList.size();
     }
 
     public Double getSubscriptionOrPayPerViewIncome(int month, int year, SubscriptionType subscriptionType) throws Exception {
-        LocalDateTime startDateTime = getFirstDayOfGivenMonth(month, year);
-        LocalDateTime endDateTime = getLastDayOfGivenMonth(startDateTime);
+        LocalDateTime startDateTime = LocalDateTimeUtil.getFirstDayOfGivenMonth(month, year);
+        LocalDateTime endDateTime = LocalDateTimeUtil.getLastDayOfGivenMonth(startDateTime);
 
         List<Billing> subscriptionList = billingRepository.findDistinctBySubscriptionTypeAndStartTimeGreaterThanEqualAndStartTimeLessThanEqual(subscriptionType, startDateTime, endDateTime);
         Double income = subscriptionList.stream().mapToDouble(sub -> sub.getTotalAmount()).sum();
         return income;
     }
 
-    public Long getAllUniqueActiveUsers(int month, int year){
-        LocalDateTime startDateTime = getFirstDayOfGivenMonth(month, year);
-        LocalDateTime endDateTime = getLastDayOfGivenMonth(startDateTime);
+    public Integer getAllUniqueActiveUsers(int month, int year){
+        LocalDateTime startDateTime = LocalDateTimeUtil.getFirstDayOfGivenMonth(month, year);
+        LocalDateTime endDateTime = LocalDateTimeUtil.getLastDayOfGivenMonth(startDateTime);
 
         Long uniqueActiveUsers = playHistoryRepository.getActiveCustomersByPlayTime(startDateTime, endDateTime);
-        return uniqueActiveUsers == null ? 0 : uniqueActiveUsers;
+        return uniqueActiveUsers == null ? 0 : uniqueActiveUsers.intValue();
     }
+
+
+
+    public List<ReportingStructureUser> getReportingForUsersForLast12Months() throws Exception{
+        List<ReportingStructureUser> reportingStructureUsers = new ArrayList<>();
+        LocalDateTime now = LocalDateTime.now(ZoneId.systemDefault());
+        List<Integer> months = new ArrayList<>();
+        List<Integer> years = new ArrayList<>();
+        for(int i=1; i<=12; i++){
+            Integer month = now.getMonthValue();
+            Integer year = now.getYear();
+            months.add(month);
+            years.add(year);
+            now = now.minusMonths(1);
+        }
+        if(months.size() == years.size()){
+            for(int i=0; i<months.size(); i++){
+                int month = months.get(i);
+                Integer subscriptionUsers = getUniqueSubscriptionUsersGivenMonth(month, years.get(i));
+                Integer payPerViewUsers = getUniquePayPerViewUsersGivenMonth(month, years.get(i));
+                Integer registeredUsers = getAllUniqueRegisteredUsersGivenMonth(month, years.get(i));
+                Integer activeUsers = getAllUniqueActiveUsers(month, years.get(i));
+                ReportingStructureUser reportingStructureUser = ReportingStructureUser.builder().name(Month.of(month).name())
+                        .SubscriptionUsers(subscriptionUsers).PayPerViewUsers(payPerViewUsers)
+                        .UniqueUsers(registeredUsers).UniqueActiveUsers(activeUsers).build();
+                reportingStructureUsers.add(reportingStructureUser);
+            }
+        }
+        return reportingStructureUsers;
+
+    }
+
+    public List<ReportingStructureIncome> getReportingForIncomeForLast12Months() throws Exception{
+        List<ReportingStructureIncome> reportingStructureIncomes= new ArrayList<>();
+        LocalDateTime now = LocalDateTime.now(ZoneId.systemDefault());
+        List<Integer> months = new ArrayList<>();
+        List<Integer> years = new ArrayList<>();
+        for(int i=1; i<=12; i++){
+            Integer month = now.getMonthValue();
+            Integer year = now.getYear();
+            months.add(month);
+            years.add(year);
+            now = now.minusMonths(1);
+        }
+        if(months.size() == years.size()){
+            for(int i=0; i<months.size(); i++){
+                int month = months.get(i);
+                Double subscriptionIncome = getSubscriptionOrPayPerViewIncome(month, years.get(i),SubscriptionType.SUBSCRIPTION);
+                Double payPerViewIncome = getSubscriptionOrPayPerViewIncome(month, years.get(i),SubscriptionType.PAY_PER_VIEW);
+                Double totalIncome = subscriptionIncome + payPerViewIncome;
+                ReportingStructureIncome reportingStructureIncome = ReportingStructureIncome.builder().name(Month.of(month).name())
+                        .SusbscriptionIncome(subscriptionIncome).PayPerViewIncome(payPerViewIncome)
+                        .TotalIncome(totalIncome).build();
+                reportingStructureIncomes.add(reportingStructureIncome);
+            }
+        }
+        return reportingStructureIncomes;
+
+    }
+
 }

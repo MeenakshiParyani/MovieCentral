@@ -2,9 +2,11 @@ package com.movie.central.MovieCentral.repository;
 
 import com.movie.central.MovieCentral.model.Customer;
 import com.movie.central.MovieCentral.model.CustomerRating;
+import com.movie.central.MovieCentral.model.CustomerRatingId;
 import com.movie.central.MovieCentral.model.Movie;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface CustomerRatingRepository extends JpaRepository<CustomerRating, Long> {
@@ -13,4 +15,7 @@ public interface CustomerRatingRepository extends JpaRepository<CustomerRating, 
     List<CustomerRating> findDistinctByCustomerRatingIdCustomer(Customer customer);
 
     List<CustomerRating> findDistinctByCustomerRatingIdMovie(Movie movie);
+
+    List<CustomerRatingId> findDistinctByRatingTimeAfterAndRatingTimeBefore(LocalDateTime startDateTime, LocalDateTime endDateTime);
+
 }
