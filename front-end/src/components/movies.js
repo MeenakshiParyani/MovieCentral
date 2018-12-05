@@ -17,6 +17,7 @@ import Fab from "@material-ui/core/Fab";
 import Modal from "@material-ui/core/Modal";
 import Typography from "@material-ui/core/Typography";
 import ReactPlayer from "react-player";
+import axios from "axios";
 // import { API_KEY } from "../../Secret";
 
 class GetMovieList extends React.Component {
@@ -24,7 +25,8 @@ class GetMovieList extends React.Component {
     super(props);
     this.state = {
       query: "",
-      moviesList: []
+      moviesList: [],
+      genres: []
     };
   }
 
@@ -41,6 +43,29 @@ class GetMovieList extends React.Component {
     }
   }
 
+  handleChange = e => {
+    this.setState({
+      releaseYears: e.target.value
+    });
+  };
+
+  handleClick = e => {
+    console.log(this.state.genre);
+    let data = {
+      genres: [this.state.genres],
+      releaseYears: [],
+      actors: [],
+      directors: [],
+      mpaaRatings: [],
+      averageRatings: null
+    };
+  };
+  // axios
+  //   .post("http://localhost:8080/api/movie/filter", data)
+  //   .then(response => {
+  //     console.log("Movies : ", response);
+  //   })
+
   render() {
     const { movieData } = this.props;
     return (
@@ -56,11 +81,21 @@ class GetMovieList extends React.Component {
           variant="outlined"
         />
         <br />
+        <TextField
+          id="outlined-name"
+          label="Genre"
+          value={this.state.releaseYears}
+          name="Search by.."
+          onChange={this.handleChange}
+          margin="normal"
+          variant="outlined"
+          style={{ width: 500 }}
+        />
         <Button
           variant="contained"
           size="large"
           color="primary"
-          // onClick={this.getRecommendations.bind(this)}
+          onClick={this.handleClick}
         >
           Search
         </Button>
@@ -100,12 +135,7 @@ class GetMovieList extends React.Component {
                         />
                       </label>
                       <br />
-                      <Button
-                        variant="contained"
-                        size="small"
-                        color="primary"
-                        // onClick={() => this.addMovie(movie)}
-                      >
+                      <Button variant="contained" size="small" color="primary">
                         Add Movie
                       </Button>
                     </label>
