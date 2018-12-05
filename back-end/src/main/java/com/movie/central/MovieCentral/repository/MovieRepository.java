@@ -2,6 +2,7 @@ package com.movie.central.MovieCentral.repository;
 
 import com.movie.central.MovieCentral.enums.Genre;
 import com.movie.central.MovieCentral.enums.MpaaRating;
+import com.movie.central.MovieCentral.model.CustomerRatingId;
 import com.movie.central.MovieCentral.model.Movie;
 import org.springframework.data.jpa.repository.JpaRepository;
 

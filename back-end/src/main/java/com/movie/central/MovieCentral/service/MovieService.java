@@ -5,6 +5,7 @@ import com.movie.central.MovieCentral.enums.MovieType;
 import com.movie.central.MovieCentral.enums.MpaaRating;
 import com.movie.central.MovieCentral.model.*;
 import com.movie.central.MovieCentral.repository.*;
+import com.movie.central.MovieCentral.util.LocalDateTimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +27,7 @@ import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class MovieService {
@@ -223,7 +225,7 @@ public class MovieService {
             if(!alreadyReviewed){
                 CustomerRatingId customerRatingId = new CustomerRatingId(c, m);
                 CustomerRating customerRating = CustomerRating.builder().customerRatingId(customerRatingId)
-                        .rating(rating).ratingComment(comment).build();
+                        .rating(rating).ratingComment(comment).ratingTime(LocalDateTime.now(ZoneId.systemDefault())).build();
                 Integer previousRatingCount = m.getRatings().size();
                 customerRating.setReviewerScreenName(c.getScreenName());
                 Double newAverageRating = (m.getAverageRating()+rating)/(previousRatingCount+1);
@@ -346,4 +348,6 @@ public class MovieService {
         }
 
     }
+
+
 }
