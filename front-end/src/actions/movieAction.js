@@ -9,6 +9,30 @@ export function newMovie(movie){
     }
 }
 
+export function rateNow(ratingDetails){
+    return dispatch => {
+        return axios.post('/api/movie/review',ratingDetails).then((response)=>{
+
+        });
+    }
+}
+
+
+
+export function getCustomerValidity (customer_id, movie_id) {
+    return dispatch => {
+      return axios
+        .get("/api/movie/is_movie_play_allowed", {
+          params: { customerId: customer_id,
+           movieId:movie_id}
+        })
+        .then(response => {
+            dispatch(validityInfo(response.data));
+        });
+    };
+  }
+  
+
 export function getPlaysPerMovie() {
   return dispatch => {
     return axios.get('/api/movie/no_of_play_per_movie').then((response) => {
@@ -18,14 +42,24 @@ export function getPlaysPerMovie() {
   };
 }
 
-export function getTopTenMovies() {
-  return dispatch => {
-    return axios.get('/api/movie/most_played_movies').then(response => {
-      dispatch(topTenMovies(response.data));
-    });
-  };
-}
+export function getMovieInfo(id) {
+    return dispatch => {
+      return axios.get('/api/movie/getMovieByID',{
+          params: { id: id }
+        }).then(response => {
+            
+        dispatch(movieInfo(response.data));
+      });
+    };
+  }
 
+  export function getTopTenMovies() {
+    return dispatch => {
+      return axios.get('/api/movie/most_played_movies').then(response => {
+        dispatch(topTenMovies(response.data));
+      });
+    };
+  }
 
 export function addMovie(res){
     return{
@@ -48,3 +82,17 @@ export function topTenMovies(res){
     }
 }
 
+
+export function movieInfo(res){
+    return{
+        type:"MOVIE_INFO",
+        payload:res
+    }
+}
+
+export function validityInfo(res){
+    return{
+        type:"VALIDITY_INFO",
+        payload:res
+    }
+}

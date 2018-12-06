@@ -2,10 +2,10 @@ import { combineReducers } from "redux";
 
 export const data = (
   state = {
-    customerInfo: {},
-    moviePlayingHistory: [],
-    topTenCustomers: [],
-    message: ""
+    customerInfo:{},
+	moviePlayingHistory:[],
+	topTenCustomers:[],
+	customersByNameList:[]
   },
   action
 ) => {
@@ -14,7 +14,7 @@ export const data = (
       console.log("In customer info" + action.payload);
       state = {
         ...state,
-        customerInfo: action.payload
+        customerInfo: action.payload.result
       };
       break;
 
@@ -37,15 +37,31 @@ export const data = (
     case "MOVIE_PLAYING_HISTORY":
       state = {
         ...state,
-        playPerViewList: action.payload
+        moviePlayingHistory: action.payload.result
       };
       break;
-    case "TOP_TEN_CUSTOMER":
+    case "TOP_TEN_CUSTOMERS":
+    console.log(action.payload.result);
       state = {
         ...state,
-        topTenMovies: action.payload
+        topTenMovies: action.payload.result
       };
       break;
+      case "CUSTOMER_BY_NAME_LIST":
+      console.log(action.payload.result);
+        state = {
+          ...state,
+          customersByNameList: action.payload.result
+          };
+          break;
+          
+      case "RESET_CUSTOMER_LIST":
+      console.log(action.payload.result);
+        state = {
+          ...state,
+          customersByNameList: []
+          };
+          break;
 
     default:
       return state;

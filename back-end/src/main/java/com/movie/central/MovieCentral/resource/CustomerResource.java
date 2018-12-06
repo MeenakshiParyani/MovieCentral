@@ -182,4 +182,12 @@ public class CustomerResource {
         return new ResponseEntity<Object>(response, HttpStatus.OK);
     }
 
+        @RequestMapping(value = "/getCustomerByName", method = RequestMethod.GET)
+    public ResponseEntity<?> getCustomerByName(@RequestParam String name, HttpSession session) throws Exception{
+        List<Customer> customers = customerService.getCustomerByName(name);
+        Map<String, List<Customer>> response = new HashMap<>();
+        response.put("result", customers);
+        return new ResponseEntity<Object>(response, HttpStatus.OK);
+    }
+
 }

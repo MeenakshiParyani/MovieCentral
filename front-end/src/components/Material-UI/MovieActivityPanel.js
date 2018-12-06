@@ -7,7 +7,7 @@ import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import AddNewMovie from './../AddNewMovie';
+import TableViewDetails from './TableViewDetails';
 import {movieData} from "../../reducers/reducer-movie";
 import * as getData from "../../actions/movieAction";
 
@@ -28,7 +28,8 @@ class MovieActivityPanel extends React.Component {
     constructor(props){
         super(props);
         this.state= {
-            playPerViewList: []
+            playPerViewList: [],
+            topTenMovies : []
         }
     }
 
@@ -36,13 +37,15 @@ class MovieActivityPanel extends React.Component {
         console.log(nextProps);
         if(nextProps.movieData){
             this.setState({
-                playPerViewList : nextProps.movieData.data.playPerViewList
+                playPerViewList : nextProps.movieData.data.playPerViewList,
+                topTenMovies : nextProps.movieData.data.topTenMovies
             });
         }
     }
     componentWillMount(){
         console.log(this.props);
         this.props.getPlaysPerMovie();
+        this.props.getTopTenMovies();
         //this.props.getMovieDetails(movie_id);
     }
 
@@ -56,15 +59,17 @@ class MovieActivityPanel extends React.Component {
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails>
                         <Typography>
-                            {this.state.playPerViewList.map((ts,i) =>
-                                <h5 key={i}>
-                                    <div>
-                                        <div>{ts.id}</div>
-                                        <div>{ts.name}</div>
-                                        <div>{ts.playCount}</div>
-                                    </div>
-                                </h5>
-                            )}
+                            <TableViewDetails viewList={this.state.playPerViewList}/>
+                            {/*{this.state.topTenMovies.map((ts,i) =>*/}
+                                {/*<h5 key={i}>*/}
+                                    {/*<div>*/}
+                                        {/*<div>{ts.id}</div>*/}
+                                        {/*<div>{ts.name}</div>*/}
+                                        {/*<div>{ts.playCount}</div>*/}
+                                    {/*</div>*/}
+                                {/*</h5>*/}
+                            {/*)}*/}
+
                         </Typography>
                     </ExpansionPanelDetails>
                 </ExpansionPanel>
@@ -75,8 +80,8 @@ class MovieActivityPanel extends React.Component {
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails>
                         <Typography>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-                            sit amet blandit leo lobortis eget.
+                            {/*{this.state.topTenMovies.length}*/}
+                            <TableViewDetails viewList={this.state.topTenMovies}/>
                         </Typography>
                     </ExpansionPanelDetails>
                 </ExpansionPanel>

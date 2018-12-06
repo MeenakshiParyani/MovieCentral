@@ -36,7 +36,8 @@ class AddNewMovie extends React.Component{
 			type:"",
 			price:"",
 			mpaaRating:"",
-			actors:"",
+            actors:"",
+            status:"ACTIVE",
 			director:"",
 			mpaaRatingData: [
                 {key:'G',value: 'G'},
@@ -89,7 +90,8 @@ class AddNewMovie extends React.Component{
 					price:nextProps.moviesData.data.movieInfo.price,
 					mpaaRating:nextProps.moviesData.data.movieInfo.mpaaRating,
 					actors:nextProps.moviesData.data.movieInfo.actors,
-                    director:nextProps.moviesData.data.movieInfo.director
+                    director:nextProps.moviesData.data.movieInfo.director,
+                    status:nextProps.moviesData.data.movieInfo.status
                 });
             }
         }
@@ -108,50 +110,82 @@ class AddNewMovie extends React.Component{
 
 	
 	addMovie(e){
-		e.preventDefault();
-
-		// var movie = {
-		// "title":"kkhh",
-		// "genre":"ACTION",
-		// "releaseYear":1994,
-		// "studio":"Ramoji",
-		// "synopsys":"romantic good movie",
-		// "imageUrl":"data:image/png;base64",
-		// "movieUrl":"data:image/png;base64iVBORw0KGgoA",
-		// "averageRating":5,
-		// "country":"India",
-		// "type":"PAID",
-		// "price":100,
-		// "mpaaRating":"PG",
-		// "actors":"aaaa bbbb,ssss Ddff,aefrgf sgrth",
-		// "director":"Sanjay Leela Bhansali",
-		// "status":"ACTIVE"
-		// };
-		//
-		// this.props.newMovie(movie);
+        e.preventDefault();
+        //alert("wo");
+		var movie = {
+		"title":this.state.title,
+		"genre":this.state.genre,
+		"releaseYear":this.state.releaseYear,
+		"studio":this.state.studio,
+		"synopsys":this.state.synopsys,
+		"imageUrl":this.state.imageUrl,
+		"movieUrl":this.state.movieUrl,
+		"averageRating":this.state.averageRating,
+		"country":this.state.country,
+		"type":this.state.type,
+		"price":this.state.price,
+		"mpaaRating":this.state.mpaaRating,
+		"actors":this.state.actors,
+		"director":this.state.director,
+		"status":"ACTIVE"
+		};
+		
+		this.props.newMovie(movie).then(
+		(data) => {
+            this.setState({
+                redirectHome: true
+             });
+		},
+		(err) => {
+			console.log(err.response);
+			this.setState({
+                errors:err.response.data.message
+		});
+		}
+	);
 	}
 
+    handleChange = (e) => {
+        console.log(e.target.value);
+        this.setState({
+           type : e.target.value
+        });
+        var value = this.state.optionsdata.filter(function(item) {
+            return item.key == e.target.value
+        })
 
-        
+    }
+
+
 	
 	render(){
         const { classes } = this.props;
+        if(this.state.redirectHome)
+            return (<Redirect to={{
+                pathname: '/adminDashboard'
+            }} />)
+            const {errors} = this.state;
+        
 
 		return(
             <div  style={styles.container}>
                 <h1>Add New Movie</h1>
-				<form style={{marginBottom:'40px'}}>
-                    <TextField
+                <div>{errors && <div className="help-block">{errors}</div>}</div>
+				<form style={{marginBottom:'40px'}} onSubmit={this.addMovie.bind(this)} class="add-form" >
+                    <label>Enter Movie Title</label><br />
+                    <input
                         id="outlined-name"
                         label="Movie Title"
                         value={this.state.title}
                         name="title"
+                        required
                         onChange={this.onChange.bind(this)}
                         margin="normal"
                         variant="outlined"
                         style = {{width: 500}}
                     /><br />
-                    <TextField
+                    <label>Enter Movie Genre</label><br />
+                    <input
                         id="outlined-name"
                         label="Movie Genre"
                         value={this.state.genre}
@@ -161,7 +195,19 @@ class AddNewMovie extends React.Component{
                         style = {{width: 500}}
                         variant="outlined"
                     /><br />
-                    <TextField
+                    <label>Enter Country</label><br />
+                    <input
+                        id="outlined-name"
+                        label="Movie Country"
+                        value={this.state.country}
+                        name="country"
+                        onChange={this.onChange.bind(this)}
+                        margin="normal"
+                        style = {{width: 500}}
+                        variant="outlined"
+                    /><br />
+                    <label>Enter Movie Release year</label><br />
+                    <input
                         id="outlined-name"
                         label="Release Year"
                         value={this.state.releaseYear}
@@ -171,7 +217,8 @@ class AddNewMovie extends React.Component{
                         style = {{width: 500}}
                         variant="outlined"
                     /><br />
-                    <TextField
+                    <label>Enter Description</label><br />
+                    <input
                         id="outlined-name"
                         label="Synopsys"
                         value={this.state.synopsys}
@@ -181,7 +228,8 @@ class AddNewMovie extends React.Component{
                         style = {{width: 500}}
                         variant="outlined"
                     /><br />
-                    <TextField
+                    <label>Enter Movie Actors (comma separated values)</label><br />
+                    <input
                         id="outlined-name"
                         label="Movie Actors"
                         value={this.state.actors}
@@ -191,7 +239,8 @@ class AddNewMovie extends React.Component{
                         style = {{width: 500}}
                         variant="outlined"
                     /><br />
-                    <TextField
+                    <label>Enter Studio</label><br />
+                    <input
                         id="outlined-name"
                         label="Studio"
                         value={this.state.studio}
@@ -201,7 +250,8 @@ class AddNewMovie extends React.Component{
                         style = {{width: 500}}
                         variant="outlined"
                     /><br />
-                    <TextField
+                    <label>Enter Image Url</label><br />
+                    <input
                         id="outlined-name"
                         label="Movie Image URL"
                         value={this.state.imageUrl}
@@ -211,7 +261,8 @@ class AddNewMovie extends React.Component{
                         style = {{width: 500}}
                         variant="outlined"
                     /><br />
-                    <TextField
+                    <label>Enter Movie Url</label><br />
+                    <input
                         id="outlined-name"
                         label="Movie URL"
                         value={this.state.movieUrl}
@@ -221,7 +272,8 @@ class AddNewMovie extends React.Component{
                         style = {{width: 500}}
                         variant="outlined"
                     /><br />
-                    <TextField
+                    <label>Enter Average Rating</label><br />
+                    <input
                         id="outlined-name"
                         label="Average rating"
                         value={this.state.averageRating}
@@ -231,17 +283,15 @@ class AddNewMovie extends React.Component{
                         margin="normal"
                         variant="outlined"
                     /><br />
-                    <TextField
-                        id="outlined-name"
-                        label="Type of movie"
-                        value={this.state.type}
-                        name="type"
-                        onChange={this.onChange.bind(this)}
-                        margin="normal"
-                        style = {{width: 500}}
-                        variant="outlined"
-                    /><br />
-                    <TextField
+                    <label>Select Movie Type</label><br />
+	
+                    <select className="select-style" name="type" required value={this.state.type} onChange={this.onChange.bind(this)}>
+                                {this.state.movieTypeData.map(function(data, key){  return (
+                                    <option key={key} value={data.key}>{data.value}</option> )
+                                })}
+                            </select><br />
+                    <label>Enter Movie Price</label><br />
+                    <input
                         id="outlined-name"
                         label="Price of movie"
                         value={this.state.price}
@@ -251,17 +301,14 @@ class AddNewMovie extends React.Component{
                         style = {{width: 500}}
                         variant="outlined"
                     /><br />
-                    <TextField
-                        id="outlined-name"
-                        label="MPAA rating"
-                        value={this.state.mpaaRating}
-                        name="mpaaRating"
-                        onChange={this.onChange.bind(this)}
-                        margin="normal"
-                        style = {{width: 500}}
-                        variant="outlined"
-                    /><br />
-                    <TextField
+                    <label>Select MPAA Rating</label><br />
+                    <select className="select-style" name="mpaaRating" required value={this.state.mpaaRating} onChange={this.onChange.bind(this)}>
+                                {this.state.mpaaRatingData.map(function(data, key){  return (
+                                    <option key={key} value={data.key}>{data.value}</option> )
+                                })}
+                            </select><br />
+                    <label>Enter Director Name</label><br />
+                    <input
                         id="outlined-name"
                         label="Director"
                         value={this.state.director}
@@ -270,9 +317,10 @@ class AddNewMovie extends React.Component{
                         margin="normal"
                         style = {{width: 500}}
                         variant="outlined"
+                        required = {true}
                     /><br/>
                 {/*<button className="btn btn-warning mt20" onClick={this.addMovie.bind(this)}>Add Movie</button>*/}
-                    <Button variant="contained" size="large" color="primary"  onClick={this.addMovie.bind(this)}>
+                    <Button variant="contained" size="large" color="primary" type="submit">
                         Add Movie
                     </Button>
                 </form>

@@ -17,6 +17,8 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
     List<Customer> findDistinctByUserRole(UserRole role);
 
+    List<Customer> findByNameContaining(String name);
+
     List<Customer> findDistinctByRegistrationDateTimeGreaterThanEqualAndRegistrationDateTimeLessThanEqual
             (LocalDateTime startDateTime, LocalDateTime endDateTime);
 

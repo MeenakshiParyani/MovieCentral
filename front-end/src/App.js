@@ -8,6 +8,9 @@ import AddNewMovie from "./components/AddNewMovie";
 import AdminDashboard from "./components/AdminDashboard";
 import Register from "./components/register";
 import Login from "./components/login";
+import CustomerPlayHistory from './components/Material-UI/CustomerPlayHistory';
+import ViewMovieDetails from './components/Material-UI/ViewMovieDetails';
+import SubscribePayPerView from './components/SubscribePayPerView';
 
 class App extends Component {
   render() {
@@ -38,6 +41,9 @@ class App extends Component {
           <Route path={`/adminDashboard`} component={AdminDashboard} />
           <Route path={"/register"} component={Register} />
           <Route path={"/login"} component={Login} />
+          <Route path={`/getPlayHistory/:user_id`} component={CustomerPlayHistory}></Route>
+        		<Route path={`/movie-details/:movie_id`} component={ViewMovieDetails}></Route>
+            <Route path={"/payperview/:movie_id"} component={SubscribePayPerView} />
         </div>
       </BrowserRouter>
     );

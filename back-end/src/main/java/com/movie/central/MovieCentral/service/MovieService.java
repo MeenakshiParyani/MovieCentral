@@ -323,6 +323,16 @@ public class MovieService {
 //    }
 
 
+    public Movie findMovieById(Long movieId){
+        Optional<Movie> movie = movieRepository.findById(movieId);
+        Movie foundMovie = new Movie();
+        if(movie.isPresent()){
+            foundMovie = movie.get();
+        }
+        return foundMovie;
+    }
+
+
 
     public void isMoviePlayAllowedForCustomer(Long customerId, Long movieId) throws Exception{
         Optional<Movie> movie = movieRepository.findById(movieId);

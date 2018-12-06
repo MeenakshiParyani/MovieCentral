@@ -14,13 +14,42 @@ export function getCustomerInfo(customer_id) {
   return dispatch => {
     return axios
       .get("/api/customer/get-customer-details", {
-        params: { customer_id: customer_id }
+        params: { id: customer_id }
       })
       .then(response => {
         dispatch(customerInfo(response.data));
       });
   };
 }
+
+
+
+export function getPlayHistory(customer_id) {
+  return dispatch => {
+    return axios.get('/api/customer/get-customer-watch-history',{
+        params: { id: customer_id }
+      }).then(response => {
+		  console.log(response.data);
+      dispatch(customerPlayHistory(response.data));
+    });
+  };
+}
+
+export function getCustomerByName(name) {
+  return dispatch => {
+    return axios.get('/api/customer/getCustomerByName',{
+        params: { name: name }
+      }).then(
+	  (response) => {
+			dispatch(customerByNameList(response.data));  
+		},
+		(error) => {
+			dispatch(resetCustomerList()); 
+		}
+	);
+  };
+}
+
 
 export function registerUser(user) {
   return dispatch => {
@@ -38,17 +67,7 @@ export function loginUser(user) {
   };
 }
 
-export function getPlayHistory(customer_id) {
-  return dispatch => {
-    return axios
-      .get("/api/customer/get-customer-watch-history", {
-        params: { customer_id: customer_id }
-      })
-      .then(response => {
-        dispatch(customerPlayHistory(response.data));
-      });
-  };
-}
+
 
 export function topTenCustomers(res) {
   return {
@@ -76,4 +95,19 @@ export function register(res) {
     type: "REGISTER_USER",
     payload: res
   };
+}
+
+
+export function customerByNameList(res){
+  return{
+      type:"CUSTOMER_BY_NAME_LIST",
+      payload:res
+  }
+}
+
+export function resetCustomerList(){
+  return{
+      type:"RESET_CUSTOMER_LIST",
+      payload:"No Data"
+  }
 }

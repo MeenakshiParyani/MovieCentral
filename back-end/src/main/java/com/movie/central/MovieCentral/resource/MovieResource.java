@@ -223,6 +223,15 @@ public class MovieResource {
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/getMovieByID", method = RequestMethod.GET)
+    public ResponseEntity<?> getMovieByID(String id, HttpSession session) throws Exception{
 
+        Long movieId = Long.parseLong(id);
+        Movie movie = movieService.findMovieById(movieId);
+
+        Map<String,Movie> response = new HashMap<>();
+        response.put("result" , movie);
+        return new ResponseEntity<Object>(response, HttpStatus.OK);
+    }
 
 }
