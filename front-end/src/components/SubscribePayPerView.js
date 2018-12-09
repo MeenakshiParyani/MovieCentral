@@ -1,30 +1,30 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import axios from 'axios/index';
+import CreditCardTemplate from './CreditCardTemplate';
+import Grid from '@material-ui/core/Grid';
+import Modal from '@material-ui/core/Modal';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle'
 
-const styles = {
-    card: {
-        minWidth: 275,
+
+const styles = theme => ({
+    paper: {
+      position: 'absolute',
+      width: theme.spacing.unit * 50,
+      backgroundColor: theme.palette.background.paper,
+      boxShadow: theme.shadows[5],
+      padding: theme.spacing.unit * 4,
     },
-    bullet: {
-        display: 'inline-block',
-        margin: '0 2px',
-        transform: 'scale(0.8)',
-    },
-    title: {
-        fontSize: 18,
-    },
-    pos: {
-        marginBottom: 12,
-    },
-};
+  });
+
 
 class SubscribePayPerView extends Component {
 
@@ -36,6 +36,20 @@ class SubscribePayPerView extends Component {
         }
     }
 
+    state= {
+        open: false
+    };
+
+    handleClickOpen = () => {
+        this.setState({ open: true });
+      };
+    
+      handleClose = () => {
+        this.setState({ open: false });
+      };
+
+    
+    
 
 
     handleSubmit(e) {
@@ -49,7 +63,6 @@ class SubscribePayPerView extends Component {
 
         axios.post(subscribePayPerViewAPI, apiPayload)
             .then(res => {
-                alert("Successful");
                 this.props.sendResult(res.data.result)
             })
             .catch(err => {
@@ -58,53 +71,53 @@ class SubscribePayPerView extends Component {
 
 
         e.preventDefault();
+        alert('Payment Successful');
     }
 
-    componentWillMount(){
-console.log(this.props.match.params.movie_id);
-let movie_id = this.props.match.params.movie_id;
-this.setState({
-    movieId : this.props.match.params.movie_id,
-    price: '5'
-});
+    componentWillMount() {
+        console.log(this.props.match.params.movie_id);
+        let movie_id = this.props.match.params.movie_id;
+        this.setState({
+            movieId: this.props.match.params.movie_id,
+            price: '5'
+        });
     }
 
     render() {
+        const classes = this.props;
         return (<div>
-            <Card >
-                <CardContent>
-                    <Typography variant="h6" component="h8">
-                        Pay-per-view rate is $5
-        </Typography>
-                    <Typography variant="h6" component="h8">
-                    </Typography>
-                </CardContent>
-            </Card>
-            <Card >
-                <CardContent>
-                    <Typography color="textSecondary" gutterBottom>
-                        Enter your card details below
-        </Typography>
-                    <Typography variant="h6" component="h8">
-                        Name on card
-          <br />
-                        <TextField></TextField>
-                    </Typography>
-                    <Typography variant="h6" component="h8">
-                        Card details
-          <br />
-                        <TextField></TextField>
-                    </Typography>
-                    <Typography variant="h6" component="h8">
-                        Expiration date
-        <br />
-                        <TextField></TextField>
-                    </Typography>
-                </CardContent>
-                <CardActions>
-                    <Button size="small" onClick={this.handleSubmit}>Pay</Button>
-                </CardActions>
-            </Card>
+            <Grid container justify="center">
+            <h4>Pay-per-view rate for this movie is $5.</h4>
+            </Grid>
+            <CreditCardTemplate />
+            <Grid container justify="center">
+                <Button size="small" onClick={this.handleClickOpen}>Pay</Button>
+            </Grid>
+            <Dialog
+          open={this.state.open}
+          onClose={this.handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">{"Are you sure?"}</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              You will be charged once you click Pay Now. 
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleClose} color="primary">
+              Cancel
+            </Button>
+            <Button onClick={this.handleSubmit} color="primary" autoFocus>
+              Pay Now
+            </Button>
+          </DialogActions>
+        </Dialog>
+
+
+
+
         </div>
         );
     }
