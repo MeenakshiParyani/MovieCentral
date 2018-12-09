@@ -32,32 +32,11 @@ class Login extends React.Component {
 
   login(e) {
     e.preventDefault();
-    this.props.loginUser(this.state).then(
-      data => {
-        console.log(data);
-        this.setState({
-          redirect: true
-        });
-      },
-      err => {
-        this.setState({ errors: err.response.data });
-        console.log(err.response);
-      }
-    );
+    this.props.loginUser(this.state);
   }
 
   render() {
     const { loginData } = this.props;
-    if (this.state.redirect) {
-      //alert("sdfghjk");
-      return (
-        <Redirect
-          to={{
-            pathname: "/home"
-          }}
-        />
-      );
-    }
 
     return (
       <div style={styles.container}>

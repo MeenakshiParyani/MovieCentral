@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import AddNewMovie from './../AddNewMovie';
 import UserActivityPanel from './UserActivityPanel';
 import MovieActivityPanel from './MovieActivityPanel';
+import FinancialReportsPanel from './FinancialReportsPanel';
 
 function TabContainer(props) {
     return (
@@ -65,7 +66,7 @@ class NavTabs extends React.Component {
                         <UserActivityPanel/>
                         </TabContainer>}
                     {value === 1 && <TabContainer><MovieActivityPanel/></TabContainer>}
-                    {value === 2 && <TabContainer>Page Three</TabContainer>}
+                    {value === 2 && <TabContainer><FinancialReportsPanel/></TabContainer>}
                 </div>
             </NoSsr>
         );
