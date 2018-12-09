@@ -9,6 +9,15 @@ export function newMovie(movie){
     }
 }
 
+export function filterMovies(movie){
+    return dispatch => {
+        return axios.post('/api/movie/filter',movie).then((response)=>{
+            console.log("addMovie"+JSON.stringify(response));
+            dispatch(allMovies(response.data));
+        });
+    }
+}
+
 export function rateNow(ratingDetails){
     return dispatch => {
         return axios.post('/api/movie/review',ratingDetails).then((response)=>{
@@ -60,6 +69,7 @@ export function getAllMovies() {
         });
     };
 }
+
 
   export function getTopTenMovies() {
     return dispatch => {
