@@ -133,16 +133,16 @@ public class MovieService {
         return movieRepository.findDistinctByGenreIsIn(genres);
     }
 
-    public List<Movie> filterByReleaseYears(List<Integer> releaseYears){
-        return movieRepository.findDistinctByReleaseYearIsIn(releaseYears);
+    public List<Movie> filterByReleaseYears(Integer releaseYear){
+        return movieRepository.findDistinctByReleaseYearIs(releaseYear);
     }
 
-    public List<Movie> filterByActors(List<String> actorNames){
-        return new ArrayList<>(actorRepository.findMoviesByActors(actorNames));
+    public List<Movie> filterByActors(String actorName){
+        return new ArrayList<>(actorRepository.findMoviesByActors(actorName));
     }
 
-    public List<Movie> filterByDirectors(List<String> directorNames){
-        return new ArrayList<>(directorRepository.findMoviesByDirectors(directorNames));
+    public List<Movie> filterByDirectors(String directorName){
+        return new ArrayList<>(directorRepository.findMoviesByDirector(directorName));
     }
 
     public List<Movie> filterByMpaaRatings(List<MpaaRating> mpaaRatings){
@@ -171,20 +171,20 @@ public class MovieService {
         }
 
         Set<Movie> releaseYearMovies = new HashSet<>();
-        if(movieFilter.getReleaseYears() != null && !movieFilter.getReleaseYears().isEmpty()){
-            releaseYearMovies.addAll(filterByReleaseYears(movieFilter.getReleaseYears()));
+        if(movieFilter.getReleaseYear() != null){
+            releaseYearMovies.addAll(filterByReleaseYears(movieFilter.getReleaseYear()));
             movieSets.add(releaseYearMovies);
         }
 
         Set<Movie> actorMovies = new HashSet<>();
-        if(movieFilter.getActors() != null && !movieFilter.getActors().isEmpty()){
-            actorMovies.addAll(filterByActors(movieFilter.getActors()));
+        if(movieFilter.getActor()!=null){
+            actorMovies.addAll(filterByActors(movieFilter.getActor()));
             movieSets.add(actorMovies);
         }
 
         Set<Movie> directorMovies = new HashSet<>();
-        if(movieFilter.getDirectors() != null && !movieFilter.getDirectors().isEmpty()){
-            directorMovies.addAll(filterByDirectors(movieFilter.getDirectors()));
+        if(movieFilter.getDirector() != null && !movieFilter.getDirector().isEmpty()){
+            directorMovies.addAll(filterByDirectors(movieFilter.getDirector()));
             movieSets.add(directorMovies);
         }
 

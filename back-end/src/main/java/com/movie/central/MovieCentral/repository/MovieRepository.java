@@ -23,7 +23,7 @@ public interface MovieRepository extends JpaRepository<Movie, Long>{
 
     List<Movie> findDistinctByGenreIsIn(List<Genre> genre);
 
-    List<Movie> findDistinctByReleaseYearIsIn(List<Integer> releaseYears);
+    List<Movie> findDistinctByReleaseYearIs(Integer releaseYears);
 
     List<Movie> findDistinctByMpaaRatingIsIn(List<MpaaRating> mpaaRatings);
 

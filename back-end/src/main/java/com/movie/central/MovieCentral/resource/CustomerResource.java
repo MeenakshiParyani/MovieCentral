@@ -56,7 +56,12 @@ public class CustomerResource {
             String email = input.get("email");
             String screenName = input.get("screenName");
             String password = input.get("password");
-            AuthType authType = AuthType.getByName(input.get("authType"));
+            AuthType authType;
+            if(input.get("authType")!=null)
+                authType = AuthType.getByName(input.get("authType"));
+            else
+                authType = AuthType.LOCAL;
+
             password = bCryptPasswordEncoder.encode(password);
             Customer customer = Customer.builder().name(name).email(email).screenName(screenName)
                     .password(password).authType(authType).registrationDateTime(LocalDateTime.now(ZoneId.systemDefault())).build();

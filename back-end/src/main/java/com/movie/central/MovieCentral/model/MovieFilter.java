@@ -14,11 +14,11 @@ public class MovieFilter implements Serializable{
 
     List<Genre> genres;
 
-    List<Integer> releaseYears;
+    Integer releaseYear;
 
-    List<String> actors;
+    String actor;
 
-    List<String> directors;
+    String director;
 
     List<MpaaRating> mpaaRatings;
 
