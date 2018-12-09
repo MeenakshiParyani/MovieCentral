@@ -19,7 +19,8 @@ export const data = (
       break;
 
     case "REGISTER_USER":
-      console.log("In Register user" + action.payload);
+      console.log("In Register user");
+      console.log(action.payload);
       state = {
         ...state,
         message: action.payload
@@ -27,7 +28,17 @@ export const data = (
       break;
 
     case "LOGIN_USER":
-      console.log("In Register user" + action.payload);
+      console.log("In Login user");
+      console.log(action.payload);
+      state = {
+        ...state,
+        message: action.payload
+      };
+      break;
+
+    case "USER_LOGGED_IN":
+      console.log("In Is User Logged In");
+      console.log(action.payload);
       state = {
         ...state,
         message: action.payload
@@ -54,7 +65,7 @@ export const data = (
           customersByNameList: action.payload.result
           };
           break;
-          
+
       case "RESET_CUSTOMER_LIST":
       console.log(action.payload.result);
         state = {

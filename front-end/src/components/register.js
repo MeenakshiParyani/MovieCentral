@@ -32,16 +32,39 @@ class Register extends React.Component {
 
   register(e) {
     e.preventDefault();
-    this.props.registerUser(this.state);
+    this.props.registerUser(this.state)
+    .then( res => {
+
+        console.log(res)
+        if(res &&  res.data && res.data.message)
+          alert(res.response.data.message)
+
+        this.setState({
+            redirectLogin: true
+         });
+
+    })
+    .catch(err => {
+      console.log(err)
+      if(err &&  err.data && err.data.message)
+        alert(err.response.data.message)
+      else
+        alert("Error registering user")
+    });
   }
 
   render() {
     const { customerData } = this.props;
 
+    if(this.state.redirectLogin)
+      return (<Redirect to={{
+          pathname: '/login'
+    }} />)
+
     return (
       <div style={styles.container}>
         <h1>Register User</h1>
-        <form style={{ marginBottom: "40px" }}>
+        <form style={{ marginBottom: "40px" }} noValidate autoComplete="off">
           <TextField
             id="outlined-name"
             label="Name"
@@ -51,13 +74,16 @@ class Register extends React.Component {
             margin="normal"
             variant="outlined"
             style={{ width: 500 }}
+
           />
           <br />
           <TextField
             id="outlined-name"
             label="Email"
+            required
             value={this.state.email}
             name="email"
+            type = "email"
             onChange={this.onChange.bind(this)}
             margin="normal"
             style={{ width: 500 }}
@@ -73,17 +99,21 @@ class Register extends React.Component {
             margin="normal"
             style={{ width: 500 }}
             variant="outlined"
+            fullWidth
           />
           <br />
           <TextField
             id="outlined-name"
             label="Password"
+            required
             value={this.state.password}
+            type="password"
             name="password"
             onChange={this.onChange.bind(this)}
             margin="normal"
             style={{ width: 500 }}
             variant="outlined"
+            fullWidth
           />
           <br />
 

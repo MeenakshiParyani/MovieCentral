@@ -41,20 +41,31 @@ export function getCustomerByName(name) {
         params: { name: name }
       }).then(
 	  (response) => {
-			dispatch(customerByNameList(response.data));  
+			dispatch(customerByNameList(response.data));
 		},
 		(error) => {
-			dispatch(resetCustomerList()); 
+			dispatch(resetCustomerList());
 		}
 	);
   };
 }
 
-
 export function registerUser(user) {
   return dispatch => {
     return axios.post("/api/customer/register", user).then(response => {
-      dispatch(register(response.data));
+      console.log(response)
+      dispatch(register(response));
+      return response;
+    });
+  };
+}
+
+export function getIsLoggedIn(){
+  return dispatch => {
+    return axios.get("/api/customer/isLoggedIn").then(response => {
+      console.log(response);
+      dispatch(isLoggedIn(response));
+      return response;
     });
   };
 }
@@ -62,7 +73,8 @@ export function registerUser(user) {
 export function loginUser(user) {
   return dispatch => {
     return axios.post("/api/customer/login", user).then(response => {
-      dispatch(register(response.data));
+      dispatch(login(response));
+      return response;
     });
   };
 }
@@ -93,6 +105,20 @@ export function customerPlayHistory(res) {
 export function register(res) {
   return {
     type: "REGISTER_USER",
+    payload: res
+  };
+}
+
+export function isLoggedIn(res) {
+  return {
+    type: "USER_LOGGED_IN",
+    payload: res
+  };
+}
+
+export function login(res) {
+  return {
+    type: "LOGIN_USER",
     payload: res
   };
 }

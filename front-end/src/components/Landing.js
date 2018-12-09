@@ -14,6 +14,10 @@ import Divider from '@material-ui/core/Divider';
 import Select from 'react-select';
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
+import * as getCustomerData from '../actions/customerAction';
+import { Redirect } from "react-router-dom";
+import MenuItem from "@material-ui/core/MenuItem";
+import Menu from "@material-ui/core/Menu";
 
 
 const styles = {
@@ -90,7 +94,27 @@ class Landing extends React.Component{
 
     componentWillMount(){
         //let movie_id = this.props.match.params.movie_id;
-        this.props.getAllMovies();
+        this.handleIsLoggedIn();
+        this.props.actions.movieAction.getAllMovies();
+
+
+    }
+
+    handleIsLoggedIn(){
+      this.props.actions.customerAction.getIsLoggedIn()
+      .then(res => {
+        // do nothing
+        this.setState({
+          redirectLogin : false
+        })
+      })
+      .catch(err => {
+        // redirect to login
+        this.setState({
+          redirectLogin : true
+        })
+
+      })
     }
 
     handleChange = (selectedOption) => {
@@ -153,6 +177,11 @@ class Landing extends React.Component{
         let outputCheckboxes = this.state.mpaaRatingData.map(function(string, i){
             return (<div class="inline-block"><CheckBox value={string.value} id={'string_' + i} onChange={this.changeEvent.bind(this)} /><label class="label-checkbox" htmlFor={'string_' + i}>{string.value}</label></div>)
         }, this);
+
+        if(this.state.redirectLogin)
+          return (<Redirect to={{
+              pathname: '/login'
+        }} />)
 
         return(
             <div  style={styles.container}>
@@ -296,7 +325,11 @@ function mapStateToProps(state){
 }
 
 function mapDispatchToProps(dispatch){
-    return bindActionCreators(getData,dispatch)
-
+  return {
+    actions: {
+      movieAction: bindActionCreators(getData, dispatch),
+      customerAction : bindActionCreators(getCustomerData, dispatch)
+    }
+  }
 }
 export default connect(mapStateToProps,mapDispatchToProps)(Landing);

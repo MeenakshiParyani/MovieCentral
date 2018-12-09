@@ -16,6 +16,7 @@ import AccountCircle from "@material-ui/icons/AccountCircle";
 import MailIcon from "@material-ui/icons/Mail";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
+import { Redirect } from "react-router-dom";
 
 const styles = theme => ({
   root: {
@@ -90,7 +91,9 @@ const styles = theme => ({
 class PrimarySearchAppBar extends React.Component {
   state = {
     anchorEl: null,
-    mobileMoreAnchorEl: null
+    mobileMoreAnchorEl: null,
+    shouldRedirectToLogin: false,
+    shouldRedirectToRegister: false
   };
 
   handleProfileMenuOpen = event => {
@@ -101,6 +104,18 @@ class PrimarySearchAppBar extends React.Component {
     this.setState({ anchorEl: null });
     this.handleMobileMenuClose();
   };
+
+  handleSignupRedirect = () => {
+    this.setState({
+      shouldRedirectToRegister: true
+    });
+  }
+
+  handleLoginRedirect = () => {
+    this.setState({
+      shouldRedirectToLogin: true
+    });
+  }
 
   handleMobileMenuOpen = event => {
     this.setState({ mobileMoreAnchorEl: event.currentTarget });
@@ -116,6 +131,15 @@ class PrimarySearchAppBar extends React.Component {
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
+    if(this.state.shouldRedirectToLogin)
+        return (<Redirect to={{
+            pathname: '/login'
+    }} />)
+
+    if(this.state.shouldRedirectToRegister)
+        return (<Redirect to={{
+            pathname: '/register'
+    }} />)
     const renderMenu = (
       <Menu
         anchorEl={anchorEl}
@@ -124,8 +148,8 @@ class PrimarySearchAppBar extends React.Component {
         open={isMenuOpen}
         onClose={this.handleMenuClose}
       >
-        <MenuItem onClick={this.handleMenuClose}>Login</MenuItem>
-        <MenuItem onClick={this.handleMenuClose}>Signup</MenuItem>
+        <MenuItem onClick={this.handleLoginRedirect}>Login</MenuItem>
+        <MenuItem onClick={this.handleSignupRedirect}>Signup</MenuItem>
       </Menu>
     );
 

@@ -18,10 +18,32 @@ const styles = {
   }
 };
 
+
+
 class Login extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+
+    };
+  }
+
+  handleIsLoggedIn(){
+    this.props.getIsLoggedIn()
+    .then(res => {
+      // do nothing
+      this.setState({
+        redirectLogin : false,
+        redirectLanding: true
+      })
+    })
+    .catch(err => {
+      // redirect to login
+      this.setState({
+        redirectLogin : true
+      })
+
+    })
   }
 
   onChange(e) {
@@ -32,11 +54,35 @@ class Login extends React.Component {
 
   login(e) {
     e.preventDefault();
-    this.props.loginUser(this.state);
+    this.props.loginUser(this.state)
+    .then(res => {
+      console.log(this.state.message);
+      this.setState({
+          redirectLanding: true
+       });
+    })
+    .catch(err => {
+      console.log(this.state.message);
+      if(err &&  err.response && err.response.data)
+        alert(err.response.data.message)
+      else
+        alert("Error logging in user")
+    });
+
+  }
+
+  componentWillMount(){
+    this.handleIsLoggedIn();
   }
 
   render() {
     const { loginData } = this.props;
+
+    if(this.state.redirectLanding)
+        return (<Redirect to={{
+            pathname: '/landing'
+        }} />)
+
 
     return (
       <div style={styles.container}>
