@@ -12,6 +12,8 @@ import Landing from "./components/Landing";
 import CustomerPlayHistory from './components/Material-UI/CustomerPlayHistory';
 import ViewMovieDetails from './components/Material-UI/ViewMovieDetails';
 import SubscribePayPerView from './components/SubscribePayPerView';
+import Subscription from './components/Subscription';
+import temporaryLogic from './components/temporaryLogic';
 
 class App extends Component {
   render() {
@@ -46,6 +48,8 @@ class App extends Component {
           <Route path={`/getPlayHistory/:user_id`} component={CustomerPlayHistory}></Route>
         		<Route path={`/movie-details/:movie_id`} component={ViewMovieDetails}></Route>
             <Route path={"/payperview/:movie_id"} component={SubscribePayPerView} />
+            <Route path={"/subscribe"} component={Subscription}/>
+            <Route path={"/logic"} component={temporaryLogic}/>
         </div>
       </BrowserRouter>
     );
