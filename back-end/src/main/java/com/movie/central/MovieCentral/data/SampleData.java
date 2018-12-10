@@ -15,6 +15,7 @@ import com.movie.central.MovieCentral.repository.MovieRepository;
 
 import com.movie.central.MovieCentral.repository.*;
 
+import com.movie.central.MovieCentral.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -26,6 +27,7 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class SampleData implements ApplicationRunner {
@@ -44,6 +46,9 @@ public class SampleData implements ApplicationRunner {
 
     @Autowired
     private CustomerRepository customerRepository;
+
+    @Autowired
+    private CustomerRatingRepository customerRatingRepository;
 
     private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
@@ -164,6 +169,7 @@ public class SampleData implements ApplicationRunner {
 
         playHistoryRepository.save(PlayHistory.builder().customer(customer).movie(movie).playTime(LocalDateTime.now(ZoneId.systemDefault())).build());
         playHistoryRepository.save(PlayHistory.builder().customer(customer).movie(movie).playTime(LocalDateTime.now(ZoneId.systemDefault())).build());
+
     }
 
     public void addPlayHistory2(){
@@ -178,8 +184,12 @@ public class SampleData implements ApplicationRunner {
 
         playHistoryRepository.save(PlayHistory.builder().customer(customer).movie(movie).playTime(LocalDateTime.now(ZoneId.systemDefault()).minusMonths(1)).build());
         playHistoryRepository.save(PlayHistory.builder().customer(customer).movie(movie).playTime(LocalDateTime.now(ZoneId.systemDefault()).minusMonths(1)).build());
+
     }
 
 
 
 }
+
+
+

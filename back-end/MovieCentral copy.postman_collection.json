@@ -33,7 +33,11 @@
 		"f9b15f60-9ad6-0242-1886-dc15322eb976",
 		"f1a6ed0c-a7d7-490d-0d5a-1b5275fe07ee",
 		"1bf60407-bf02-d474-68ae-1260f8c21d13",
-		"0ba8dfe7-fdd4-2598-d64e-17f1827f7ca5"
+		"0ba8dfe7-fdd4-2598-d64e-17f1827f7ca5",
+		"f98711d8-7944-022b-2540-25f1df0ae5c4",
+		"2e2a2c82-df78-4519-bd27-6703bd1355cb",
+		"548de643-b107-39bb-e9d9-d69cc4da3d45",
+		"085a80ad-1baf-dd1a-39cf-2da3235ade95"
 	],
 	"folders": [],
 	"folders_order": [],
@@ -64,7 +68,7 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1544316822813,
+			"time": 1544396107103,
 			"name": "Filter Movies By random filters",
 			"description": "",
 			"collectionId": "5c0bb5c1-3a05-9456-27f7-f594c1a87c59",
@@ -131,6 +135,27 @@
 			"responses": [],
 			"collection_id": "5c0bb5c1-3a05-9456-27f7-f594c1a87c59",
 			"rawModeData": "{\n\t\"genres\" : [],\n\t\"releaseYears\" : [],\n\t\"actors\" : [\"Ranbir Kapoor\", \"Ranveer Singh\", \"Kate Winslet\"],\n\t\"directors\" : [],\n\t\"mpaaRatings\" : [],\n\t\"averageRatings\" : null\n}"
+		},
+		{
+			"id": "085a80ad-1baf-dd1a-39cf-2da3235ade95",
+			"headers": "",
+			"headerData": [],
+			"url": "http://localhost:8080/api/movie/scoreboard/mostPopularMovies",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": null,
+			"dataMode": "params",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1544402901073,
+			"name": "mostPopularMovies",
+			"description": "",
+			"collectionId": "5c0bb5c1-3a05-9456-27f7-f594c1a87c59",
+			"responses": []
 		},
 		{
 			"id": "0ba8dfe7-fdd4-2598-d64e-17f1827f7ca5",
@@ -246,6 +271,27 @@
 			"collection_id": "5c0bb5c1-3a05-9456-27f7-f594c1a87c59"
 		},
 		{
+			"id": "2e2a2c82-df78-4519-bd27-6703bd1355cb",
+			"headers": "",
+			"headerData": [],
+			"url": "http://localhost:8080/api/movie/no_of_play_per_movie",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": null,
+			"dataMode": "params",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1544396293981,
+			"name": "no_of_play_per_movie",
+			"description": "",
+			"collectionId": "5c0bb5c1-3a05-9456-27f7-f594c1a87c59",
+			"responses": []
+		},
+		{
 			"id": "2e58ea39-86b0-0565-2402-fc12fc1c356c",
 			"headers": "Content-Type: application/json\n",
 			"headerData": [
@@ -297,13 +343,12 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1543920749811,
+			"time": 1544403337134,
 			"name": "Review a movie",
 			"description": "",
 			"collectionId": "5c0bb5c1-3a05-9456-27f7-f594c1a87c59",
 			"responses": [],
-			"collection_id": "5c0bb5c1-3a05-9456-27f7-f594c1a87c59",
-			"rawModeData": "{\n\t\"customerId\" : \"1\",\n\t\"movieId\" : \"4\",\n\t\"rating\" : \"1\",\n\t\"comment\" : \"Very nice movie!!!\"\n}"
+			"rawModeData": "{\n\t\"customerId\" : \"1\",\n\t\"movieId\" : \"5\",\n\t\"rating\" : \"5\",\n\t\"comment\" : \"Very nice movie!!!\"\n}"
 		},
 		{
 			"id": "37e493a8-9a1e-8515-0b38-14952ed593c1",
@@ -425,6 +470,35 @@
 			"responses": [],
 			"collection_id": "5c0bb5c1-3a05-9456-27f7-f594c1a87c59",
 			"rawModeData": "{\n\t\"genres\" : [],\n\t\"releaseYears\" : [],\n\t\"actors\" : [],\n\t\"directors\" : [],\n\t\"mpaaRatings\" : [\"G\", \"PG\"],\n\t\"averageRating\" : null\n}"
+		},
+		{
+			"id": "548de643-b107-39bb-e9d9-d69cc4da3d45",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/api/movie/scoreboard/highlyRatedMovies",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": [],
+			"dataMode": "raw",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1544398763539,
+			"name": "Top10highlyRatedMoviesInLastMonth",
+			"description": "",
+			"collectionId": "5c0bb5c1-3a05-9456-27f7-f594c1a87c59",
+			"responses": [],
+			"rawModeData": "{\n\t\n}"
 		},
 		{
 			"id": "5b096d7f-76a8-436f-31ca-ab31ec6257fe",
@@ -938,6 +1012,28 @@
 			"variables": null,
 			"collection_id": "5c0bb5c1-3a05-9456-27f7-f594c1a87c59",
 			"rawModeData": "{\n  \"month\" : \"12\",\n  \"year\" : \"2018\"\n}"
+		},
+		{
+			"id": "f98711d8-7944-022b-2540-25f1df0ae5c4",
+			"headers": "Content-Type: application/json\n",
+			"url": "http://localhost:8080/api/movie/filter",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"name": "Filter Movies By random filters copy",
+			"description": "",
+			"sandboxFiles": "",
+			"sendMethod": "xhr",
+			"time": 1544396115238,
+			"responses": [],
+			"collectionId": "5c0bb5c1-3a05-9456-27f7-f594c1a87c59",
+			"rawModeData": "{\n\t\"genres\" : [\"\"],\n\t\"releaseYears\" : [2013],\n\t\"actors\" : [],\n\t\"directors\" : [],\n\t\"mpaaRatings\" : [],\n\t\"averageRating\" :0.0\n}"
 		},
 		{
 			"id": "f9b15f60-9ad6-0242-1886-dc15322eb976",
