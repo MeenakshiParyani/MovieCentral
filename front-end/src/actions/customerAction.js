@@ -22,45 +22,47 @@ export function getCustomerInfo(customer_id) {
   };
 }
 
-
-
 export function getPlayHistory(customer_id) {
   return dispatch => {
-    return axios.get('/api/customer/get-customer-watch-history',{
+    return axios
+      .get("/api/customer/get-customer-watch-history", {
         params: { id: customer_id }
-      }).then(response => {
-		  console.log(response.data);
-      dispatch(customerPlayHistory(response.data));
-    });
+      })
+      .then(response => {
+        console.log(response.data);
+        dispatch(customerPlayHistory(response.data));
+      });
   };
 }
 
 export function getCustomerByName(name) {
   return dispatch => {
-    return axios.get('/api/customer/getCustomerByName',{
+    return axios
+      .get("/api/customer/getCustomerByName", {
         params: { name: name }
-      }).then(
-	  (response) => {
-			dispatch(customerByNameList(response.data));
-		},
-		(error) => {
-			dispatch(resetCustomerList());
-		}
-	);
+      })
+      .then(
+        response => {
+          dispatch(customerByNameList(response.data));
+        },
+        error => {
+          dispatch(resetCustomerList());
+        }
+      );
   };
 }
 
 export function registerUser(user) {
   return dispatch => {
     return axios.post("/api/customer/register", user).then(response => {
-      console.log(response)
-      dispatch(register(response));
+      console.log(response.data);
+      dispatch(register(response.data));
       return response;
     });
   };
 }
 
-export function getIsLoggedIn(){
+export function getIsLoggedIn() {
   return dispatch => {
     return axios.get("/api/customer/isLoggedIn").then(response => {
       console.log(response);
@@ -78,8 +80,6 @@ export function loginUser(user) {
     });
   };
 }
-
-
 
 export function topTenCustomers(res) {
   return {
@@ -123,17 +123,16 @@ export function login(res) {
   };
 }
 
-
-export function customerByNameList(res){
-  return{
-      type:"CUSTOMER_BY_NAME_LIST",
-      payload:res
-  }
+export function customerByNameList(res) {
+  return {
+    type: "CUSTOMER_BY_NAME_LIST",
+    payload: res
+  };
 }
 
-export function resetCustomerList(){
-  return{
-      type:"RESET_CUSTOMER_LIST",
-      payload:"No Data"
-  }
+export function resetCustomerList() {
+  return {
+    type: "RESET_CUSTOMER_LIST",
+    payload: "No Data"
+  };
 }

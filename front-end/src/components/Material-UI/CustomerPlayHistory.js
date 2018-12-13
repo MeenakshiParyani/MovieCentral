@@ -27,7 +27,8 @@ class CustomerPlayHistory extends React.Component {
         super(props);
         this.state= {
             moviePlayingHistory: [],
-			userId:""
+			userId:"",
+			redirectLogin=""
         }
     }
 
@@ -46,13 +47,37 @@ class CustomerPlayHistory extends React.Component {
     }
     componentWillMount(){
         console.log(this.props);
-        this.props.getPlayHistory(this.props.match.params.user_id);
+		this.props.getPlayHistory(this.props.match.params.user_id);
+		this.handleIsLoggedIn();
         //this.props.getTopTenMovies();
         //this.props.getMovieDetails(movie_id);
     }
-
+	handleIsLoggedIn() {
+		this.props
+		  .getIsLoggedIn()
+		  .then(res => {
+			// do nothing
+			this.setState({
+			  redirectLogin: false
+			});
+		  })
+		  .catch(err => {
+			// redirect to login
+			this.setState({
+			  redirectLogin: true
+			});
+		  });
+	  }
 
     render() {
+		if (this.state.redirectLogin)
+      return (
+        <Redirect
+          to={{
+            pathname: "/login"
+          }}
+        />
+      );
 		const { customerData } = this.props;
 
         return (
@@ -106,7 +131,8 @@ function mapStateToProps(state){
 }
 
 function mapDispatchToProps(dispatch){
-    return bindActionCreators(getData,dispatch)
+    return bindActionCreators(
+		Object.assign({}, getData, getCustomerData),dispatch)
 
 }
 

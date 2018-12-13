@@ -32,34 +32,35 @@ class Register extends React.Component {
 
   register(e) {
     e.preventDefault();
-    this.props.registerUser(this.state)
-    .then( res => {
-
-        console.log(res)
-        if(res &&  res.data && res.data.message)
-          alert(res.response.data.message)
+    this.props
+      .registerUser(this.state)
+      .then(res => {
+        console.log("Response: ", res);
+        if (res.data.message) alert(res.data.message);
 
         this.setState({
-            redirectLogin: true
-         });
-
-    })
-    .catch(err => {
-      console.log(err)
-      if(err &&  err.data && err.data.message)
-        alert(err.response.data.message)
-      else
-        alert("Error registering user")
-    });
+          redirectLogin: true
+        });
+      })
+      .catch(err => {
+        console.log(err);
+        if (err && err.data && err.data.message)
+          alert(err.response.data.message);
+        else alert("Error registering user");
+      });
   }
 
   render() {
     const { customerData } = this.props;
 
-    if(this.state.redirectLogin)
-      return (<Redirect to={{
-          pathname: '/login'
-    }} />)
+    if (this.state.redirectLogin)
+      return (
+        <Redirect
+          to={{
+            pathname: "/login"
+          }}
+        />
+      );
 
     return (
       <div style={styles.container}>
@@ -74,7 +75,6 @@ class Register extends React.Component {
             margin="normal"
             variant="outlined"
             style={{ width: 500 }}
-
           />
           <br />
           <TextField
@@ -83,7 +83,7 @@ class Register extends React.Component {
             required
             value={this.state.email}
             name="email"
-            type = "email"
+            type="email"
             onChange={this.onChange.bind(this)}
             margin="normal"
             style={{ width: 500 }}
