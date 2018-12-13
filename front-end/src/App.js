@@ -13,6 +13,7 @@ import CustomerPlayHistory from './components/Material-UI/CustomerPlayHistory';
 import ViewMovieDetails from './components/Material-UI/ViewMovieDetails';
 import SubscribePayPerView from './components/SubscribePayPerView';
 import Subscription from './components/Subscription';
+import MovieScoreBoard from './components/Material-UI/MovieScoreBoard';
 import temporaryLogic from './components/temporaryLogic';
 
 class App extends Component {
@@ -41,6 +42,7 @@ class App extends Component {
           </PrimarySearchAppBar>
 
           <Route path={`/addMovie`} component={AddNewMovie} />
+          <Route path={`/editMovie/:movie_id`} component={AddNewMovie} />
           <Route path={`/adminDashboard`} component={AdminDashboard} />
           <Route path={"/register"} component={Register} />
           <Route path={"/login"} component={Login} />
@@ -49,6 +51,7 @@ class App extends Component {
         		<Route path={`/movie-details/:movie_id`} component={ViewMovieDetails}></Route>
             <Route path={"/payperview/:movie_id"} component={SubscribePayPerView} />
             <Route path={"/subscribe"} component={Subscription}/>
+            <Route path={"/movieScoreBoard"} component={MovieScoreBoard}/>
             <Route path={"/logic"} component={temporaryLogic}/>
         </div>
       </BrowserRouter>

@@ -172,4 +172,22 @@ public class CustomerService {
         return playDetailsNew;
     }
 
+    public List<Customer> getCustomerByName(String name) throws Exception{
+        List<Customer> customerList = customerRepository.findByNameContaining(name);
+        if(customerList.size()>0){
+            List<Customer> responseCustomerList = new ArrayList<Customer>();
+            //List<PlayHistory> playHistory = playHistoryRepository.findMovieAndPlayHistoryByCustomer_IdCheck(customerId);
+
+            for (Customer customer: customerList) {
+                Customer newCustomer = new Customer();
+                newCustomer = customer;
+                newCustomer.setPassword("");
+                responseCustomerList.add(newCustomer);
+            }
+            return responseCustomerList;
+        }else{
+            throw new MovieCentralException(Error.USER_NOT_FOUND);
+        }
+    }
+
 }

@@ -59,7 +59,7 @@ class CustomerPlayHistory extends React.Component {
             <div style={styles.container} class="mt40">
 			<h2 >Movie Playing History</h2>
 			<div>  
-				{this.state.moviePlayingHistory.map((movieObj,i) => {
+				{this.state.moviePlayingHistory && this.state.moviePlayingHistory.map((movieObj,i) => {
 						return (
 							<div  style={{ display: 'inline-flex' }}  class="play-history-tile">
 							<div>

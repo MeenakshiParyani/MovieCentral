@@ -155,7 +155,8 @@ class ViewMovieDetails extends React.Component {
 						<img
 								  className="img-fluid img-thumbnail"
 								  src={this.state.movieInfo.imageUrl}
-								  alt="http://placehold.it/400x300"
+								  alt="https://rawapk.com/wp-content/uploads/2018/09/Movie-HD-Icon.png"
+								  onError={(e)=>{e.target.onerror = null; e.target.src="https://rawapk.com/wp-content/uploads/2018/09/Movie-HD-Icon.png"}}
 								  style={{
 									width: '310px',
 									height: '300px'

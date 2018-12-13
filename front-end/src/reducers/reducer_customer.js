@@ -46,6 +46,7 @@ export const data = (
       break;
 
     case "MOVIE_PLAYING_HISTORY":
+    console.log(action.payload);
       state = {
         ...state,
         moviePlayingHistory: action.payload.result
@@ -55,7 +56,7 @@ export const data = (
     console.log(action.payload.result);
       state = {
         ...state,
-        topTenMovies: action.payload.result
+        topTenCustomers: action.payload.result
       };
       break;
       case "CUSTOMER_BY_NAME_LIST":

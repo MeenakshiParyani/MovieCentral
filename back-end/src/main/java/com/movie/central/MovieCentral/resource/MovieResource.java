@@ -221,6 +221,16 @@ public class MovieResource {
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/getMovieByID", method = RequestMethod.GET)
+    public ResponseEntity<?> getMovieById(@RequestParam Long movieId, HttpSession session)
+            throws Exception{
+        Movie movie = movieService.getMovieById(movieId);
+
+        Map<String,Movie> response = new HashMap<>();
+        response.put("result" , movie);
+        return new ResponseEntity<Object>(response, HttpStatus.OK);
+    }
+
 
 
 }

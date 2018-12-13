@@ -18,6 +18,8 @@ class AddNewMovie extends React.Component{
 	constructor(props){
         super(props);
         this.state={
+            id:"",
+            editFlow:false,
             title:"",
             synopsys:"",
             genre:"",
@@ -27,9 +29,9 @@ class AddNewMovie extends React.Component{
 			movieUrl:"",
 			averageRating:"",
 			country:"",
-			type:"",
+			type:"PAY_PER_VIEW",
 			price:"",
-			mpaaRating:"",
+			mpaaRating:"G",
             actors:"",
             status:"ACTIVE",
 			director:"",
@@ -68,32 +70,39 @@ class AddNewMovie extends React.Component{
 
 	    componentWillReceiveProps(nextProps){
         console.log(nextProps);
-        if(nextProps.moviesData){
-            if(nextProps.moviesData.data.movieInfo){
+        if(nextProps.movieData){
+            if(nextProps.movieData.data.movieInfo){
                 this.setState ({
-                    title:nextProps.moviesData.data.movieInfo.title,
-                    synopsys:nextProps.moviesData.data.movieInfo.synopsys,
-                    genre:nextProps.moviesData.data.movieInfo.genre,
-                    releaseYear:nextProps.moviesData.data.movieInfo.releaseYear,
-                    studio:nextProps.moviesData.data.movieInfo.studio,
-                    imageUrl:nextProps.moviesData.data.movieInfo.imageUrl,
-                    movieUrl:nextProps.moviesData.data.movieInfo.movieUrl,
-                    averageRating:nextProps.moviesData.data.movieInfo.averageRating,
-                    country:nextProps.moviesData.data.movieInfo.country,
-                    type:nextProps.moviesData.data.movieInfo.type,
-					price:nextProps.moviesData.data.movieInfo.price,
-					mpaaRating:nextProps.moviesData.data.movieInfo.mpaaRating,
-					actors:nextProps.moviesData.data.movieInfo.actors,
-                    director:nextProps.moviesData.data.movieInfo.director,
-                    status:nextProps.moviesData.data.movieInfo.status
+                    id:nextProps.movieData.data.movieInfo.id,
+                    title:nextProps.movieData.data.movieInfo.title,
+                    synopsys:nextProps.movieData.data.movieInfo.synopsys,
+                    genre:nextProps.movieData.data.movieInfo.genre,
+                    releaseYear:nextProps.movieData.data.movieInfo.releaseYear,
+                    studio:nextProps.movieData.data.movieInfo.studio,
+                    imageUrl:nextProps.movieData.data.movieInfo.imageUrl,
+                    movieUrl:nextProps.movieData.data.movieInfo.movieUrl,
+                    averageRating:nextProps.movieData.data.movieInfo.averageRating,
+                    country:nextProps.movieData.data.movieInfo.country,
+                    type:nextProps.movieData.data.movieInfo.type,
+					price:nextProps.movieData.data.movieInfo.price,
+					mpaaRating:nextProps.movieData.data.movieInfo.mpaaRating,
+					actors:nextProps.movieData.data.movieInfo.actors.map(p => p.name),
+                    director:nextProps.movieData.data.movieInfo.director.name,
+                    status:nextProps.movieData.data.movieInfo.status
                 });
             }
         }
     }
 	
 	    componentWillMount(){
-        //let movie_id = this.props.match.params.movie_id;
-        //this.props.getMovieDetails(movie_id);
+        
+        if(this.props.match.params.movie_id){
+            let movie_id = this.props.match.params.movie_id;
+            this.setState({
+                editFlow : true
+            });
+            this.props.getMovieInfo(movie_id);
+        }
     }
 	
 	onChange(e){
@@ -106,37 +115,75 @@ class AddNewMovie extends React.Component{
 	addMovie(e){
         e.preventDefault();
         //alert("wo");
-		var movie = {
-		"title":this.state.title,
-		"genre":this.state.genre,
-		"releaseYear":this.state.releaseYear,
-		"studio":this.state.studio,
-		"synopsys":this.state.synopsys,
-		"imageUrl":this.state.imageUrl,
-		"movieUrl":this.state.movieUrl,
-		"averageRating":this.state.averageRating,
-		"country":this.state.country,
-		"type":this.state.type,
-		"price":this.state.price,
-		"mpaaRating":this.state.mpaaRating,
-		"actors":this.state.actors,
-		"director":this.state.director,
-		"status":"ACTIVE"
-		};
+        
+        
+        if(this.state.editFlow && this.state.editFlow){
+            // const actStr = this.state.actors.map((actor) => actor);
+            // alert(actStr);
+            var movie = {
+                "id":this.state.id,
+            "title":this.state.title,
+            "genre":this.state.genre,
+            "releaseYear":this.state.releaseYear,
+            "studio":this.state.studio,
+            "synopsys":this.state.synopsys,
+            "imageUrl":this.state.imageUrl,
+            "movieUrl":this.state.movieUrl,
+            "averageRating":this.state.averageRating,
+            "country":this.state.country,
+            "type":this.state.type,
+            "price":this.state.price,
+            "mpaaRating":this.state.mpaaRating,
+            "actors":this.state.actors.toString(),
+            "director":this.state.director,
+            "status":"ACTIVE"
+            };
+            this.props.editMovie(movie).then(
+                (data) => {
+                    this.setState({
+                        redirectHome: true
+                     });
+                },
+                (err) => {
+                    console.log(err.response);
+                    this.setState({
+                        errors:err.response.data.message
+                });
+                }
+            );
+        }else{
+            var movie = {
+            "title":this.state.title,
+            "genre":this.state.genre,
+            "releaseYear":this.state.releaseYear,
+            "studio":this.state.studio,
+            "synopsys":this.state.synopsys,
+            "imageUrl":this.state.imageUrl,
+            "movieUrl":this.state.movieUrl,
+            "averageRating":this.state.averageRating,
+            "country":this.state.country,
+            "type":this.state.type,
+            "price":this.state.price,
+            "mpaaRating":this.state.mpaaRating,
+            "actors":this.state.actors,
+            "director":this.state.director,
+            "status":"ACTIVE"
+            };
+            this.props.newMovie(movie).then(
+                (data) => {
+                    this.setState({
+                        redirectHome: true
+                     });
+                },
+                (err) => {
+                    console.log(err.response);
+                    this.setState({
+                        errors:err.response.data.message
+                });
+                }
+            );
+        }
 		
-		this.props.newMovie(movie).then(
-		(data) => {
-            this.setState({
-                redirectHome: true
-             });
-		},
-		(err) => {
-			console.log(err.response);
-			this.setState({
-                errors:err.response.data.message
-		});
-		}
-	);
 	}
 
     handleChange = (e) => {
@@ -163,7 +210,11 @@ class AddNewMovie extends React.Component{
 
 		return(
             <div  style={styles.container}>
-                <h1>Add New Movie</h1>
+            {this.state.editFlow && this.state.editFlow == true ? 
+            <h1>Edit Movie</h1>
+            :
+            <h1>Add New Movie</h1>
+            }
                 <div>{errors && <div className="help-block">{errors}</div>}</div>
 				<form style={{marginBottom:'40px'}} onSubmit={this.addMovie.bind(this)} class="add-form" >
                     <label>Enter Movie Title</label><br />
@@ -314,9 +365,17 @@ class AddNewMovie extends React.Component{
                         required = {true}
                     /><br/>
                 {/*<button className="btn btn-warning mt20" onClick={this.addMovie.bind(this)}>Add Movie</button>*/}
-                    <Button variant="contained" size="large" color="primary" type="submit">
+                    
+
+                    {this.state.editFlow && this.state.editFlow == true ? 
+            <Button variant="contained" size="large" color="primary" type="submit">
+            Edit Movie
+        </Button>
+            :
+            <Button variant="contained" size="large" color="primary" type="submit">
                         Add Movie
                     </Button>
+            }
                 </form>
 			</div>
 		)

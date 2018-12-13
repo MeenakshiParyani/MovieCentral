@@ -60,7 +60,7 @@ class TableViewDetails extends React.Component {
                             return (
                                 <TableRow key={row.id}>
                                     <TableCell component="th" scope="row">
-                                        {i}
+                                        {i+1}
                                     </TableCell >
                                     <TableCell>{row.name}</TableCell>
                                     <TableCell>{row.playCount}</TableCell>

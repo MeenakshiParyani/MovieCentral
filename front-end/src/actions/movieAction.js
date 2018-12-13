@@ -3,8 +3,13 @@ import axios from "axios/index";
 export function newMovie(movie){
     return dispatch => {
         return axios.post('/api/movie/addMovie',movie).then((response)=>{
-            console.log("addMovie"+JSON.stringify(response));
-            dispatch(addMovie(response.data));
+        });
+    }
+}
+
+export function editMovie(movie){
+    return dispatch => {
+        return axios.post('/api/movie/editMovie',movie).then((response)=>{
         });
     }
 }
@@ -54,7 +59,7 @@ export function getPlaysPerMovie() {
 export function getMovieInfo(id) {
     return dispatch => {
       return axios.get('/api/movie/getMovieByID',{
-          params: { id: id }
+          params: { movieId: id }
         }).then(response => {
             
         dispatch(movieInfo(response.data));

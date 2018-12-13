@@ -15,7 +15,7 @@ import Select from 'react-select';
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import * as getCustomerData from '../actions/customerAction';
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 
@@ -49,6 +49,7 @@ class Landing extends React.Component{
         this.state={
             // moviesList : []
             moviesList : [],
+            errorText : "",
             mpaaRatingData: [
                 {key:'G',value: 'G'},
                 {key:'PG',value: 'PG'},
@@ -74,7 +75,7 @@ class Landing extends React.Component{
                 actors : [],
                 directors : [],
                 mpaaRatings : [],
-                genreChecked :[],
+                genres :[],
                 averageRating : ""
             },
             selectedOption: null
@@ -117,62 +118,154 @@ class Landing extends React.Component{
       })
     }
 
-    handleChange = (selectedOption) => {
+    handleValueChange = (selectedOption) => {
         this.setState({ selectedOption });
         console.log(`Option selected:`, selectedOption);
-        //
 
-        let checkedArray = this.state.movieFilter.genreChecked;
-        checkedArray.push(selectedOption);
+        console.log(this.state.movieFilter.genres);
+        //let checkedArray = this.state.movieFilter.genres;
+        let checkedArray = [];
+        checkedArray = selectedOption;
+        let selOptns = [];
+        //checkedArray.push(selectedOption);
+        for(let i=0; i<checkedArray.length; i++){
+            selOptns.push(checkedArray[i].value);
+        }
         this.setState({
             movieFilter : {
-                genreChecked: checkedArray
+                genres: selOptns,
+                keywords:this.state.movieFilter.keywords,
+                releaseYear : this.state.movieFilter.releaseYear,
+                mpaaRatings : this.state.movieFilter.mpaaRatings,
+                averageRating : this.state.movieFilter.averageRating
             }
-        });
+        },this.applyFilters);
+        
+        //alert(this.state.movieFilter.keywords);
     }
 
 
     onChange(e){
         this.setState({
             movieFilter :{
-                keywords: e.target.value
+                keywords: e.target.value,
+                genres: this.state.movieFilter.genres,
+                releaseYear : this.state.movieFilter.releaseYear,
+                mpaaRatings : this.state.movieFilter.mpaaRatings,
+                averageRating : this.state.movieFilter.averageRating
             }
-        });
-        this.props.filterMovies(this.state.movieFilter);
+        },this.applyFilters);
+        
     }
+
+    applyFilters(){
+        this.props.actions.movieAction.filterMovies(this.state.movieFilter);
+    }
+
 
     changeEvent(event) {
 
-        let checkedArray = this.state.mpaaOptionsChecked;
+        let checkedArray = this.state.movieFilter.mpaaRatings;
         let selectedValue = event.target.value;
 
         if (event.target.checked === true) {
 
             checkedArray.push(selectedValue);
-            this.setState({
-                mpaaOptionsChecked: checkedArray
-            });
 
         } else {
             let valueIndex = checkedArray.indexOf(selectedValue);
-            checkedArray.splice(valueIndex, 1);
-
-            this.setState({
-                mpaaOptionsChecked: checkedArray
-            });
+            checkedArray.splice(valueIndex, 1);   
 
         }
-
+        this.setState({
+            movieFilter:{
+            mpaaRatings: checkedArray,
+            keywords: this.state.movieFilter.keywords,
+            genres: this.state.movieFilter.genres,
+            releaseYear : this.state.movieFilter.releaseYear,
+            averageRating : this.state.movieFilter.averageRating
+        }
+        },this.applyFilters);
     }
 
     onStarClick(nextValue, prevValue, name) {
-        alert(prevValue);
+        //alert(prevValue);
+        this.setState({
+            movieFilter : {
+            averageRating : prevValue,
+            mpaaRatings: this.state.movieFilter.mpaaRatings,
+            keywords: this.state.movieFilter.keywords,
+            genres: this.state.movieFilter.genres,
+            releaseYear : this.state.movieFilter.releaseYear
+            }
+        },this.applyFilters);
     }
+
+    onYearChange(event) {
+
+
+        const re = /^[0-9\b]+$/;
+
+        if (event.target.value=== '' || re.test(event.target.value)) {
+            //alert(event.target.value);
+            this.setState({yearVal: event.target.value});
+            if (event.target.value.length == 4 || event.target.value ==='') {
+                this.setState({
+                    movieFilter:{
+                    mpaaRatings: this.state.movieFilter.mpaaRatings,
+                    keywords: this.state.movieFilter.keywords,
+                    genres: this.state.movieFilter.genres,
+                    releaseYear : event.target.value,
+                    averageRating : this.state.movieFilter.averageRating
+                },
+                errorText: ''
+            },this.applyFilters);
+         } else if(this.state.movieFilter.releaseYear === ""){
+            this.setState({
+                movieFilter:{
+                mpaaRatings: this.state.movieFilter.mpaaRatings,
+                keywords: this.state.movieFilter.keywords,
+                genres: this.state.movieFilter.genres,
+                releaseYear : event.target.value,
+                averageRating : this.state.movieFilter.averageRating
+            },
+            errorText: ''
+        },this.applyFilters);
+         }else {
+              this.setState({ errorText: 'Invalid format: Year should be 4-digit number' })
+            }
+         }else {
+            this.setState({ errorText: 'Invalid format: Year should be 4-digit number' })
+          }
+
+        // if(!isNaN(event.target.value)){
+        //     this.setState({
+        //         yearVal : event.target.value
+        //     });
+        //     if (event.target.value.length == 4) {
+        //         this.setState({
+        //             movieFilter:{
+        //             mpaaRatings: this.state.movieFilter.mpaaRatings,
+        //             keywords: this.state.movieFilter.keywords,
+        //             genres: this.state.movieFilter.genres,
+        //             releaseYear : event.target.value,
+        //             averageRating : this.state.movieFilter.averageRating
+        //         },
+        //         errorText: ''
+        //     });
+        //  } else {
+        //       this.setState({ errorText: 'Invalid format: Year should be 4-digit number' })
+        //     }
+        // }
+        
+        
+      }
 
     render(){
         const { movieData } = this.props;
         //alert(this.state.movieFilter.keywords);
         const { selectedOption } = this.state;
+        //alert(this.state.movieFilter.mpaaRatings);
 
         let outputCheckboxes = this.state.mpaaRatingData.map(function(string, i){
             return (<div class="inline-block"><CheckBox value={string.value} id={'string_' + i} onChange={this.changeEvent.bind(this)} /><label class="label-checkbox" htmlFor={'string_' + i}>{string.value}</label></div>)
@@ -209,7 +302,7 @@ class Landing extends React.Component{
                                 <div>
                                     <Select
                                     value={selectedOption}
-                                    onChange={this.handleChange}
+                                    onChange={this.handleValueChange}
                                     options={this.state.genreList}
                                     isMulti
                                 /></div>
@@ -220,14 +313,17 @@ class Landing extends React.Component{
                                 <label className="fl label-checkbox ">Release Year : </label>
                                 <div className="inline-block"><TextField
                                     id="outlined-name"
-                                    value={this.state.movieFilter.releaseYear}
+                                    value={this.state.yearVal}
                                     placeholder="Enter Search String"
                                     name="name"
-                                    onChange={this.onChange.bind(this)}
+                                    onChange={this.onYearChange.bind(this)}
                                     margin="normal"
+                                    errorText= {this.state.errorText.length === 0 ? false : true }
+                                    helperText={this.state.errorText}
                                     style = {{width: 500}}
                                     variant="outlined"
-                                /></div>
+                                />
+                                <label>Release Year selected : {this.state.movieFilter.releaseYear}</label></div>
                             </div><br/>
                             <div className="m20">
                                 <label className="fl label-checkbox ">Average Rating : </label><br/>
@@ -242,21 +338,25 @@ class Landing extends React.Component{
                                     name="rate1"
                                     starCount={5}
                                     value={2}
+                                    onStarClick={this.onStarClick.bind(this)}
                                 /> & up<br/>
                                 <StarRatingComponent
                                     name="rate1"
                                     starCount={5}
                                     value={3}
+                                    onStarClick={this.onStarClick.bind(this)}
                                 /> & up<br/>
                                 <StarRatingComponent
                                     name="rate1"
                                     starCount={5}
                                     value={4}
+                                    onStarClick={this.onStarClick.bind(this)}
                                 /> & up<br/>
                                 <StarRatingComponent
                                     name="rate1"
                                     starCount={5}
                                     value={5}
+                                    onStarClick={this.onStarClick.bind(this)}
                                 /> & up<br/>
                                 </div>
                             </div>
@@ -281,6 +381,7 @@ class Landing extends React.Component{
                         <div>
                             {this.state.moviesList && this.state.moviesList.map((movie,i) => {
                                 return (
+                                    <Link to={'/movie-details/' + movie.id}>
                                     <div class="m20 inline-block p20 h400">
                                         <label key={i}>
                                             <img
@@ -304,7 +405,7 @@ class Landing extends React.Component{
                                                 /></label><br/></div>
                                         </label>
                                     </div>
-
+                                    </Link>
                                 );
                             })}
                         </div>

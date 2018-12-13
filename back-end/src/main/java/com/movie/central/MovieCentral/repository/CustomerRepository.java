@@ -21,4 +21,6 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
             (LocalDateTime startDateTime, LocalDateTime endDateTime);
 
     Optional<Customer> findDistinctByEmail(String email);
+
+    List<Customer> findByNameContaining(String name);
 }
