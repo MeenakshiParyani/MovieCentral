@@ -158,7 +158,23 @@ public class MovieService {
         return movieRepository.findAll();
     }
 
+    public boolean isEmptyFilter(MovieFilter movieFilter){
+        if((movieFilter.getKeywords()==null || movieFilter.getKeywords()=="")
+                && (movieFilter.getAverageRating()==null || movieFilter.getAverageRating()==0.0)
+                && (movieFilter.getMpaaRatings()==null || movieFilter.getMpaaRatings().size()==0)
+                && (movieFilter.getGenres()==null || movieFilter.getGenres().size()==0)
+                && (movieFilter.getDirector()==null || movieFilter.getDirector()=="")
+                && (movieFilter.getActor()==null || movieFilter.getActor()=="")
+                && (movieFilter.getReleaseYear()==null || movieFilter.getReleaseYear()==0))
+            return true;
+        return false;
+    }
+
     public List<Movie> filterMoviesByMovieFilter(MovieFilter movieFilter){
+
+        //check if filter is null , if yes, return all movies
+        if(isEmptyFilter(movieFilter))
+            return findAllMovies();
 
         List<Movie> result = new ArrayList<>();
 
@@ -171,19 +187,19 @@ public class MovieService {
         }
 
         Set<Movie> releaseYearMovies = new HashSet<>();
-        if(movieFilter.getReleaseYear() != null){
+        if(movieFilter.getReleaseYear() != null && movieFilter.getReleaseYear()!=0){
             releaseYearMovies.addAll(filterByReleaseYears(movieFilter.getReleaseYear()));
             movieSets.add(releaseYearMovies);
         }
 
         Set<Movie> actorMovies = new HashSet<>();
-        if(movieFilter.getActor()!=null){
+        if(movieFilter.getActor()!=null && movieFilter.getActor()!=""){
             actorMovies.addAll(filterByActors(movieFilter.getActor()));
             movieSets.add(actorMovies);
         }
 
         Set<Movie> directorMovies = new HashSet<>();
-        if(movieFilter.getDirector() != null && !movieFilter.getDirector().isEmpty()){
+        if(movieFilter.getDirector() != null && movieFilter.getDirector()!=""){
             directorMovies.addAll(filterByDirectors(movieFilter.getDirector()));
             movieSets.add(directorMovies);
         }
@@ -195,13 +211,13 @@ public class MovieService {
         }
 
         Set<Movie> averatingRatingMovies = new HashSet<>();
-        if(movieFilter.getAverageRating() != null && !movieFilter.getAverageRating().isNaN()){
+        if(movieFilter.getAverageRating() != null && !movieFilter.getAverageRating().isNaN() && movieFilter.getAverageRating()!=0.0){
             averatingRatingMovies.addAll(filterByAverageRatingGreaterThan(movieFilter.getAverageRating()));
             movieSets.add(averatingRatingMovies);
         }
 
         Set<Movie> keywordSearchMovies = new HashSet<>();
-        if(movieFilter.getKeywords() != null && !movieFilter.getKeywords().isEmpty()){
+        if(movieFilter.getKeywords() != null && movieFilter.getKeywords()!=""){
             keywordSearchMovies.addAll(searchMoviesByKeywords(movieFilter.getKeywords().split(" ")));
             movieSets.add(keywordSearchMovies);
         }
