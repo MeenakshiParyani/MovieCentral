@@ -2,27 +2,36 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b1453952-7822-4348-888b-001ecfb6149d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/movie/central/MovieCentral/repository/CustomerRatingRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/movie/central/MovieCentral/repository/CustomerRatingRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/movie/central/MovieCentral/repository/CustomerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/movie/central/MovieCentral/repository/CustomerRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/movie/central/MovieCentral/repository/PlayHistoryRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/movie/central/MovieCentral/repository/PlayHistoryRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-end/src/main/java/com/movie/central/MovieCentral/event/OnRegistrationCompleteEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-end/src/main/java/com/movie/central/MovieCentral/event/OnVerificationCompleteEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-end/src/main/java/com/movie/central/MovieCentral/event/RegistrationListener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-end/src/main/java/com/movie/central/MovieCentral/event/VerificationListener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-end/src/main/java/com/movie/central/MovieCentral/model/VerificationToken.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-end/src/main/java/com/movie/central/MovieCentral/repository/VerificationTokenRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/movie/central/MovieCentral/config/WebConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/movie/central/MovieCentral/config/WebConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/movie/central/MovieCentral/data/SampleData.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/movie/central/MovieCentral/data/SampleData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/movie/central/MovieCentral/exceptions/Error.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/movie/central/MovieCentral/exceptions/Error.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/movie/central/MovieCentral/resource/CustomerResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/movie/central/MovieCentral/resource/CustomerResource.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/movie/central/MovieCentral/resource/MovieResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/movie/central/MovieCentral/resource/MovieResource.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/movie/central/MovieCentral/response/PopularMovieDetails.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/movie/central/MovieCentral/response/PopularMovieDetails.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/movie/central/MovieCentral/service/CustomerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/movie/central/MovieCentral/service/CustomerService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/movie/central/MovieCentral/service/MovieScoreboardService.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/movie/central/MovieCentral/service/MovieScoreboardService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/movie/central/MovieCentral/service/MovieService.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/movie/central/MovieCentral/service/MovieService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/back-end/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/target/MovieCentral-0.0.1-SNAPSHOT.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/target/MovieCentral-0.0.1-SNAPSHOT.jar.original" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/back-end/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/target/classes/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/target/classes/com/movie/central/MovieCentral/data/SampleData.class" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/target/classes/com/movie/central/MovieCentral/data/SampleData.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/target/classes/com/movie/central/MovieCentral/repository/CustomerRatingRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/target/classes/com/movie/central/MovieCentral/repository/CustomerRatingRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/target/classes/com/movie/central/MovieCentral/repository/CustomerRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/target/classes/com/movie/central/MovieCentral/repository/CustomerRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/target/classes/com/movie/central/MovieCentral/repository/PlayHistoryRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/target/classes/com/movie/central/MovieCentral/repository/PlayHistoryRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/target/classes/com/movie/central/MovieCentral/resource/CustomerResource.class" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/target/classes/com/movie/central/MovieCentral/resource/CustomerResource.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/target/classes/com/movie/central/MovieCentral/resource/MovieResource.class" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/target/classes/com/movie/central/MovieCentral/resource/MovieResource.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/back-end/target/classes/com/movie/central/MovieCentral/resource/MovieScoreboardResource.class" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/target/classes/com/movie/central/MovieCentral/resource/MovieScoreboardResource.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/target/classes/com/movie/central/MovieCentral/service/CustomerService.class" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/target/classes/com/movie/central/MovieCentral/service/CustomerService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/target/classes/com/movie/central/MovieCentral/service/MovieScoreboardService.class" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/target/classes/com/movie/central/MovieCentral/service/MovieScoreboardService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/target/classes/com/movie/central/MovieCentral/service/MovieService.class" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/target/classes/com/movie/central/MovieCentral/service/MovieService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/target/maven-archiver/pom.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/target/surefire-reports/TEST-com.movie.central.MovieCentral.CustomerTests.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/target/surefire-reports/TEST-com.movie.central.MovieCentral.MovieCentralApplicationTests.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/target/surefire-reports/com.movie.central.MovieCentral.CustomerTests.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/target/surefire-reports/com.movie.central.MovieCentral.MovieCentralApplicationTests.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/target/test-classes/com/movie/central/MovieCentral/CustomerTests.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/target/test-classes/com/movie/central/MovieCentral/MovieCentralApplicationTests.class" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/back-end/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -33,15 +42,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/back-end/src/main/java/com/movie/central/MovieCentral/MovieCentralApplication.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="16" selection-start-line="16" selection-end-line="16" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/back-end/src/main/java/com/movie/central/MovieCentral/service/MovieScoreboardService.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -69,20 +69,36 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/back-end/src/main/java/com/movie/central/MovieCentral/repository/CustomerRatingRepository.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="19" column="96" selection-start-line="19" selection-start-column="96" selection-end-line="19" selection-end-column="96" />
+            <state relative-caret-position="136">
+              <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/back-end/src/main/java/com/movie/central/MovieCentral/resource/CustomerResource.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="124">
-              <caret line="126" column="54" selection-start-line="126" selection-start-column="49" selection-end-line="126" selection-end-column="54" />
+            <state relative-caret-position="442">
+              <caret line="26" column="68" lean-forward="true" selection-start-line="26" selection-start-column="68" selection-end-line="26" selection-end-column="68" />
+              <folding>
+                <element signature="e#5097#5098#0" expanded="true" />
+                <element signature="e#5133#5134#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/back-end/src/main/java/com/movie/central/MovieCentral/data/SampleData.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="34">
+              <caret line="2" selection-start-line="2" selection-end-line="2" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -91,7 +107,7 @@
         <entry file="file://$PROJECT_DIR$/back-end/src/main/java/com/movie/central/MovieCentral/resource/MovieResource.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="209">
-              <caret line="202" column="5" lean-forward="true" selection-start-line="202" selection-start-column="5" selection-end-line="202" selection-end-column="5" />
+              <caret line="202" column="5" selection-start-line="202" selection-start-column="5" selection-end-line="202" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -99,8 +115,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/back-end/src/main/java/com/movie/central/MovieCentral/service/CustomerService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2652">
-              <caret line="183" column="28" selection-start-line="183" selection-start-column="28" selection-end-line="183" selection-end-column="28" />
+            <state relative-caret-position="3162">
+              <caret line="188" column="28" selection-start-line="188" selection-start-column="28" selection-end-line="188" selection-end-column="28" />
             </state>
           </provider>
         </entry>
@@ -216,6 +232,15 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="MovieCentral" type="462c0819:PsiDirectoryNode" />
+              <item name="model" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="MovieCentral" type="b2602c69:ProjectViewProjectNode" />
+              <item name="back-end" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="MovieCentral" type="462c0819:PsiDirectoryNode" />
               <item name="resource" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
@@ -274,18 +299,17 @@
       <workItem from="1544763475221" duration="1282000" />
       <workItem from="1544765678511" duration="5786000" />
       <workItem from="1544808173619" duration="943000" />
-      <workItem from="1544809840670" duration="5317000" />
+      <workItem from="1544809840670" duration="5788000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="21702000" />
+    <option name="totallyTimeSpent" value="22173000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25266525" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.246875" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -295,23 +319,23 @@
       <window_info id="Web" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.0" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.0" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Spring" order="7" />
-      <window_info anchor="bottom" id="Terminal" order="8" />
+      <window_info anchor="bottom" id="Terminal" order="8" weight="0.32936078" />
       <window_info anchor="bottom" id="Docker" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="bottom" id="Messages" order="11" weight="0.32827735" />
+      <window_info anchor="bottom" id="Messages" order="11" visible="true" weight="0.6042328" />
       <window_info anchor="bottom" id="Java Enterprise" order="12" />
       <window_info anchor="bottom" id="Database Changes" order="13" />
       <window_info anchor="bottom" id="Version Control" order="14" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Maven" order="3" visible="true" weight="0.03997868" />
+      <window_info anchor="right" id="Maven" order="3" visible="true" weight="0.2515625" />
       <window_info anchor="right" id="Palette" order="4" />
       <window_info anchor="right" id="Capture Analysis" order="5" />
       <window_info anchor="right" id="Database" order="6" />
@@ -387,17 +411,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/back-end/src/main/java/com/movie/central/MovieCentral/repository/CustomerRatingRepository.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="19" column="96" selection-start-line="19" selection-start-column="96" selection-end-line="19" selection-end-column="96" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/back-end/src/main/java/com/movie/central/MovieCentral/service/CustomerService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2652">
-          <caret line="183" column="28" selection-start-line="183" selection-start-column="28" selection-end-line="183" selection-end-column="28" />
+        <state relative-caret-position="3162">
+          <caret line="188" column="28" selection-start-line="188" selection-start-column="28" selection-end-line="188" selection-end-column="28" />
         </state>
       </provider>
     </entry>
@@ -418,14 +435,35 @@
     <entry file="file://$PROJECT_DIR$/back-end/src/main/java/com/movie/central/MovieCentral/resource/MovieResource.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="209">
-          <caret line="202" column="5" lean-forward="true" selection-start-line="202" selection-start-column="5" selection-end-line="202" selection-end-column="5" />
+          <caret line="202" column="5" selection-start-line="202" selection-start-column="5" selection-end-line="202" selection-end-column="5" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/back-end/src/main/java/com/movie/central/MovieCentral/resource/CustomerResource.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="124">
-          <caret line="126" column="54" selection-start-line="126" selection-start-column="49" selection-end-line="126" selection-end-column="54" />
+        <state relative-caret-position="442">
+          <caret line="26" column="68" lean-forward="true" selection-start-line="26" selection-start-column="68" selection-end-line="26" selection-end-column="68" />
+          <folding>
+            <element signature="e#5097#5098#0" expanded="true" />
+            <element signature="e#5133#5134#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/back-end/src/main/java/com/movie/central/MovieCentral/data/SampleData.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" selection-start-line="2" selection-end-line="2" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/back-end/src/main/java/com/movie/central/MovieCentral/repository/CustomerRatingRepository.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
         </state>
       </provider>
     </entry>
