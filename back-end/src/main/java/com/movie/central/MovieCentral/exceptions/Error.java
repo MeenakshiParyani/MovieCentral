@@ -12,8 +12,10 @@ public enum Error {
     INVALID_CUSTOMER_OR_MOVIE(HttpStatus.BAD_REQUEST, "Either user or the movie does not exist."),
     MOVIE_NOT_FOUND(HttpStatus.NOT_FOUND, "Movie not found, please select another movie"),
     MOVIE_NEEDS_SUBSCRIPTION(HttpStatus.FORBIDDEN, "Movie needs subscription, please subscribe to view the movie"),
-    MOVIE_NEEDS_PAYPERVIEW(HttpStatus.FORBIDDEN, "Movie needs pay per view, please pay to view the movie");
-
+    MOVIE_NEEDS_PAYPERVIEW(HttpStatus.FORBIDDEN, "Movie needs pay per view, please pay to view the movie"),
+    INVALID_VERIFICATION_TOKEN(HttpStatus.BAD_REQUEST, "Verification token is invalid, please verify using link sent in email"),
+    VERIFICATION_TOKEN_EXPIRED(HttpStatus.BAD_REQUEST, "Verification token has expired, Please check your email for new token"),
+    USER_ACCOUNT_NOT_VERIFIED(HttpStatus.FORBIDDEN, "Account not verified. Please verify your account using link sent in email");
     private final HttpStatus code;
     private final String description;
 
