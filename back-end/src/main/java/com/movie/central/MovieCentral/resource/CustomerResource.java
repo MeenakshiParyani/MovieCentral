@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.movie.central.MovieCentral.enums.AuthType;
+import com.movie.central.MovieCentral.enums.UserRole;
 import com.movie.central.MovieCentral.exceptions.Error;
 import com.movie.central.MovieCentral.exceptions.MovieCentralException;
 import com.movie.central.MovieCentral.model.Customer;
@@ -61,10 +62,15 @@ public class CustomerResource {
                 authType = AuthType.getByName(input.get("authType"));
             else
                 authType = AuthType.LOCAL;
+            UserRole role = UserRole.CUSTOMER;
+            if(email.contains("@sjsu.edu")){
+                role = UserRole.ADMIN;
+            }
 
             password = bCryptPasswordEncoder.encode(password);
             Customer customer = Customer.builder().name(name).email(email).screenName(screenName)
-                    .password(password).authType(authType).registrationDateTime(LocalDateTime.now(ZoneId.systemDefault())).build();
+                    .password(password).authType(authType).registrationDateTime(LocalDateTime.now(ZoneId.systemDefault()))
+                    .userRole(role).build();
             customerService.register(customer);
             Response response = new Response("Customer Registered Successfully", HttpStatus.CREATED);
             return new ResponseEntity(response, response.getStatus());

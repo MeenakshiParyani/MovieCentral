@@ -195,8 +195,6 @@ public class MovieResource {
     @RequestMapping(value = "/no_of_play_per_movie", method = RequestMethod.GET)
     public ResponseEntity<?> playPerMovie(HttpSession session) throws Exception{
 
-//        ObjectMapper objectMapper = new ObjectMapper();
-//        objectMapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
         List<PlayDetails> play_details = movieService.getPlayPerMovie();
 
         Map<String,List<PlayDetails>> response = new HashMap<>();

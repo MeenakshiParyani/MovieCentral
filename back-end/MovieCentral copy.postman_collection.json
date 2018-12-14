@@ -33,7 +33,12 @@
 		"f9b15f60-9ad6-0242-1886-dc15322eb976",
 		"f1a6ed0c-a7d7-490d-0d5a-1b5275fe07ee",
 		"1bf60407-bf02-d474-68ae-1260f8c21d13",
-		"0ba8dfe7-fdd4-2598-d64e-17f1827f7ca5"
+		"0ba8dfe7-fdd4-2598-d64e-17f1827f7ca5",
+		"f8be1d3f-3d8b-33a4-cd60-73eea8eac430",
+		"f98711d8-7944-022b-2540-25f1df0ae5c4",
+		"2e2a2c82-df78-4519-bd27-6703bd1355cb",
+		"548de643-b107-39bb-e9d9-d69cc4da3d45",
+		"085a80ad-1baf-dd1a-39cf-2da3235ade95"
 	],
 	"folders": [],
 	"folders_order": [],
@@ -64,12 +69,12 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1544316822813,
+			"time": 1544687116269,
 			"name": "Filter Movies By random filters",
 			"description": "",
 			"collectionId": "5c0bb5c1-3a05-9456-27f7-f594c1a87c59",
 			"responses": [],
-			"rawModeData": "{\n\t\"genres\" : [\"DRAMA\"],\n\t\"releaseYear\" : \"\",\n\t\"actor\" : \"\",\n\t\"director\" : \"\",\n\t\"mpaaRatings\" : [\"PG\"],\n\t\"averageRating\" :0.0\n}"
+			"rawModeData": "{\n\t\"genres\" : [],\n\t\"releaseYear\" : null,\n\t\"actor\" : \"\",\n\t\"director\" : \"\",\n\t\"mpaaRatings\" : [],\n\t\"averageRating\" :3.0,\n\t\"keywords\" : \"\"\n}"
 		},
 		{
 			"id": "0159d470-f1ba-6f9d-3034-06f70101dfa9",
@@ -124,13 +129,33 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1543481242570,
+			"time": 1544687046121,
 			"name": "Filter Movies By actors",
 			"description": "",
 			"collectionId": "5c0bb5c1-3a05-9456-27f7-f594c1a87c59",
 			"responses": [],
-			"collection_id": "5c0bb5c1-3a05-9456-27f7-f594c1a87c59",
-			"rawModeData": "{\n\t\"genres\" : [],\n\t\"releaseYears\" : [],\n\t\"actors\" : [\"Ranbir Kapoor\", \"Ranveer Singh\", \"Kate Winslet\"],\n\t\"directors\" : [],\n\t\"mpaaRatings\" : [],\n\t\"averageRatings\" : null\n}"
+			"rawModeData": "{\n\t\"genres\" : [],\n\t\"releaseYear\" : null,\n\t\"actor\" : \"Ranbir Kapoor\",\n\t\"director\" : \"\",\n\t\"mpaaRatings\" : [],\n\t\"averageRatings\" : null\n}"
+		},
+		{
+			"id": "085a80ad-1baf-dd1a-39cf-2da3235ade95",
+			"headers": "",
+			"headerData": [],
+			"url": "http://localhost:8080/api/movie/scoreboard/mostPopularMovies",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": null,
+			"dataMode": "params",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1544402901073,
+			"name": "mostPopularMovies",
+			"description": "",
+			"collectionId": "5c0bb5c1-3a05-9456-27f7-f594c1a87c59",
+			"responses": []
 		},
 		{
 			"id": "0ba8dfe7-fdd4-2598-d64e-17f1827f7ca5",
@@ -246,6 +271,27 @@
 			"collection_id": "5c0bb5c1-3a05-9456-27f7-f594c1a87c59"
 		},
 		{
+			"id": "2e2a2c82-df78-4519-bd27-6703bd1355cb",
+			"headers": "",
+			"headerData": [],
+			"url": "http://localhost:8080/api/movie/no_of_play_per_movie",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": null,
+			"dataMode": "params",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1544396293981,
+			"name": "no_of_play_per_movie",
+			"description": "",
+			"collectionId": "5c0bb5c1-3a05-9456-27f7-f594c1a87c59",
+			"responses": []
+		},
+		{
 			"id": "2e58ea39-86b0-0565-2402-fc12fc1c356c",
 			"headers": "Content-Type: application/json\n",
 			"headerData": [
@@ -267,13 +313,12 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1543481237026,
+			"time": 1544687035392,
 			"name": "Filter Movies By Genres",
 			"description": "",
 			"collectionId": "5c0bb5c1-3a05-9456-27f7-f594c1a87c59",
 			"responses": [],
-			"collection_id": "5c0bb5c1-3a05-9456-27f7-f594c1a87c59",
-			"rawModeData": "{\n\t\"genres\" : [\"DRAMA\", \"ADVENTURE\"],\n\t\"releaseYears\" : [],\n\t\"actors\" : [],\n\t\"directors\" : [],\n\t\"mpaaRatings\" : [],\n\t\"averageRatings\" : null\n}"
+			"rawModeData": "{\n\t\"genres\" : [\"DRAMA\", \"ADVENTURE\"],\n\t\"releaseYear\" : null,\n\t\"actor\" : \"\",\n\t\"director\" : \"\",\n\t\"mpaaRatings\" : [],\n\t\"averageRating\" : null\n}"
 		},
 		{
 			"id": "32172d12-4a7d-2d93-9de6-8986c5e89347",
@@ -297,13 +342,12 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1543920749811,
+			"time": 1544740697720,
 			"name": "Review a movie",
 			"description": "",
 			"collectionId": "5c0bb5c1-3a05-9456-27f7-f594c1a87c59",
 			"responses": [],
-			"collection_id": "5c0bb5c1-3a05-9456-27f7-f594c1a87c59",
-			"rawModeData": "{\n\t\"customerId\" : \"1\",\n\t\"movieId\" : \"4\",\n\t\"rating\" : \"1\",\n\t\"comment\" : \"Very nice movie!!!\"\n}"
+			"rawModeData": "{\n\t\"customerId\" : \"1\",\n\t\"movieId\" : \"5\",\n\t\"rating\" : \"5\",\n\t\"comment\" : \"Very nice movie!!!\"\n}"
 		},
 		{
 			"id": "37e493a8-9a1e-8515-0b38-14952ed593c1",
@@ -357,13 +401,12 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1543481660489,
+			"time": 1544687104070,
 			"name": "Filter Movies By average rating",
 			"description": "",
 			"collectionId": "5c0bb5c1-3a05-9456-27f7-f594c1a87c59",
 			"responses": [],
-			"collection_id": "5c0bb5c1-3a05-9456-27f7-f594c1a87c59",
-			"rawModeData": "{\n\t\"genres\" : [],\n\t\"releaseYears\" : [],\n\t\"actors\" : [],\n\t\"directors\" : [],\n\t\"mpaaRatings\" : [],\n\t\"averageRating\" : 2.0\n}"
+			"rawModeData": "{\n\t\"genres\" : [],\n\t\"releaseYear\" : null,\n\t\"actor\" : \"\",\n\t\"director\" : \"\",\n\t\"mpaaRating\" : [],\n\t\"averageRating\" : 2.0\n}"
 		},
 		{
 			"id": "4c0e2d00-a969-22af-2754-1969137d4018",
@@ -418,13 +461,41 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1543481290479,
+			"time": 1544687094227,
 			"name": "Filter Movies By mpaa ratings",
 			"description": "",
 			"collectionId": "5c0bb5c1-3a05-9456-27f7-f594c1a87c59",
 			"responses": [],
-			"collection_id": "5c0bb5c1-3a05-9456-27f7-f594c1a87c59",
-			"rawModeData": "{\n\t\"genres\" : [],\n\t\"releaseYears\" : [],\n\t\"actors\" : [],\n\t\"directors\" : [],\n\t\"mpaaRatings\" : [\"G\", \"PG\"],\n\t\"averageRating\" : null\n}"
+			"rawModeData": "{\n\t\"genres\" : [],\n\t\"releaseYear\" : null,\n\t\"actor\" : \"\",\n\t\"director\" : \"\",\n\t\"mpaaRatings\" : [\"G\", \"PG\"],\n\t\"averageRating\" : null\n}"
+		},
+		{
+			"id": "548de643-b107-39bb-e9d9-d69cc4da3d45",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/api/movie/scoreboard/highlyRatedMovies",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": [],
+			"dataMode": "raw",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1544398763539,
+			"name": "Top10highlyRatedMoviesInLastMonth",
+			"description": "",
+			"collectionId": "5c0bb5c1-3a05-9456-27f7-f594c1a87c59",
+			"responses": [],
+			"rawModeData": "{\n\t\n}"
 		},
 		{
 			"id": "5b096d7f-76a8-436f-31ca-ab31ec6257fe",
@@ -479,13 +550,12 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1543481248840,
+			"time": 1544687077564,
 			"name": "Filter Movies By directors",
 			"description": "",
 			"collectionId": "5c0bb5c1-3a05-9456-27f7-f594c1a87c59",
 			"responses": [],
-			"collection_id": "5c0bb5c1-3a05-9456-27f7-f594c1a87c59",
-			"rawModeData": "{\n\t\"genres\" : [],\n\t\"releaseYears\" : [],\n\t\"actors\" : [],\n\t\"directors\" : [\"Sanjay Leela Bhansali\"],\n\t\"mpaaRatings\" : [],\n\t\"averageRating\" : null\n}"
+			"rawModeData": "{\n\t\"genres\" : [],\n\t\"releaseYear\" : null,\n\t\"actor\" : null,\n\t\"director\" : \"Sanjay Leela Bhansali\",\n\t\"mpaaRatings\" : [],\n\t\"averageRating\" : null\n}"
 		},
 		{
 			"id": "742992f5-6ad8-6d66-ae2c-290f46d756e7",
@@ -596,13 +666,12 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1543480683463,
+			"time": 1544687022583,
 			"name": "Filter Movies By release years",
 			"description": "",
 			"collectionId": "5c0bb5c1-3a05-9456-27f7-f594c1a87c59",
 			"responses": [],
-			"collection_id": "5c0bb5c1-3a05-9456-27f7-f594c1a87c59",
-			"rawModeData": "{\n\t\"genres\" : [],\n\t\"releaseYears\" : [2013, 1997],\n\t\"actors\" : [],\n\t\"directors\" : [],\n\t\"mpaaRatings\" : [],\n\t\"averageRatings\" : []\n}"
+			"rawModeData": "{\n\t\"genres\" : [],\n\t\"releaseYear\" : 2013,\n\t\"actor\" : \"\",\n\t\"director\" : \"\",\n\t\"mpaaRatings\" : [],\n\t\"averageRating\" : 0.0\n}"
 		},
 		{
 			"id": "8b90dfbb-3fea-e10b-bfb0-360aafdd2cca",
@@ -627,12 +696,12 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1544073232823,
+			"time": 1544687128237,
 			"name": "serach Movies by keywords and filters",
 			"description": "",
 			"collectionId": "5c0bb5c1-3a05-9456-27f7-f594c1a87c59",
 			"responses": [],
-			"rawModeData": "{\n\t\"keywords\" : \"Gone \"\n}"
+			"rawModeData": "{\n\t\"genres\" : [],\n\t\"releaseYear\" : null,\n\t\"actor\" : \"\",\n\t\"director\" : \"\",\n\t\"mpaaRatings\" : [],\n\t\"averageRating\" :null,\n\t\"keywords\" : \"titanic kate\"\n}"
 		},
 		{
 			"id": "8cfd6639-e7c4-cddd-c136-8efcf9f9f72b",
@@ -938,6 +1007,57 @@
 			"variables": null,
 			"collection_id": "5c0bb5c1-3a05-9456-27f7-f594c1a87c59",
 			"rawModeData": "{\n  \"month\" : \"12\",\n  \"year\" : \"2018\"\n}"
+		},
+		{
+			"id": "f8be1d3f-3d8b-33a4-cd60-73eea8eac430",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/api/movie/editMovie",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1544736715889,
+			"name": "Edit Movie",
+			"description": "",
+			"collectionId": "5c0bb5c1-3a05-9456-27f7-f594c1a87c59",
+			"responses": [],
+			"rawModeData": "{\n\t\"actors\": \"Deepika Padukone, Ranveer Singh\",\n\t\"id\":1,\n\t\"averageRating\": \"4\",\n\t\"country\": \"India\",\n\t\"director\": \"Sanjay Leela Bhansali\",\n\t\"genre\": \"DRAMA\",\n\t\"imageUrl\": \"https://image.tmdb.org/t/p/w185_and_h278_bestv2/6Pph0xbOJvNPhWh1fdeWGHppSPH.jpg\",\n\t\"movieUrl\": \"https://www.youtube.com/watch?v=szVW_w-W8cQ\",\n\t\"mpaaRating\": \"G\",\n\t\"price\": 10,\n\t\"releaseYear\": 2015,\n\t\"status\": \"ACTIVE\",\n\t\"studio\": \"abc\",\n\t\"synopsys\": \"A man (Ranveer Singh) from a crime family falls in love with a woman (Deepika Padukone) who is resistant to her family's choice of a husband for her.\",\n\t\"title\": \"Ramleela\",\n\t\"type\": \"SUBSCRIPTION_ONLY\"\n}"
+		},
+		{
+			"id": "f98711d8-7944-022b-2540-25f1df0ae5c4",
+			"headers": "Content-Type: application/json\n",
+			"url": "http://localhost:8080/api/movie/filter",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"name": "Filter Movies By random filters copy",
+			"description": "",
+			"sandboxFiles": "",
+			"sendMethod": "xhr",
+			"time": 1544396115238,
+			"responses": [],
+			"collectionId": "5c0bb5c1-3a05-9456-27f7-f594c1a87c59",
+			"rawModeData": "{\n\t\"genres\" : [\"\"],\n\t\"releaseYears\" : [2013],\n\t\"actors\" : [],\n\t\"directors\" : [],\n\t\"mpaaRatings\" : [],\n\t\"averageRating\" :0.0\n}"
 		},
 		{
 			"id": "f9b15f60-9ad6-0242-1886-dc15322eb976",
