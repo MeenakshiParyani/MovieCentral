@@ -267,6 +267,7 @@ class Landing extends React.Component{
         const { selectedOption } = this.state;
         //alert(this.state.movieFilter.mpaaRatings);
 
+        //alert(sessionStorage.getItem('userId'));
         let outputCheckboxes = this.state.mpaaRatingData.map(function(string, i){
             return (<div class="inline-block"><CheckBox value={string.value} id={'string_' + i} onChange={this.changeEvent.bind(this)} /><label class="label-checkbox" htmlFor={'string_' + i}>{string.value}</label></div>)
         }, this);

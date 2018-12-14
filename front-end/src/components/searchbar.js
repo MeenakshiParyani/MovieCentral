@@ -125,6 +125,13 @@ class PrimarySearchAppBar extends React.Component {
     this.setState({ mobileMoreAnchorEl: null });
   };
 
+
+  mScoreDirect(){
+    this.setState({
+      shouldRedirectToScoreBoard : true
+    });
+  }
+
   render() {
     const { anchorEl, mobileMoreAnchorEl } = this.state;
     const { classes } = this.props;
@@ -140,6 +147,11 @@ class PrimarySearchAppBar extends React.Component {
         return (<Redirect to={{
             pathname: '/register'
     }} />)
+
+    if(this.state.shouldRedirectToScoreBoard)
+        return (<Redirect to={{
+      pathname: '/landing'
+}} />)
     const renderMenu = (
       <Menu
         anchorEl={anchorEl}
@@ -207,28 +219,31 @@ class PrimarySearchAppBar extends React.Component {
             </Typography>
             <div className={classes.search}>
               <div className={classes.searchIcon}>
-                <SearchIcon />
+                
               </div>
-              <InputBase
-                placeholder="Search…"
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput
-                }}
-              />
             </div>
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
-              <IconButton color="inherit">
-                <Badge badgeContent={4} color="secondary">
-                  <MailIcon />
-                </Badge>
-              </IconButton>
-              <IconButton color="inherit">
-                <Badge badgeContent={17} color="secondary">
-                  <NotificationsIcon />
-                </Badge>
-              </IconButton>
+            <Typography
+              className={classes.title}
+              style={{marginRight:30,cursor:'pointer',marginTop:5}}
+              variant="h6"
+              color="inherit"
+              noWrap
+              onClick={this.mScoreDirect.bind(this)}
+            >
+              Movies Scoreboard
+            </Typography>
+
+            <Typography
+              className={classes.title}
+              style={{marginRight:30,cursor:'pointer',marginTop:5}}
+              variant="h6"
+              color="inherit"
+              noWrap
+            >
+               My Account
+            </Typography>
               <IconButton
                 aria-owns={isMenuOpen ? "material-appbar" : undefined}
                 aria-haspopup="true"

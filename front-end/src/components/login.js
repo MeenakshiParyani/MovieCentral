@@ -31,6 +31,7 @@ class Login extends React.Component {
   handleIsLoggedIn(){
     this.props.getIsLoggedIn()
     .then(res => {
+      
       // do nothing
       this.setState({
         redirectLogin : false,
@@ -56,6 +57,9 @@ class Login extends React.Component {
     e.preventDefault();
     this.props.loginUser(this.state)
     .then(res => {
+      console.log(res);
+      sessionStorage.setItem('userId', res.data.id);
+      sessionStorage.setItem('userRole',res.data.userRole);
       console.log(this.state.message);
       this.setState({
           redirectLanding: true

@@ -87,7 +87,7 @@ class ViewMovieDetails extends React.Component {
             ratingDetails.comment = this.state.comment;
             ratingDetails.rating = this.state.rating;
             ratingDetails.movieId = this.props.match.params.movie_id;
-            ratingDetails.customerId = 3;//this.props.match.params.movie_id;;
+            ratingDetails.customerId = sessionStorage.getItem("userId");//this.props.match.params.movie_id;;
             this.props.rateNow(ratingDetails).then(
                 (data) => {
                     this.props.getMovieInfo(this.props.match.params.movie_id);
@@ -144,6 +144,8 @@ class ViewMovieDetails extends React.Component {
     render() {
 		const { movieData } = this.props;
 		console.log(this.state.movieInfo.title);
+		this.state.isAdmin = sessionStorage.getItem("userRole");
+		//alert(this.state.isAdmin && this.state.isAdmin === 'CUSTOMER');
         return (
             <div class="mt40">
 			<div>
@@ -165,13 +167,20 @@ class ViewMovieDetails extends React.Component {
 						</div>
 						<div class="ml100 w75">
 						<div class="float-right">
-						<Fab color="secondary" aria-label="Edit">
+						{(this.state.isAdmin && this.state.isAdmin === 'ADMIN') ?
+						<div>
+							<Fab color="secondary" aria-label="Edit">
 							<EditIcon onClick={this.editMovie.bind(this)}>edit_icon</EditIcon>
  					    </Fab>
 						<div class="mt10"></div>
 						<Fab aria-label="Delete">
 							<DeleteIcon />
 						</Fab>
+						</div>
+						:
+						""
+						}
+						
 						</div>
 						
 						<div class="m10 bold-font">Movie Name : {this.state.movieInfo.title}</div>

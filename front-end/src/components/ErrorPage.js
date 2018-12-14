@@ -10,16 +10,11 @@ import {bindActionCreators} from "redux";
 import NavTabs from './Material-UI/NavTabs';
 
 
-class AdminDashboard extends React.Component{
+class ErrorPage extends React.Component{
     render() {
-        if(sessionStorage.getItem("userRole") === 'CUSTOMER'){
-            return (<Redirect to={{
-                pathname: '/errorPage'
-          }} />)
-        }
         return (
             <div className="container-fluid">
-                <NavTabs/>
+               Oye dont mess with the routes.
             </div>
         )
     }
@@ -35,4 +30,4 @@ function mapDispatchToProps(dispatch){
     return bindActionCreators(getData,dispatch)
 
 }
-export default connect(mapStateToProps,mapDispatchToProps)(AdminDashboard);
+export default connect(mapStateToProps,mapDispatchToProps)(ErrorPage);

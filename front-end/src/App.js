@@ -15,6 +15,7 @@ import SubscribePayPerView from './components/SubscribePayPerView';
 import Subscription from './components/Subscription';
 import MovieScoreBoard from './components/Material-UI/MovieScoreBoard';
 import temporaryLogic from './components/temporaryLogic';
+import ErrorPage from './components/ErrorPage';
 
 class App extends Component {
   render() {
@@ -48,10 +49,11 @@ class App extends Component {
           <Route path={"/login"} component={Login} />
           <Route path={"/landing"} component={Landing} />
           <Route path={`/getPlayHistory/:user_id`} component={CustomerPlayHistory}></Route>
-        		<Route path={`/movie-details/:movie_id`} component={ViewMovieDetails}></Route>
-            <Route path={"/payperview/:movie_id"} component={SubscribePayPerView} />
-            <Route path={"/subscribe"} component={Subscription}/>
-            <Route path={"/movieScoreBoard"} component={MovieScoreBoard}/>
+        	<Route path={`/movie-details/:movie_id`} component={ViewMovieDetails}></Route>
+          <Route path={"/payperview/:movie_id"} component={SubscribePayPerView} />
+          <Route path={"/subscribe"} component={Subscription}/>
+          <Route path={"/movieScoreBoard"} component={MovieScoreBoard}/>
+          <Route path={"/errorPage"} component={ErrorPage}/>
             <Route path={"/logic"} component={temporaryLogic}/>
         </div>
       </BrowserRouter>
