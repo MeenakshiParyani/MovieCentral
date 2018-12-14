@@ -2,19 +2,16 @@ package com.movie.central.MovieCentral.service;
 
 import com.movie.central.MovieCentral.enums.SubscriptionType;
 import com.movie.central.MovieCentral.enums.UserRole;
+import com.movie.central.MovieCentral.event.OnRegistrationCompleteEvent;
+import com.movie.central.MovieCentral.event.OnVerificationCompleteEvent;
 import com.movie.central.MovieCentral.exceptions.Error;
 import com.movie.central.MovieCentral.exceptions.MovieCentralException;
-import com.movie.central.MovieCentral.model.Billing;
-import com.movie.central.MovieCentral.model.Customer;
-
-import com.movie.central.MovieCentral.model.CustomerRating;
-import com.movie.central.MovieCentral.model.Movie;
-
-import com.movie.central.MovieCentral.model.PlayHistory;
+import com.movie.central.MovieCentral.model.*;
 
 import com.movie.central.MovieCentral.repository.*;
 import com.movie.central.MovieCentral.response.PlayDetails;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
@@ -45,12 +42,20 @@ public class CustomerService {
     @Autowired
     MovieRepository movieRepository;
 
+    @Autowired
+    private VerificationTokenRepository tokenRepository;
+
+    @Autowired
+    ApplicationEventPublisher eventPublisher;
+
     public void register(Customer customer) throws Exception {
 
         LocalDateTime startTime = LocalDateTime.now(ZoneId.systemDefault());
         LocalDateTime endTime = getSubscriptionEndDate(startTime, 1).withHour(0).withMinute(0).withSecond(0);
         customer.setSubscriptionEndTime(endTime);
-        customerRepository.save(customer);
+        customer = customerRepository.save(customer);
+        String appUrl = "/api/customer/";
+        eventPublisher.publishEvent(new OnRegistrationCompleteEvent(customer, appUrl));
     }
 
     private LocalDateTime getSubscriptionEndDate(LocalDateTime startTime, Integer months) {
@@ -185,6 +190,39 @@ public class CustomerService {
             e.printStackTrace();
         }
         return playDetailsNew;
+    }
+
+
+    public void createVerificationToken(Customer user, String token) {
+        VerificationToken myToken = new VerificationToken(token, user);
+        tokenRepository.save(myToken);
+    }
+
+    public VerificationToken getVerificationToken(String VerificationToken) {
+        return tokenRepository.findByToken(VerificationToken);
+    }
+
+    public void verifyUser(Customer user) throws MovieCentralException{
+        Optional<Customer> customer = customerRepository.findById(user.getId());
+        if(customer.isPresent()){
+            Customer c = customer.get();
+            c.setAccountVerified(true);
+            customerRepository.save(c);
+            eventPublisher.publishEvent(new OnVerificationCompleteEvent(c));
+        }else{
+            throw new MovieCentralException(Error.USER_NOT_FOUND);
+        }
+
+    }
+
+    public boolean isUserVerified(String email) throws MovieCentralException{
+        Optional<Customer> customer = customerRepository.findDistinctByEmail(email);
+        if(customer.isPresent()){
+            Customer c = customer.get();
+            return c.isAccountVerified();
+        }else{
+            throw new MovieCentralException(Error.USER_NOT_FOUND);
+        }
     }
 
 }

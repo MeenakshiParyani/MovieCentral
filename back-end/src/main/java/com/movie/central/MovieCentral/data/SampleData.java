@@ -146,7 +146,7 @@ public class SampleData implements ApplicationRunner {
     public void saveCustomer1(){
 
         String password = bCryptPasswordEncoder.encode("password");
-        Customer customer = Customer.builder().authType(AuthType.LOCAL).password(password).email("meenakshi.paryani@gmail.com")
+        Customer customer = Customer.builder().authType(AuthType.LOCAL).password(password).email("meenakshi.paryani1@gmail.com")
                 .screenName("meenu").name("Meenakshi Paryani").userRole(UserRole.CUSTOMER).registrationDateTime(LocalDateTime.now(ZoneId.systemDefault())).build();
         customerRepository.save(customer);
     }

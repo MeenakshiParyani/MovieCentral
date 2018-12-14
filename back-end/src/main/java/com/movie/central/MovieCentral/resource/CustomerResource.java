@@ -5,18 +5,17 @@ import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.movie.central.MovieCentral.enums.AuthType;
 import com.movie.central.MovieCentral.enums.UserRole;
+import com.movie.central.MovieCentral.event.OnRegistrationCompleteEvent;
 import com.movie.central.MovieCentral.exceptions.Error;
 import com.movie.central.MovieCentral.exceptions.MovieCentralException;
-import com.movie.central.MovieCentral.model.Customer;
+import com.movie.central.MovieCentral.model.*;
 
-import com.movie.central.MovieCentral.model.CustomerRating;
-import com.movie.central.MovieCentral.model.Movie;
-import com.movie.central.MovieCentral.model.PlayHistory;
 import com.movie.central.MovieCentral.response.PlayDetails;
 
 import com.movie.central.MovieCentral.response.Response;
 import com.movie.central.MovieCentral.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,10 +30,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @RequestMapping("/api/customer")
 @RestController
@@ -48,6 +44,9 @@ public class CustomerResource {
 
     @Autowired
     private PasswordEncoder bCryptPasswordEncoder;
+
+    @Autowired
+    ApplicationEventPublisher eventPublisher;
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ResponseEntity<?> register(@RequestBody Map<String, String> input, HttpSession session) throws Exception{
@@ -66,13 +65,14 @@ public class CustomerResource {
             if(email.contains("@sjsu.edu")){
                 role = UserRole.ADMIN;
             }
-
             password = bCryptPasswordEncoder.encode(password);
             Customer customer = Customer.builder().name(name).email(email).screenName(screenName)
                     .password(password).authType(authType).registrationDateTime(LocalDateTime.now(ZoneId.systemDefault()))
                     .userRole(role).build();
+
             customerService.register(customer);
             Response response = new Response("Customer Registered Successfully", HttpStatus.CREATED);
+
             return new ResponseEntity(response, response.getStatus());
         }catch(DataIntegrityViolationException ex){
             throw new MovieCentralException(Error.DUPLICATE_USER);
@@ -82,23 +82,20 @@ public class CustomerResource {
 
     @RequestMapping(value = "/login", headers = "Accept=application/json", method = RequestMethod.POST, produces = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<?> login(@RequestBody Map<String, String> input, HttpSession session){
-        try{
-            String email = input.get("email");
-            String password = input.get("password");
-            UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(email, password);
-            Authentication authentication = this.authenticationManager.authenticate(token);
-            SecurityContext context = SecurityContextHolder.getContext();
-            SecurityContextHolder.setStrategyName(SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
-            context.setAuthentication(authentication);
-            session.setAttribute("SPRING_SECURITY_CONTEXT", context);
-            return new ResponseEntity<>(authentication.getPrincipal(), HttpStatus.OK);
-
-        }catch(Exception e){
-            System.out.println(e.getMessage());
-
+    public ResponseEntity<?> login(@RequestBody Map<String, String> input, HttpSession session) throws MovieCentralException{
+        String email = input.get("email");
+        String password = input.get("password");
+        if(!customerService.isUserVerified(email)){
+            throw new MovieCentralException(Error.USER_ACCOUNT_NOT_VERIFIED);
         }
-        return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(email, password);
+        Authentication authentication = this.authenticationManager.authenticate(token);
+        SecurityContext context = SecurityContextHolder.getContext();
+        SecurityContextHolder.setStrategyName(SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
+        context.setAuthentication(authentication);
+        session.setAttribute("SPRING_SECURITY_CONTEXT", context);
+        return new ResponseEntity<>(authentication.getPrincipal(), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/isLoggedIn", method = RequestMethod.GET)
@@ -200,4 +197,23 @@ public class CustomerResource {
         response.put("result", customers);
         return new ResponseEntity<Object>(response, HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/verify", method = RequestMethod.GET)
+    public ResponseEntity<?> verifyAccount(@RequestParam String token, HttpSession session) throws Exception{
+        VerificationToken verificationToken = customerService.getVerificationToken(token);
+        if (verificationToken == null) {
+            throw new MovieCentralException(Error.INVALID_VERIFICATION_TOKEN);
+        }
+        Customer user = verificationToken.getUser();
+        Calendar cal = Calendar.getInstance();
+        if ((verificationToken.getExpiryDate().getTime() - cal.getTime().getTime()) <= 0) {
+            String appUrl = "/api/customer/";
+            eventPublisher.publishEvent(new OnRegistrationCompleteEvent(user, appUrl));
+            throw new MovieCentralException(Error.VERIFICATION_TOKEN_EXPIRED);
+
+        }
+        customerService.verifyUser(user);
+        return new ResponseEntity<Object>("User verified successfully, You can now login to MovieCenral", HttpStatus.OK);
+    }
+
 }
