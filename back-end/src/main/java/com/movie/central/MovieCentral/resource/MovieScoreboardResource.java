@@ -3,6 +3,7 @@ package com.movie.central.MovieCentral.resource;
 import com.movie.central.MovieCentral.model.Movie;
 import com.movie.central.MovieCentral.response.MovieRatings;
 import com.movie.central.MovieCentral.response.PlayDetails;
+import com.movie.central.MovieCentral.response.PopularMovieDetails;
 import com.movie.central.MovieCentral.service.MovieScoreboardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,16 +29,16 @@ public class MovieScoreboardResource {
 
     @RequestMapping(value = "/highlyRatedMovies", method = RequestMethod.GET)
     public ResponseEntity<?> getMostHighlyRatedMoviesInGivenMonth( HttpSession session) throws Exception {
-        List<MovieRatings> highlyRatedMoviesInGivenMonth = movieScoreboardService.getMostHighlyRatedMoviesInGivenMonth();
-        Map<String, List<MovieRatings>> response = new HashMap<>();
+        List<PopularMovieDetails> highlyRatedMoviesInGivenMonth = movieScoreboardService.getMostHighlyRatedMoviesInGivenMonth();
+        Map<String, List<PopularMovieDetails>> response = new HashMap<>();
         response.put("result", highlyRatedMoviesInGivenMonth);
         return new ResponseEntity<Object>(response, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/mostPopularMovies", method = RequestMethod.GET)
     public ResponseEntity<?> getMostPopularMoviesInGivenMonth( HttpSession session) throws Exception {
-        List<PlayDetails> highlyRatedMoviesInGivenMonth = movieScoreboardService.getMostPopularMoviesInGivenMonth();
-        Map<String, List<PlayDetails>> response = new HashMap<>();
+        List<PopularMovieDetails> highlyRatedMoviesInGivenMonth = movieScoreboardService.getMostPopularMoviesInGivenMonth();
+        Map<String, List<PopularMovieDetails>> response = new HashMap<>();
         response.put("result", highlyRatedMoviesInGivenMonth);
         return new ResponseEntity<Object>(response, HttpStatus.OK);
     }

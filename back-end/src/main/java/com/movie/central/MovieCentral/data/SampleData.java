@@ -144,6 +144,7 @@ public class SampleData implements ApplicationRunner {
     }
 
     public void saveCustomer1(){
+
         String password = bCryptPasswordEncoder.encode("password");
         Customer customer = Customer.builder().authType(AuthType.LOCAL).password(password).email("meenakshi.paryani@gmail.com")
                 .screenName("meenu").name("Meenakshi Paryani").userRole(UserRole.CUSTOMER).registrationDateTime(LocalDateTime.now(ZoneId.systemDefault())).build();
@@ -158,6 +159,16 @@ public class SampleData implements ApplicationRunner {
     }
 
     public void addPlayHistory1(){
+        Director director = new Director("abc director");
+        directorRepository.save(director);
+
+        Actor actor1 = new Actor("actor1");
+        Actor actor2 = new Actor("actor2");
+        Actor actor3 = new Actor("actor3");
+        actorRepository.save(actor1);
+        actorRepository.save(actor2);
+        actorRepository.save(actor3);
+        List<Actor> actors = new ArrayList<>(Arrays.asList(actor1,actor2, actor3));
         String password = bCryptPasswordEncoder.encode("password");
         Customer customer = Customer.builder().authType(AuthType.LOCAL).password(password).email("meenakshi.paryani33@gmail.com")
                 .screenName("meenu33").name("Meenakshi Paryani33").userRole(UserRole.CUSTOMER).registrationDateTime(LocalDateTime.now(ZoneId.systemDefault())).build();
@@ -165,7 +176,8 @@ public class SampleData implements ApplicationRunner {
 
         Movie movie = movieRepository.save(Movie.builder().title("abcxyz").synopsys("").country("India").averageRating(0.0)
                 .genre(Genre.DRAMA).imageUrl("").movieUrl("").mpaaRating(MpaaRating.PG)
-                .price(0.0).releaseYear(2008).studio("def55").status(Status.ACTIVE).type(MovieType.PAY_PER_VIEW).build());
+                .price(0.0).releaseYear(2008).studio("def55").status(Status.ACTIVE).type(MovieType.PAY_PER_VIEW)
+                .actors(actors).director(director).build());
 
         playHistoryRepository.save(PlayHistory.builder().customer(customer).movie(movie).playTime(LocalDateTime.now(ZoneId.systemDefault())).build());
         playHistoryRepository.save(PlayHistory.builder().customer(customer).movie(movie).playTime(LocalDateTime.now(ZoneId.systemDefault())).build());
@@ -173,6 +185,18 @@ public class SampleData implements ApplicationRunner {
     }
 
     public void addPlayHistory2(){
+
+        Director director = new Director("xyz director");
+        directorRepository.save(director);
+
+        Actor actor1 = new Actor("actorx");
+        Actor actor2 = new Actor("actory");
+        Actor actor3 = new Actor("actorz");
+        actorRepository.save(actor1);
+        actorRepository.save(actor2);
+        actorRepository.save(actor3);
+        List<Actor> actors = new ArrayList<>(Arrays.asList(actor1,actor2, actor3));
+
         String password = bCryptPasswordEncoder.encode("password");
         Customer customer = Customer.builder().authType(AuthType.LOCAL).password(password).email("meenakshi.paryani44@gmail.com")
                 .screenName("meenu44").name("Meenakshi Paryani44").userRole(UserRole.CUSTOMER).registrationDateTime(LocalDateTime.now(ZoneId.systemDefault())).build();
@@ -180,7 +204,8 @@ public class SampleData implements ApplicationRunner {
 
         Movie movie = movieRepository.save(Movie.builder().title("abcxyzaa").synopsys("").country("India").averageRating(0.0)
                 .genre(Genre.DRAMA).imageUrl("").movieUrl("").mpaaRating(MpaaRating.PG)
-                .price(0.0).releaseYear(2008).studio("def55").status(Status.ACTIVE).type(MovieType.PAY_PER_VIEW).build());
+                .price(0.0).releaseYear(2008).studio("def55").status(Status.ACTIVE).type(MovieType.PAY_PER_VIEW)
+                .actors(actors).director(director).build());
 
         playHistoryRepository.save(PlayHistory.builder().customer(customer).movie(movie).playTime(LocalDateTime.now(ZoneId.systemDefault()).minusMonths(1)).build());
         playHistoryRepository.save(PlayHistory.builder().customer(customer).movie(movie).playTime(LocalDateTime.now(ZoneId.systemDefault()).minusMonths(1)).build());

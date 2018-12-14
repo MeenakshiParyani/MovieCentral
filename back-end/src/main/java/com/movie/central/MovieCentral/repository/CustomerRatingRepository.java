@@ -17,7 +17,7 @@ public interface CustomerRatingRepository extends JpaRepository<CustomerRating, 
 
     List<CustomerRating> findDistinctByCustomerRatingIdMovie(Movie movie);
 
-    @Query(value = "select m.id, m.title, avg(c.rating) as rating from movie m join customer_rating c on c.movie_id = m.id and  rating_time between ?1 AND ?2 group by m.id order by rating desc limit 10", nativeQuery = true)
+    @Query(value = "select m.id, m.title, avg(c.rating) as rating, m.average_rating from movie m join customer_rating c on c.movie_id = m.id and  rating_time between ?1 AND ?2 group by m.id order by rating desc limit 10", nativeQuery = true)
     List<Object[]> findTopTenByAverageRatingInLastMonth(LocalDateTime startDateTime, LocalDateTime endDateTime);
 
 
