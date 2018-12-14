@@ -1,5 +1,6 @@
 package com.movie.central.MovieCentral.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -14,12 +15,22 @@ import java.util.Properties;
 @EnableWebMvc
 public class WebConfig implements WebMvcConfigurer {
 
+
+
+    @Value("${client.host}")
+    String host;
+
+    @Value("${client.port}")
+    String port;
+
     @Override
     public void addCorsMappings(CorsRegistry registry) {
+        String allowedOrigin = "http://" + host + ":" + port;
         registry.addMapping("/api/**")
-                .allowedOrigins("http://localhost:3000")
+                .allowedOrigins(allowedOrigin)
                 .allowCredentials(true);
     }
+
 
     @Bean
     public JavaMailSenderImpl mailSender() {
