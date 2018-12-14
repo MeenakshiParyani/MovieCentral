@@ -58,7 +58,8 @@ class AddNewMovie extends React.Component {
       statusData: [
         { key: "ACTIVE", value: "ACTIVE" },
         { key: "INACTIVE", value: "INACTIVE" }
-      ]
+      ],
+      redirectLogin: ""
     };
   }
 
@@ -91,6 +92,23 @@ class AddNewMovie extends React.Component {
     this.handleIsLoggedIn();
     //let movie_id = this.props.match.params.movie_id;
     //this.props.getMovieDetails(movie_id);
+  }
+
+  handleIsLoggedIn() {
+    this.props
+      .getIsLoggedIn()
+      .then(res => {
+        // do nothing
+        this.setState({
+          redirectLogin: false
+        });
+      })
+      .catch(err => {
+        // redirect to login
+        this.setState({
+          redirectLogin: true
+        });
+      });
   }
 
   onChange(e) {
