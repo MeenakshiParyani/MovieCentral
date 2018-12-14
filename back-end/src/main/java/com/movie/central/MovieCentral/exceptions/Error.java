@@ -15,7 +15,8 @@ public enum Error {
     MOVIE_NEEDS_PAYPERVIEW(HttpStatus.FORBIDDEN, "Movie needs pay per view, please pay to view the movie"),
     INVALID_VERIFICATION_TOKEN(HttpStatus.BAD_REQUEST, "Verification token is invalid, please verify using link sent in email"),
     VERIFICATION_TOKEN_EXPIRED(HttpStatus.BAD_REQUEST, "Verification token has expired, Please check your email for new token"),
-    USER_ACCOUNT_NOT_VERIFIED(HttpStatus.FORBIDDEN, "Account not verified. Please verify your account using link sent in email");
+    USER_ACCOUNT_NOT_VERIFIED(HttpStatus.FORBIDDEN, "Account not verified. Please verify your account using link sent in email"),
+    INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "Request failed");
     private final HttpStatus code;
     private final String description;
 

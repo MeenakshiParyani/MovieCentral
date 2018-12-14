@@ -3,6 +3,7 @@ package com.movie.central.MovieCentral.service;
 import com.movie.central.MovieCentral.enums.SubscriptionType;
 import com.movie.central.MovieCentral.enums.UserRole;
 import com.movie.central.MovieCentral.event.OnRegistrationCompleteEvent;
+import com.movie.central.MovieCentral.event.OnVerificationCompleteEvent;
 import com.movie.central.MovieCentral.exceptions.Error;
 import com.movie.central.MovieCentral.exceptions.MovieCentralException;
 import com.movie.central.MovieCentral.model.*;
@@ -190,6 +191,7 @@ public class CustomerService {
             Customer c = customer.get();
             c.setAccountVerified(true);
             customerRepository.save(c);
+            eventPublisher.publishEvent(new OnVerificationCompleteEvent(c));
         }else{
             throw new MovieCentralException(Error.USER_NOT_FOUND);
         }

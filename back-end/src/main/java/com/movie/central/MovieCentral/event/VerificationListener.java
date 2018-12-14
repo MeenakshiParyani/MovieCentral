@@ -1,12 +1,13 @@
 package com.movie.central.MovieCentral.event;
 
+import com.movie.central.MovieCentral.exceptions.Error;
+import com.movie.central.MovieCentral.exceptions.MovieCentralException;
 import com.movie.central.MovieCentral.model.Customer;
 import com.movie.central.MovieCentral.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationListener;
 import org.springframework.mail.javamail.JavaMailSender;
-
 import org.springframework.stereotype.Component;
 
 import javax.mail.Message;
@@ -17,13 +18,12 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
-import java.util.Locale;
 import java.util.Properties;
-import java.util.UUID;
+
 
 @Component
-public class RegistrationListener implements
-        ApplicationListener<OnRegistrationCompleteEvent> {
+public class VerificationListener implements
+        ApplicationListener<OnVerificationCompleteEvent> {
 
     @Autowired
     private CustomerService service;
@@ -31,28 +31,24 @@ public class RegistrationListener implements
     @Autowired
     private JavaMailSender mailSender;
 
-    @Value("${server.host}")
+    @Value("${client.host}")
     String host;
 
-    @Value("${server.port}")
+    @Value("${client.port}")
     String port;
 
     @Override
-    public void onApplicationEvent(OnRegistrationCompleteEvent event){
-        this.confirmRegistration(event);
+    public void onApplicationEvent(OnVerificationCompleteEvent event){
+        this.confirmVerification(event);
     }
 
-    private void confirmRegistration(OnRegistrationCompleteEvent event) {
+    private void confirmVerification(OnVerificationCompleteEvent event){
         Customer user = event.getUser();
-        String token = UUID.randomUUID().toString();
-        service.createVerificationToken(user, token);
-
         String recipientAddress = user.getEmail();
-        String subject = "Movie Central Registration Confirmation";
-        String confirmationUrl
-                = event.getAppUrl() + "verify?token=" + token;
-        String message = "Registered successfully.Please click the link below to verify your account : <br>";
-        message = message + "  http://" + host + ":" + port + confirmationUrl;
+        String subject = "Movie Central Account Verification";
+        String confirmationUrl = "  http://" + host + ":" + port + "/login";
+        String message = "Account verified successfully.Please click the link below to login to your account : <br>";
+        message = message + confirmationUrl;
         try{
             MimeBodyPart mbp = new MimeBodyPart();
             mbp.setContent(message, "text/html");
