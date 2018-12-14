@@ -34,6 +34,7 @@
 		"f1a6ed0c-a7d7-490d-0d5a-1b5275fe07ee",
 		"1bf60407-bf02-d474-68ae-1260f8c21d13",
 		"0ba8dfe7-fdd4-2598-d64e-17f1827f7ca5",
+		"f8be1d3f-3d8b-33a4-cd60-73eea8eac430",
 		"f98711d8-7944-022b-2540-25f1df0ae5c4",
 		"2e2a2c82-df78-4519-bd27-6703bd1355cb",
 		"548de643-b107-39bb-e9d9-d69cc4da3d45",
@@ -341,7 +342,7 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1544403337134,
+			"time": 1544740697720,
 			"name": "Review a movie",
 			"description": "",
 			"collectionId": "5c0bb5c1-3a05-9456-27f7-f594c1a87c59",
@@ -1006,6 +1007,35 @@
 			"variables": null,
 			"collection_id": "5c0bb5c1-3a05-9456-27f7-f594c1a87c59",
 			"rawModeData": "{\n  \"month\" : \"12\",\n  \"year\" : \"2018\"\n}"
+		},
+		{
+			"id": "f8be1d3f-3d8b-33a4-cd60-73eea8eac430",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/api/movie/editMovie",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1544736715889,
+			"name": "Edit Movie",
+			"description": "",
+			"collectionId": "5c0bb5c1-3a05-9456-27f7-f594c1a87c59",
+			"responses": [],
+			"rawModeData": "{\n\t\"actors\": \"Deepika Padukone, Ranveer Singh\",\n\t\"id\":1,\n\t\"averageRating\": \"4\",\n\t\"country\": \"India\",\n\t\"director\": \"Sanjay Leela Bhansali\",\n\t\"genre\": \"DRAMA\",\n\t\"imageUrl\": \"https://image.tmdb.org/t/p/w185_and_h278_bestv2/6Pph0xbOJvNPhWh1fdeWGHppSPH.jpg\",\n\t\"movieUrl\": \"https://www.youtube.com/watch?v=szVW_w-W8cQ\",\n\t\"mpaaRating\": \"G\",\n\t\"price\": 10,\n\t\"releaseYear\": 2015,\n\t\"status\": \"ACTIVE\",\n\t\"studio\": \"abc\",\n\t\"synopsys\": \"A man (Ranveer Singh) from a crime family falls in love with a woman (Deepika Padukone) who is resistant to her family's choice of a husband for her.\",\n\t\"title\": \"Ramleela\",\n\t\"type\": \"SUBSCRIPTION_ONLY\"\n}"
 		},
 		{
 			"id": "f98711d8-7944-022b-2540-25f1df0ae5c4",
