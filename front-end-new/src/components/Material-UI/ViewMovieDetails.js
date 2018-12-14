@@ -69,11 +69,12 @@ class ViewMovieDetails extends React.Component {
 		if(nextProps.movieData.data.movieInfo){
             this.setState({
                 movieInfo : nextProps.movieData.data.movieInfo
-            });
+			});
+			// ReactPlayer.canPlay(nextProps.movieData.data.movieInfo.movieUrl);
         }
     }
     componentWillMount(){
-        console.log(this.props);
+		console.log(this.props);
         this.props.getMovieInfo(this.props.match.params.movie_id);
     }
 	
@@ -128,6 +129,10 @@ class ViewMovieDetails extends React.Component {
 		let path = "payperview/"+this.props.match.params.movie_id
 		this.props.history.push(path);
 	
+	}
+
+	unableToPlay(){
+		alert("Cannot play requested video. PLease try again later.")
 	}
 	
 	subscribe(){
@@ -222,6 +227,7 @@ class ViewMovieDetails extends React.Component {
 					height={500} 
 					controls={true}
 					playing={this.state.playing}
+					onError={this.unableToPlay.bind(this)}
 					onStart={this.checkValidity.bind(this)}/>
 				</Grid>
 				</div>
@@ -230,9 +236,9 @@ class ViewMovieDetails extends React.Component {
 				<Grid container justify = "center">
 				<div class="w75">
 				
-				<form  onSubmit={this.rateNow.bind(this)}>
+				<form style={{maxWidth:'none'}} onSubmit={this.rateNow.bind(this)}>
 					<div>
-						<h2>Rate the movie</h2>
+						<h2 style={{textAlign:'left'}}>Rate the movie</h2>
 						<StarRatingComponent
 							required
 							name="rate1"
@@ -303,7 +309,7 @@ class ViewMovieDetails extends React.Component {
 					{this.state.errMsg == "Movie needs pay per view, please pay to view the movie"?
 					<Link to={'/payperview/'+this.props.match.params.movie_id}  target="_blank">Pay Now</Link>
 					:
-					<Link to={'/payperview/'+this.props.match.params.movie_id.id}  target="_blank">Subscribe</Link>
+					<Link to={'/subscribe/'+this.props.match.params.movie_id}  target="_blank">Subscribe</Link>
 										}
 				  </div>
 				</Modal>

@@ -4,14 +4,13 @@ import {Redirect} from 'react-router-dom';
 import * as getData from '../actions/movieAction';
 import {bindActionCreators} from "redux";
 import Button from '@material-ui/core/Button';
+import PrimarySearchAppBar from "./searchbar";
 
 const styles = {
     container: {
         textAlign: "center"
     }
 };
-
-
 
 
 class AddNewMovie extends React.Component{
@@ -209,6 +208,8 @@ class AddNewMovie extends React.Component{
         
 
 		return(
+        <div>
+            <PrimarySearchAppBar/>
             <div  style={styles.container}>
             {this.state.editFlow && this.state.editFlow == true ? 
             <h1>Edit Movie</h1>
@@ -378,6 +379,7 @@ class AddNewMovie extends React.Component{
             }
                 </form>
 			</div>
+            </div>
 		)
 	}
 }

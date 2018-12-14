@@ -199,6 +199,9 @@ input[type="checkbox" i]{
     background-color: #d67612 !important;
     color:white !important;
 }
+.MuiAppBar-colorPrimary-212, .MuiAppBar-colorPrimary-182, .MuiAppBar-colorPrimary-376, .MuiAppBar-colorPrimary-530, [class*="MuiAppBar-colorPrimary-"]{
+    background-color: #d67612 !important;
+}
 .css-10nd86i{
     width:400px !important;
 }
@@ -234,3 +237,8 @@ input[type="checkbox" i]{
     font-size: 20px !important;
     color:white !important;
 }
+.cust-view{
+    width: 50%;
+    margin: 100px 300px 10px 300px;
+}
+/* PrimarySearchAppBar-root-165, MuiPaper-root-184 MuiPaper-elevation4-190 MuiAppBar-root-175 MuiAppBar-positionStatic-179 MuiAppBar-colorPrimary-182,MuiToolbar-root-211 MuiToolbar-regular-213 MuiToolbar-gutters-212 */

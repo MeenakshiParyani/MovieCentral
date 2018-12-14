@@ -56,10 +56,28 @@ export function getPlaysPerMovie() {
   };
 }
 
+export function getHighlyRatedMovies() {
+    return dispatch => {
+      return axios.get('/api/movie/scoreboard/highlyRatedMovies').then((response) => {
+          console.log(response);
+          dispatch(highlyRatedMovie(response.data));
+      });
+    };
+  }
+
+  export function getMostPopularMovies() {
+    return dispatch => {
+      return axios.get('/api/movie/scoreboard/mostPopularMovies').then((response) => {
+          console.log(response);
+          dispatch(mostPopularMovies(response.data));
+      });
+    };
+  }
+
 export function getMovieInfo(id) {
     return dispatch => {
       return axios.get('/api/movie/getMovieByID',{
-          params: { movieId: id }
+          params: { id: id }
         }).then(response => {
             
         dispatch(movieInfo(response.data));
@@ -123,6 +141,20 @@ export function validityInfo(res){
 export function allMovies(res){
     return{
         type:"ALL_MOVIES",
+        payload:res
+    }
+}
+
+export function highlyRatedMovie(res){
+    return{
+        type:"HIGHLY_RATED_MOVIES",
+        payload:res
+    }
+}
+
+export function mostPopularMovies(res){
+    return{
+        type:"MOST_POPULAR_MOVIES",
         payload:res
     }
 }

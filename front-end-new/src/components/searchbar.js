@@ -1,5 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
+import {bindActionCreators} from "redux";
+import {connect} from "react-redux";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
@@ -17,6 +19,8 @@ import MailIcon from "@material-ui/icons/Mail";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import { Redirect } from "react-router-dom";
+import {customerData} from "./../reducers/reducer_customer";
+import * as getData from "./../actions/customerAction";
 
 const styles = theme => ({
   root: {
@@ -89,12 +93,19 @@ const styles = theme => ({
 });
 
 class PrimarySearchAppBar extends React.Component {
-  state = {
-    anchorEl: null,
-    mobileMoreAnchorEl: null,
-    shouldRedirectToLogin: false,
-    shouldRedirectToRegister: false
-  };
+
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      anchorEl: null,
+      mobileMoreAnchorEl: null,
+      shouldRedirectToLogin: false,
+      shouldRedirectToRegister: false
+    };
+    //this.sportsCornerPanel= this.sportsCornerPanel.bind(this);
+}
+  
 
   handleProfileMenuOpen = event => {
     this.setState({ anchorEl: event.currentTarget });
@@ -116,6 +127,24 @@ class PrimarySearchAppBar extends React.Component {
       shouldRedirectToLogin: true
     });
   }
+  
+  componentWillMount(){
+    console.log(this.props);
+  }
+
+
+  signOut(){
+    this.props.signOut()
+    .then(res => {
+      console.log(res);
+      sessionStorage.removeItem("userId");
+      sessionStorage.removeItem('userRole');
+      console.log(this.state.message);
+      this.setState({
+        shouldRedirectToLogin: true
+       });
+    });
+  }
 
   handleMobileMenuOpen = event => {
     this.setState({ mobileMoreAnchorEl: event.currentTarget });
@@ -132,11 +161,35 @@ class PrimarySearchAppBar extends React.Component {
     });
   }
 
+  addMovie(){
+    this.setState({
+      shouldRedirectToAddMovie : true
+    });
+  }
+
+  viewDashboard(){
+    this.setState({
+      shouldRedirectToDashboard : true
+    });
+  }
+  shouldRedirectToLanding
+  myAccount(){
+    this.setState({
+      shouldRedirectToMyAccount : true
+    });
+  }
+  onLanding(){
+    this.setState({
+      shouldRedirectToLanding : true
+    });
+  }
+
   render() {
     const { anchorEl, mobileMoreAnchorEl } = this.state;
     const { classes } = this.props;
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+    const { customerData } = this.props;
 
     if(this.state.shouldRedirectToLogin)
         return (<Redirect to={{
@@ -150,8 +203,24 @@ class PrimarySearchAppBar extends React.Component {
 
     if(this.state.shouldRedirectToScoreBoard)
         return (<Redirect to={{
+      pathname: '/movieScoreBoard'
+    }} />)
+    if(this.state.shouldRedirectToAddMovie)
+        return (<Redirect to={{
+      pathname: '/addMovie'
+    }} />)
+    if(this.state.shouldRedirectToDashboard)
+        return (<Redirect to={{
+      pathname: '/adminDashboard'
+    }} />)
+    if(this.state.shouldRedirectToMyAccount)
+        return (<Redirect to={{
+      pathname: '/userDetails'
+    }} />)
+    if(this.state.shouldRedirectToLanding)
+        return (<Redirect to={{
       pathname: '/landing'
-}} />)
+    }} />)
     const renderMenu = (
       <Menu
         anchorEl={anchorEl}
@@ -160,8 +229,15 @@ class PrimarySearchAppBar extends React.Component {
         open={isMenuOpen}
         onClose={this.handleMenuClose}
       >
+      if()
+      {!sessionStorage.getItem('userRole') || sessionStorage.getItem("userId") === "" ?
+      <div>
         <MenuItem onClick={this.handleLoginRedirect}>Login</MenuItem>
         <MenuItem onClick={this.handleSignupRedirect}>Signup</MenuItem>
+        </div>
+          :
+          <MenuItem onClick={this.signOut.bind(this)}>Signout</MenuItem>
+          }
       </Menu>
     );
 
@@ -214,6 +290,7 @@ class PrimarySearchAppBar extends React.Component {
               variant="h6"
               color="inherit"
               noWrap
+              onClick={this.onLanding.bind(this)}
             >
               Movies
             </Typography>
@@ -224,6 +301,8 @@ class PrimarySearchAppBar extends React.Component {
             </div>
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
+            {sessionStorage.getItem('userRole') === 'CUSTOMER'?
+            <div class="display-inline-flex">
             <Typography
               className={classes.title}
               style={{marginRight:30,cursor:'pointer',marginTop:5}}
@@ -241,9 +320,43 @@ class PrimarySearchAppBar extends React.Component {
               variant="h6"
               color="inherit"
               noWrap
+              onClick={this.myAccount.bind(this)}
             >
                My Account
             </Typography>
+            </div>
+            :
+            <div>
+            {sessionStorage.getItem('userRole') === 'ADMIN'?
+            <div class="display-inline-flex">
+            <Typography
+              className={classes.title}
+              style={{marginRight:30,cursor:'pointer',marginTop:5}}
+              variant="h6"
+              color="inherit"
+              noWrap
+              onClick={this.addMovie.bind(this)}
+            >
+              Add Movie
+            </Typography>
+
+            <Typography
+              className={classes.title}
+              style={{marginRight:30,cursor:'pointer',marginTop:5}}
+              variant="h6"
+              color="inherit"
+              noWrap
+              onClick={this.viewDashboard.bind(this)}
+            >
+               View Dashboard
+            </Typography>
+            </div>
+            :
+            ""
+          }
+          </div>
+            }
+            
               <IconButton
                 aria-owns={isMenuOpen ? "material-appbar" : undefined}
                 aria-haspopup="true"
@@ -275,4 +388,18 @@ PrimarySearchAppBar.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(PrimarySearchAppBar);
+
+function mapStateToProps(state){
+  return{
+      customerData : state.CustomerReducer
+  };
+}
+
+function mapDispatchToProps(dispatch){
+  return bindActionCreators(getData,dispatch)
+
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(withStyles(styles)(PrimarySearchAppBar));
+
+// export default withStyles(styles)(PrimarySearchAppBar);

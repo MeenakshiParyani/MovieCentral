@@ -21,4 +21,5 @@ public class PopularMovieDetails {
     private String director;
     private Genre genre;
     private List<String> actors;
+    private String imageUrl;
 }

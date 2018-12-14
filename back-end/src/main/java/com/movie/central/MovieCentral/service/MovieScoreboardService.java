@@ -52,6 +52,7 @@ public class MovieScoreboardService {
                         playDet.setAverageRating(((BigDecimal) obj[2]).doubleValue());
                     else
                         playDet.setAverageRating(0.0);
+                    playDet.setImageUrl((String) obj[3]);
                     Movie m = movieRepository.getOne(((BigInteger)obj[0]).longValue());
                     playDet.setAverageRating(m.getAverageRating());
                     playDet.setActors(m.getActors().stream().map(movie -> movie.getName()).collect(Collectors.toList()));
@@ -85,6 +86,7 @@ public class MovieScoreboardService {
                     playDet.setName((String) obj[1]);
                     playDet.setPlayCount((BigInteger)obj[2]);
                     playDet.setAverageRating((Double)obj[3]);
+                    playDet.setImageUrl((String)obj[4]);
                     Movie m = movieRepository.getOne(((BigInteger)obj[0]).longValue());
                     playDet.setActors(m.getActors().stream().map(movie -> movie.getName()).collect(Collectors.toList()));
                     playDet.setDirector(m.getDirector().getName());

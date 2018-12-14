@@ -91,6 +91,15 @@ public class MovieService {
         return movieRepository.findMovieById(id);
     }
 
+    public Movie findMovieById(Long movieId){
+        Optional<Movie> movie = movieRepository.findById(movieId);
+        Movie foundMovie = new Movie();
+        if(movie.isPresent()){
+            foundMovie = movie.get();
+        }
+        return foundMovie;
+    }
+
 
     public Set<Movie> searchMoviesByKeywords(String[] keywords){
         Set<Movie> result = new HashSet<>();

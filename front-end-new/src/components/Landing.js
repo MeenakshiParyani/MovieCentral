@@ -16,6 +16,7 @@ import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import * as getCustomerData from '../actions/customerAction';
 import { Redirect, Link } from "react-router-dom";
+import PrimarySearchAppBar from "./searchbar";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 
@@ -278,6 +279,8 @@ class Landing extends React.Component{
         }} />)
 
         return(
+            <div>
+        <PrimarySearchAppBar/>
             <div  style={styles.container}>
                 <div>
                 <ExpansionPanel>
@@ -415,6 +418,7 @@ class Landing extends React.Component{
                 }
 
 
+            </div>
             </div>
         )
     }

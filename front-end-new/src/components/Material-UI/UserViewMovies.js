@@ -9,9 +9,9 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import AddNewMovie from './../AddNewMovie';
-import UserTableView from './UserTableView';
-import {customerData} from "../../reducers/reducer_customer";
-import * as getData from "../../actions/customerAction";
+import ViewInUser from './ViewInUser';
+import {movieData} from "../../reducers/reducer-movie";
+import * as getData from "../../actions/movieAction";
 
 const styles = {
     container: {
@@ -26,76 +26,58 @@ class UserViewMovies extends React.Component {
 	constructor(props){
         super(props);
         this.state= {
-            viewList: [],
-            panel:""
+			highlyRatedMovies: [],
+			mostPopularMovies:[],
+			panel:"",
+			type:""
         }
     }
 
-    componentWillReceiveProps(nextProps) {
-        console.log(nextProps);
-		if(nextProps){
+	componentWillReceiveProps(nextProps) {
+		console.log(nextProps);
+		if(nextProps.type){
+			this.setState({
+				type : nextProps.type
+			});
+		}
+        if(nextProps.movieData.data.highlyRatedMovies){
             this.setState({
-                viewList : nextProps.viewList
+				highlyRatedMovies : nextProps.movieData.data.highlyRatedMovies
+            });
+		}
+		if(nextProps.movieData.data.mostPopularMovies){
+            this.setState({
+				mostPopularMovies : nextProps.movieData.data.mostPopularMovies
             });
         }
     }
     componentWillMount(){
         console.log(this.props);
-        //this.props.getPlayHistory(this.props.match.params.user_id);
-        //this.props.getTopTenMovies();
-        //this.props.getMovieDetails(movie_id);
+		this.props.getHighlyRatedMovies();
+		this.props.getMostPopularMovies();
     }
 
 
     render() {
-		const { customerData } = this.props;
+		const { movieData } = this.props;
 
         return (
             <div style={styles.container} class="mt40">
-			<div>  
-				{this.state.moviePlayingHistory && this.state.moviePlayingHistory.map((movieObj,i) => {
-						return (
-							<div  style={{ display: 'inline-flex' }}  class="play-history-tile">
-							<div>
-							<img
-								  className="img-fluid img-thumbnail"
-								  src={movieObj.movie.imageUrl}
-								  alt="http://placehold.it/400x300"
-								  style={{
-									width: '110px',
-									height: '100px'
-								  }}
-								/>
-								</div>
-								<div style={{textAlign:'left'}} class="ml30">
-								<label class="bold-font"> Movie Title : {movieObj.movie.title}</label>
-								<div> Actors :  
-									{movieObj.movie.actors.map((row,i) => {
-											return (
-												<label key={i}>
-													<label> {row.name}, </label> 
-												</label>
-											);
-										})}
-								</div>
-								<div>Director : {movieObj.movie.director.name}</div>
-								<div>Play time : {(new Intl.DateTimeFormat('en-US', {year: 'numeric', month: '2-digit',day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit'}).format(new Date(Date.UTC(movieObj.playTime.slice(0, 1), movieObj.playTime.slice(1, 2), movieObj.playTime.slice(2, 3), movieObj.playTime.slice(3, 4), movieObj.playTime.slice(4, 5), movieObj.playTime.slice(5, 6)))))}</div>
-								</div>
-								
-								</div>
-						);
-					})}
-			</div>
-			
+			{this.state.type === 'HR' ?
+			<ViewInUser viewList={this.state.highlyRatedMovies}/>
+			:
+			<ViewInUser viewList={this.state.mostPopularMovies}/>
+		}
             </div>
         );
     }
 }
 
 
+
 function mapStateToProps(state){
     return{
-        customerData : state.CustomerReducer
+        movieData : state.MovieReducer
     };
 }
 

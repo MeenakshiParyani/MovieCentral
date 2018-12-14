@@ -16,6 +16,7 @@ import Subscription from './components/Subscription';
 import MovieScoreBoard from './components/Material-UI/MovieScoreBoard';
 import temporaryLogic from './components/temporaryLogic';
 import ErrorPage from './components/ErrorPage';
+import CustomerDetails from "./components/Material-UI/CustomerDetails";
 
 class App extends Component {
   render() {
@@ -23,24 +24,7 @@ class App extends Component {
       <BrowserRouter>
         <div>
           {/*<Home/>*/}
-          <PrimarySearchAppBar>
-            <div className="App">
-              <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo" />
-                <p>
-                  Edit <code>src/App.js</code> and save to reload.
-                </p>
-                <a
-                  className="App-link"
-                  href="https://reactjs.org"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Learn React
-                </a>
-              </header>
-            </div>
-          </PrimarySearchAppBar>
+          {/* <PrimarySearchAppBar/> */}
 
           <Route path={`/addMovie`} component={AddNewMovie} />
           <Route path={`/editMovie/:movie_id`} component={AddNewMovie} />
@@ -51,10 +35,11 @@ class App extends Component {
           <Route path={`/getPlayHistory/:user_id`} component={CustomerPlayHistory}></Route>
         	<Route path={`/movie-details/:movie_id`} component={ViewMovieDetails}></Route>
           <Route path={"/payperview/:movie_id"} component={SubscribePayPerView} />
-          <Route path={"/subscribe"} component={Subscription}/>
+          <Route path={"/subscribe/:movie_id"} component={Subscription}/>
           <Route path={"/movieScoreBoard"} component={MovieScoreBoard}/>
           <Route path={"/errorPage"} component={ErrorPage}/>
             <Route path={"/logic"} component={temporaryLogic}/>
+            <Route path={"/userDetails"} component={CustomerDetails} />
         </div>
       </BrowserRouter>
     );

@@ -15,6 +15,7 @@ import SubscribePayPerView from "./components/SubscribePayPerView";
 import Subscription from "./components/Subscription";
 import temporaryLogic from "./components/temporaryLogic";
 
+
 class App extends Component {
   render() {
     return (

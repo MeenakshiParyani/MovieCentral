@@ -8,18 +8,22 @@ import * as getData from '../actions/movieAction';
 import {BrowserRouter, Route, Link} from 'react-router-dom';
 import {bindActionCreators} from "redux";
 import NavTabs from './Material-UI/NavTabs';
+import PrimarySearchAppBar from "./searchbar";
 
 
 class AdminDashboard extends React.Component{
     render() {
-        if(sessionStorage.getItem("userRole") === 'CUSTOMER'){
+        if(!sessionStorage.getItem("userRole") || sessionStorage.getItem("userRole") === 'CUSTOMER'){
             return (<Redirect to={{
                 pathname: '/errorPage'
           }} />)
         }
         return (
+            <div>
+                <PrimarySearchAppBar/>
             <div className="container-fluid">
                 <NavTabs/>
+            </div>
             </div>
         )
     }

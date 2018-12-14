@@ -7,12 +7,17 @@ import TextField from '@material-ui/core/TextField';
 import axios from 'axios/index';
 import CreditCardTemplate from './CreditCardTemplate';
 import Grid from '@material-ui/core/Grid';
+import { Redirect } from "react-router-dom";
 import Modal from '@material-ui/core/Modal';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle'
+import DialogTitle from '@material-ui/core/DialogTitle';
+import {bindActionCreators} from "redux";
+import {connect} from "react-redux";
+import {customerData} from "./../reducers/reducer_customer";
+import * as getData from "./../actions/customerAction";
 
 
 const styles = theme => ({
@@ -54,24 +59,43 @@ class SubscribePayPerView extends Component {
 
     handleSubmit(e) {
 
-        let subscribePayPerViewAPI = "/api/customer/subscribe-payperview";
         let apiPayload = {};
-        apiPayload.movieId = 2;
-        apiPayload.customerId = 2;
+        apiPayload.movieId = this.props.match.params.movie_id;
+        apiPayload.customerId = sessionStorage.getItem('userId');
         apiPayload.price = '5';
-
-
-        axios.post(subscribePayPerViewAPI, apiPayload)
-            .then(res => {
-                this.props.sendResult(res.data.result)
+        this.props.subscribePayPerView(apiPayload).then(res => {
+            alert("Payment Successful");
+            // do nothing
+            this.setState({
+                redirectBack: true
             })
-            .catch(err => {
-                console.error(err);
-            });
+          })
+          .catch(err => {
+            // redirect to login
+            alert("Payment Unsuccessful");
+            this.setState({
+                redirectLanding: true
+            })
+          });
+        
+        
+
+        // axios.post(subscribePayPerViewAPI, apiPayload)
+        //     .then(res => {
+        //         this.props.sendResult(res.data.result).then(response => {
+        //             alert('Payment Successful');
+        //             this.setState({
+        //                 redirectBack : true
+        //             })
+        //         })
+        //     })
+        //     .catch(err => {
+        //         console.error(err);
+        //     });
 
 
-        e.preventDefault();
-        alert('Payment Successful');
+        // e.preventDefault();
+        
     }
 
     componentWillMount() {
@@ -85,6 +109,17 @@ class SubscribePayPerView extends Component {
 
     render() {
         const classes = this.props;
+        let routeUrl = "/movie-details/"+this.props.match.params.movie_id;
+        if(this.state.redirectBack)
+        return (<Redirect to={{
+            pathname: routeUrl
+        }} />)
+
+        if(this.state.redirectLanding)
+        return (<Redirect to={{
+            pathname: '/login'
+        }} />)
+
         return (<div>
             <Grid container justify="center">
             <h4>Pay-per-view rate for this movie is $5.</h4>
@@ -109,7 +144,7 @@ class SubscribePayPerView extends Component {
             <Button onClick={this.handleClose} color="primary">
               Cancel
             </Button>
-            <Button onClick={this.handleSubmit} color="primary" autoFocus>
+            <Button onClick={this.handleSubmit.bind(this)} color="primary" autoFocus>
               Pay Now
             </Button>
           </DialogActions>
@@ -124,4 +159,18 @@ class SubscribePayPerView extends Component {
 }
 
 
-export default SubscribePayPerView;
+
+function mapStateToProps(state){
+    return{
+        customerData : state.CustomerReducer
+    };
+}
+
+function mapDispatchToProps(dispatch){
+    return bindActionCreators(getData,dispatch)
+
+}
+
+
+export default connect(mapStateToProps,mapDispatchToProps)(SubscribePayPerView);
+// export default SubscribePayPerView;

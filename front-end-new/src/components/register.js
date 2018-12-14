@@ -9,6 +9,7 @@ import { withStyles } from "@material-ui/core/styles";
 import MenuItem from "@material-ui/core/MenuItem";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import PrimarySearchAppBar from "./searchbar";
 import { customerData } from "./../reducers/reducer_customer";
 import * as getData from "./../actions/customerAction";
 
@@ -37,7 +38,7 @@ class Register extends React.Component {
 
         console.log(res)
         if(res &&  res.data && res.data.message)
-          alert(res.response.data.message)
+          alert(res.data.message)
 
         this.setState({
             redirectLogin: true
@@ -62,6 +63,8 @@ class Register extends React.Component {
     }} />)
 
     return (
+      <div>
+        <PrimarySearchAppBar/>
       <div style={styles.container}>
         <h1>Register User</h1>
         <form style={{ marginBottom: "40px" }} noValidate autoComplete="off">
@@ -128,6 +131,7 @@ class Register extends React.Component {
             Register User
           </Button>
         </form>
+      </div>
       </div>
     );
   }

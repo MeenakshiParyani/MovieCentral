@@ -10,6 +10,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import { loginData } from "./../reducers/reducer_customer";
+import PrimarySearchAppBar from "./searchbar";
 import * as getData from "./../actions/customerAction";
 
 const styles = {
@@ -89,6 +90,8 @@ class Login extends React.Component {
 
 
     return (
+      <div>
+        <PrimarySearchAppBar/>
       <div style={styles.container}>
         <h1>Login</h1>
         <form style={{ marginBottom: "40px" }}>
@@ -127,6 +130,7 @@ class Login extends React.Component {
             Login
           </Button>
         </form>
+      </div>
       </div>
     );
   }

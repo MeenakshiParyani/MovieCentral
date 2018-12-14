@@ -22,6 +22,16 @@ export function getCustomerInfo(customer_id) {
   };
 }
 
+export function signOut() {
+  return dispatch => {
+    return axios
+      .get("/api/customer/logout")
+      .then(response => {
+
+      });
+  };
+}
+
 
 
 export function getPlayHistory(customer_id) {
@@ -56,6 +66,23 @@ export function registerUser(user) {
       console.log(response)
       dispatch(register(response));
       return response;
+    });
+  };
+}
+
+
+export function subscribePayPerView(payload) {
+  return dispatch => {
+    return axios.post("/api/customer/subscribe-payperview", payload).then(response => {
+
+    });
+  };
+}
+
+export function subscribe(payload) {
+  return dispatch => {
+    return axios.post("/api/customer/subscribe", payload).then(response => {
+
     });
   };
 }

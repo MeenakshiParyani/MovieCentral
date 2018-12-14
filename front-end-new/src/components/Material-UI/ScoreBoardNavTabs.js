@@ -58,10 +58,10 @@ class ScoreBoardNavTabs extends React.Component {
                         </Tabs>
                     </AppBar>
                     {value === 0 && <TabContainer>
-                        <UserViewMovies  viewList={this.state.topTenCustomers}/>
+                        <UserViewMovies type={"HR"}/>
                     </TabContainer>}
                     {value === 1 && <TabContainer>
-                        <UserViewMovies  viewList={this.state.topTenCustomers}/>
+                        <UserViewMovies type={"MP"}/>
                     </TabContainer>}
                 </div>
             </NoSsr>

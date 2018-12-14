@@ -13,6 +13,10 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle'
+import { Redirect } from "react-router-dom";
+import {bindActionCreators} from "redux";
+import {connect} from "react-redux";
+import * as getData from "./../actions/customerAction";
 
 
 const styles = theme => ({
@@ -63,28 +67,58 @@ class Subscription extends Component {
 
     handleSubmit(e) {
 
-        let SubscriptionAPI = "/api/customer/subscribe";
         let apiPayload = {};
-        apiPayload.customer_id = '';
-        apiPayload.noOfMonths = '';
-        apiPayload.price = '';
-
-
-        axios.post(SubscriptionAPI, apiPayload)
-            .then(res => {
-                this.props.sendResult(res.data.result)
+        apiPayload.months = this.state.months;
+        apiPayload.customerId = sessionStorage.getItem('userId');
+        apiPayload.price = this.state.months * 10;
+        this.props.subscribe(apiPayload).then(res => {
+            alert("Payment Successful");
+            // do nothing
+            this.setState({
+                redirectBack: true
             })
-            .catch(err => {
-                console.error(err);
-            });
+          })
+          .catch(err => {
+            // redirect to login
+            alert("Payment Unsuccessful");
+            this.setState({
+                redirectLanding: true
+            })
+          });
+
+        // let SubscriptionAPI = "/api/customer/subscribe";
+        // let apiPayload = {};
+        // apiPayload.customer_id = '';
+        // apiPayload.noOfMonths = '';
+        // apiPayload.price = '';
 
 
-        e.preventDefault();
-        alert('Payment Successful');
+        // axios.post(SubscriptionAPI, apiPayload)
+        //     .then(res => {
+        //         this.props.sendResult(res.data.result)
+        //     })
+        //     .catch(err => {
+        //         console.error(err);
+        //     });
+
+
+        // e.preventDefault();
+        // alert('Payment Successful');
     }
 
     render() {
         const classes = this.props;
+        //alert();
+        let routeUrl = "/movie-details/"+this.props.match.params.movie_id;
+        if(this.state.redirectBack)
+        return (<Redirect to={{
+            pathname: routeUrl
+        }} />)
+
+        if(this.state.redirectLanding)
+        return (<Redirect to={{
+            pathname: '/login'
+        }} />)
         return (<div>
             <Grid container justify="center">
                 <h4>Subscribe now for just $10/month.</h4>
@@ -129,7 +163,7 @@ class Subscription extends Component {
                     <Button onClick={this.handleClose} color="primary">
                         Cancel
             </Button>
-                    <Button onClick={this.handleSubmit} color="primary" autoFocus>
+                    <Button onClick={this.handleSubmit.bind(this)} color="primary" autoFocus>
                         Pay Now
             </Button>
                 </DialogActions>
@@ -144,4 +178,19 @@ class Subscription extends Component {
 }
 
 
-export default Subscription;
+// export default Subscription;
+
+
+function mapStateToProps(state){
+    return{
+        customerData : state.CustomerReducer
+    };
+}
+
+function mapDispatchToProps(dispatch){
+    return bindActionCreators(getData,dispatch)
+
+}
+
+
+export default connect(mapStateToProps,mapDispatchToProps)(Subscription);

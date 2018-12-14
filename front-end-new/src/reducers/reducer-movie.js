@@ -5,7 +5,9 @@ export const data = (state =  {
 	moviesList:[],
 	message:"",
 	playPerViewList:[],
-	topTenMovies:[]
+	topTenMovies:[],
+	highlyRatedMovies:[],
+	mostPopularMovies:[]
 }, action) =>{
 
 	switch (action.type) {
@@ -35,6 +37,20 @@ export const data = (state =  {
 			state = {
 				...state,
 				moviesList: action.payload.result
+			  };
+			  break;
+		case "HIGHLY_RATED_MOVIES":
+            console.log("In movie add"+action.payload.result);
+			state = {
+				...state,
+				highlyRatedMovies: action.payload.result
+			  };
+			  break;
+		case "MOST_POPULAR_MOVIES":
+            console.log("In movie add"+action.payload.result);
+			state = {
+				...state,
+				mostPopularMovies: action.payload.result
 			  };
 			  break;
 		case "TOP_TEN_MOVIES":
