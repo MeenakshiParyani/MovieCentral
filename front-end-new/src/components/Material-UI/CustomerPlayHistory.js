@@ -86,7 +86,9 @@ class CustomerPlayHistory extends React.Component {
             <div style={styles.container} class="mt40">
 			<h2 >Movie Playing History</h2>
 			<div>  
-				{this.state.moviePlayingHistory && this.state.moviePlayingHistory.map((movieObj,i) => {
+				{this.state.moviePlayingHistory && this.state.moviePlayingHistory.length > 0 ?
+				<div>
+					{this.state.moviePlayingHistory.map((movieObj,i) => {
 						return (
 							<div  style={{ display: 'inline-flex' }}  class="play-history-tile">
 							<div>
@@ -112,17 +114,20 @@ class CustomerPlayHistory extends React.Component {
 										})}
 								</div>
 								<div>Director : {movieObj.movie.director.name}</div>
-								<div>Play time : {(new Intl.DateTimeFormat('en-US', {year: 'numeric', month: '2-digit',day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit'}).format(new Date(Date.UTC(movieObj.playTime.slice(0, 1), movieObj.playTime.slice(1, 2), movieObj.playTime.slice(2, 3), movieObj.playTime.slice(3, 4), movieObj.playTime.slice(4, 5), movieObj.playTime.slice(5, 6)))))}</div>
+								<div>Play time : {movieObj.playTime.slice(0, 1)} / {movieObj.playTime.slice(1, 2)} / {movieObj.playTime.slice(2, 3)}, {movieObj.playTime.slice(3, 4)} : {movieObj.playTime.slice(4, 5)} : {movieObj.playTime.slice(5, 6)}</div>
 								</div>
 								
 								</div>
 								
 						);
 					})}
+				</div>
+			:
+			<h4>No play history for this user as of now.</h4>}
 			</div>
 			
             </div>
-			>/</div>
+			</div>
         );
     }
 }

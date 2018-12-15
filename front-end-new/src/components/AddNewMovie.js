@@ -220,7 +220,7 @@ class AddNewMovie extends React.Component{
         const { classes } = this.props;
         if(this.state.redirectHome)
             return (<Redirect to={{
-                pathname: '/adminDashboard'
+                pathname: '/landing'
             }} />)
             const {errors} = this.state;
 

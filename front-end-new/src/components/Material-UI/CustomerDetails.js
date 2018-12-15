@@ -118,7 +118,7 @@ class CustomerDetails extends React.Component {
                                     <TableCell>
                                         {/* {this.state.customerInfo.registrationDateTime.slice(0, 1)/this.state.customerInfo.registrationDateTime.slice(1, 2)/this.state.customerInfo.registrationDateTime.slice(2, 3)}, {this.state.customerInfo.registrationDateTime.slice(3, 4)}:{this.state.customerInfo.registrationDateTime.slice(4, 5)}:{this.state.customerInfo.registrationDateTime.slice(5, 6)} */}
                                         {/* {(new Date(this.state.customerInfo.registrationDateTime.slice(0, 1), this.state.customerInfo.registrationDateTime.slice(1, 2), this.state.customerInfo.registrationDateTime.slice(2, 3), this.state.customerInfo.registrationDateTime.slice(3, 4), this.state.customerInfo.registrationDateTime.slice(4, 5), this.state.customerInfo.registrationDateTime.slice(5, 6))).toString()} */}
-                                    {(new Intl.DateTimeFormat('en-US', {year: 'numeric', month: '2-digit',day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit'}).format(new Date(Date.UTC(this.state.customerInfo.registrationDateTime.slice(0, 1), this.state.customerInfo.registrationDateTime.slice(1, 2)-1, this.state.customerInfo.registrationDateTime.slice(2, 3), this.state.customerInfo.registrationDateTime.slice(3, 4), this.state.customerInfo.registrationDateTime.slice(4, 5), this.state.customerInfo.registrationDateTime.slice(5, 6)))))}
+                                    {this.state.customerInfo.registrationDateTime.slice(0, 1)}/{this.state.customerInfo.registrationDateTime.slice(1, 2)}/{this.state.customerInfo.registrationDateTime.slice(2, 3)}, {this.state.customerInfo.registrationDateTime.slice(3, 4)}:{this.state.customerInfo.registrationDateTime.slice(4, 5)}:{this.state.customerInfo.registrationDateTime.slice(5, 6)} PST
                                     </TableCell>
                                 </TableRow>   : "" 
                             }
@@ -129,7 +129,7 @@ class CustomerDetails extends React.Component {
                                     </TableCell >
                                     <TableCell style={{fontWeight:700,float:'left'}}>
                                     {this.state.customerInfo.subscriptionEndTime && this.state.customerInfo.subscriptionEndTime.length > 0 ?
-                                    <h4>{(new Intl.DateTimeFormat('en-US', {year: 'numeric', month: '2-digit',day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit'}).format(new Date(Date.UTC(this.state.customerInfo.subscriptionEndTime.slice(0, 1), this.state.customerInfo.subscriptionEndTime.slice(1, 2)-1, this.state.customerInfo.subscriptionEndTime.slice(2, 3), this.state.customerInfo.subscriptionEndTime.slice(3, 4), this.state.customerInfo.subscriptionEndTime.slice(4, 5), this.state.customerInfo.subscriptionEndTime.slice(5, 6)))))}</h4>
+                                    <h4>{this.state.customerInfo.subscriptionEndTime.slice(0, 1)}/{this.state.customerInfo.subscriptionEndTime.slice(1, 2)}/{this.state.customerInfo.subscriptionEndTime.slice(2, 3)}, {this.state.customerInfo.subscriptionEndTime.slice(3, 4)}:{this.state.customerInfo.subscriptionEndTime.slice(4, 5)}:00 PST</h4>
                                     : <div>No Active Subscriptions 
                                         <div class="m10"><Link to={'/subscribe-now'}>Subscribe Now </Link></div>
                                     </div>

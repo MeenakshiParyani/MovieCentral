@@ -76,6 +76,8 @@ class ViewInUser extends React.Component {
 								</div>
 								<div style={{marginTop:10}}><label>Director : {movieObj.director}</label></div>
                                 <div style={{marginTop:10}}><label>Genre : {movieObj.genre}</label></div>
+                                {movieObj.playCount ? <div style={{marginTop:10}}><label>Play Count : {movieObj.playCount}</label></div> : ""}
+                                {movieObj.averageRating ? <div style={{marginTop:10}}><label>Average Rating : {movieObj.averageRating}</label></div> : ""}
 								</div>
 								
 								</div>

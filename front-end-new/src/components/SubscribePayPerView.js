@@ -67,7 +67,7 @@ class SubscribePayPerView extends Component {
         apiPayload.price = '5';
         this.props.subscribePayPerView(apiPayload).then(res => {
             //alert("Payment Successful");
-            // do nothing
+            // do nothing 
             this.setState({
                 open1: true,
                 open:false,
