@@ -110,7 +110,7 @@ class Login extends React.Component {
         <PrimarySearchAppBar/>
       <div style={styles.container}>
         <h1>Login</h1>
-        <form style={{ marginBottom: "40px" }}>
+        <form style={{ marginBottom: "40px" }} onSubmit={this.login.bind(this)}>
           <input
             id="outlined-name"
             label="Email"
@@ -119,7 +119,9 @@ class Login extends React.Component {
             onChange={this.onChange.bind(this)}
             margin="normal"
             variant="outlined"
+            placeholder="Email"
             type="email"
+            required
             style={{ width: 500 }}
           />
           <br />
@@ -127,8 +129,10 @@ class Login extends React.Component {
             id="outlined-name"
             label="Password"
             type="password"
+            placeholder="Password"
             value={this.state.password}
             name="password"
+            required
             onChange={this.onChange.bind(this)}
             margin="normal"
             style={{ width: 500 }}
@@ -142,7 +146,7 @@ class Login extends React.Component {
             variant="contained"
             size="large"
             color="primary"
-            onClick={this.login.bind(this)}
+            type="submit"
           >
             Login
           </Button>

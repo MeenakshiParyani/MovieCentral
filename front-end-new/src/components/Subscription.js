@@ -39,14 +39,13 @@ class Subscription extends Component {
             customer_id: '',
             noOfMonths: '1',
             price: '',
-            months: '1'
+            months: '1',
+            redirectUserDetails:false,
+            open : false,
+            open1 : false,
+            redirectBack:false
         }
     }
-
-    state = {
-        open: false,
-        months: '1'
-    };
 
     result = () => '$' + this.state.months * 10;
 
@@ -95,17 +94,34 @@ class Subscription extends Component {
         this.props.subscribe(apiPayload).then(res => {
             alert("Payment Successful");
             // do nothing
-            this.setState({
-                redirectBack: true
-            })
+            if(!this.props.match.params.movie_id){
+                this.setState({
+                    redirectUserDetails: true
+                })
+            }
+            else{
+                this.setState({
+                    redirectBack: true
+                })
+            }
+            
           })
           .catch(err => {
             // redirect to login
             alert("Payment Unsuccessful");
             this.setState({
-                redirectLanding: true
+                redirectLanding: true,
+                open: true,
+                errMsg : "Payment unsuccessful"
             })
           });
+        //   .catch(err => {
+        //     // redirect to login
+        //     alert("Payment Unsuccessful");
+        //     this.setState({
+        //         redirectLanding: true
+        //     })
+        //   });
 
         // let SubscriptionAPI = "/api/customer/subscribe";
         // let apiPayload = {};
@@ -145,6 +161,11 @@ class Subscription extends Component {
         return (<Redirect to={{
             pathname: '/login'
         }} />)
+        if(this.state.redirectUserDetails)
+        return (<Redirect to={{
+            pathname: '/userDetails'
+        }} />)
+        
         
         return (<div>
             <Grid container justify="center">
@@ -197,6 +218,26 @@ class Subscription extends Component {
             </Button>
                 </DialogActions>
             </Dialog>
+            <Dialog
+          open={this.state.open1}
+          onClose={this.handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+          disableEscapeKeyDown = {true}
+          disableBackdropClick = {true}
+        >
+          <DialogTitle id="alert-dialog-title">{"Payment status"}</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              {this.state.errMsg}
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleRedirect.bind(this)} color="primary">
+              Okay
+            </Button>
+          </DialogActions>
+        </Dialog>
 
 
 

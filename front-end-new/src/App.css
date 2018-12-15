@@ -244,6 +244,10 @@ input[type="checkbox" i]{
     width: 50%;
     margin: 100px 300px 10px 300px;
 }
+.MuiSvgIcon-colorError-55, [class*="MuiSvgIcon-colorError-"] {
+    color: white !important;
+    margin-right: 20px !important;
+}
 /* PrimarySearchAppBar{
     position: fixed;
 } */

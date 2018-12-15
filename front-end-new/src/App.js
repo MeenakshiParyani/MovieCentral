@@ -41,6 +41,7 @@ class App extends Component {
         	<Route path={`/movie-details/:movie_id`} component={ViewMovieDetails}></Route>
           <Route path={"/payperview/:movie_id"} component={SubscribePayPerView} />
           <Route path={"/subscribe/:movie_id"} component={Subscription}/>
+          <Route path={"/subscribe-now"} component={Subscription}/>
           <Route path={"/movieScoreBoard"} component={MovieScoreBoard}/>
           <Route path={"/errorPage"} component={ErrorPage}/>
             <Route path={"/logic"} component={temporaryLogic}/>

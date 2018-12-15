@@ -51,7 +51,8 @@ class CustomerSearch extends React.Component {
         }
     }
     componentWillMount(){
-        console.log(this.props);
+		console.log(this.props);
+		this.props.getCustomerByName("");
         //this.props.getCustomerByName(this.state.name);
         //this.props.getTopTenMovies();
         //this.props.getMovieDetails(movie_id);
@@ -61,15 +62,16 @@ class CustomerSearch extends React.Component {
 		this.setState({
             [e.target.name]:e.target.value
         });
-		if(e.target.value == ""){
-			this.setState({
-				customerDetails : {},
-				customersByNameList : []
-			});
-		}
-		else{
-		this.props.getCustomerByName(e.target.value);			
-		}
+		// if(e.target.value == ""){
+		// 	this.setState({
+		// 		customerDetails : {},
+		// 		customersByNameList : []
+		// 	});
+		// }
+		// else{
+		// this.props.getCustomerByName(e.target.value);			
+		// }
+		this.props.getCustomerByName(e.target.value);	
     }
 
 	findCustomer(id){
