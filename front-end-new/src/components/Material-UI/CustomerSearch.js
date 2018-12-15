@@ -140,8 +140,9 @@ class CustomerSearch extends React.Component {
 						<div class="m10 bold-font">
 						{this.state.customerDetails.subscriptionEndTime && this.state.customerDetails.subscriptionEndTime.length>0 ?
 						<div>
-							Subscription End Date: 
-						{(new Intl.DateTimeFormat('en-US', {year: 'numeric', month: '2-digit',day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit'}).format(new Date(Date.UTC(this.state.customerDetails.subscriptionEndTime.slice(0, 1), this.state.customerDetails.subscriptionEndTime.slice(1, 2), this.state.customerDetails.subscriptionEndTime.slice(2, 3), this.state.customerDetails.subscriptionEndTime.slice(3, 4), this.state.customerDetails.subscriptionEndTime.slice(4, 5), this.state.customerDetails.subscriptionEndTime.slice(5, 6)))))}
+							Subscription End Date: {this.state.customerDetails.subscriptionEndTime.slice(0, 1)}/{this.state.customerDetails.subscriptionEndTime.slice(1, 2)}/{this.state.customerDetails.subscriptionEndTime.slice(2, 3)}, {this.state.customerDetails.subscriptionEndTime.slice(3, 4)} : {this.state.customerDetails.subscriptionEndTime.slice(4, 5)} : {this.state.customerDetails.subscriptionEndTime.slice(5, 6)}
+
+						{/* {(new Intl.DateTimeFormat('en-US', {year: 'numeric', month: '2-digit',day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit'}).format(new Date(Date.UTC(this.state.customerDetails.subscriptionEndTime.slice(0, 1), this.state.customerDetails.subscriptionEndTime.slice(1, 2), this.state.customerDetails.subscriptionEndTime.slice(2, 3), this.state.customerDetails.subscriptionEndTime.slice(3, 4), this.state.customerDetails.subscriptionEndTime.slice(4, 5), this.state.customerDetails.subscriptionEndTime.slice(5, 6)))))} */}
 						</div>: <div>Not Subscribed</div>}
 						</div>
 						<div></div>

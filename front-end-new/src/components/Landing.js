@@ -19,6 +19,7 @@ import { Redirect, Link } from "react-router-dom";
 import PrimarySearchAppBar from "./searchbar";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
+import { Button } from '@material-ui/core';
 
 
 const styles = {
@@ -238,28 +239,22 @@ class Landing extends React.Component{
          }else {
             this.setState({ errorText: 'Invalid format: Year should be 4-digit number' })
           }
+      }
 
-        // if(!isNaN(event.target.value)){
-        //     this.setState({
-        //         yearVal : event.target.value
-        //     });
-        //     if (event.target.value.length == 4) {
-        //         this.setState({
-        //             movieFilter:{
-        //             mpaaRatings: this.state.movieFilter.mpaaRatings,
-        //             keywords: this.state.movieFilter.keywords,
-        //             genres: this.state.movieFilter.genres,
-        //             releaseYear : event.target.value,
-        //             averageRating : this.state.movieFilter.averageRating
-        //         },
-        //         errorText: ''
-        //     });
-        //  } else {
-        //       this.setState({ errorText: 'Invalid format: Year should be 4-digit number' })
-        //     }
-        // }
-        
-        
+
+      resetFilter(){
+          this.setState({
+            yearVal:"",
+            movieFilter :{
+                keywords : "",
+                releaseYear : "",
+                actors : [],
+                directors : [],
+                mpaaRatings : [],
+                genres :[],
+                averageRating : ""
+            }
+          },this.applyFilters);
       }
 
     render(){
@@ -270,7 +265,7 @@ class Landing extends React.Component{
 
         //alert(sessionStorage.getItem('userId'));
         let outputCheckboxes = this.state.mpaaRatingData.map(function(string, i){
-            return (<div class="inline-block"><CheckBox value={string.value} id={'string_' + i} onChange={this.changeEvent.bind(this)} /><label class="label-checkbox" htmlFor={'string_' + i}>{string.value}</label></div>)
+            return (<div class="inline-block" style={{marginRight:15}}><CheckBox value={string.value} id={'string_' + i} onChange={this.changeEvent.bind(this)}/><label class="label-checkbox" htmlFor={'string_' + i}>{string.value}</label></div>)
         }, this);
 
         if(this.state.redirectLogin)
@@ -318,7 +313,7 @@ class Landing extends React.Component{
                                 <div className="inline-block"><TextField
                                     id="outlined-name"
                                     value={this.state.yearVal}
-                                    placeholder="Enter Search String"
+                                    placeholder="Enter Release Year"
                                     name="name"
                                     onChange={this.onYearChange.bind(this)}
                                     margin="normal"
@@ -327,7 +322,7 @@ class Landing extends React.Component{
                                     style = {{width: 500}}
                                     variant="outlined"
                                 />
-                                <label>Release Year selected : {this.state.movieFilter.releaseYear}</label></div>
+                                </div>
                             </div><br/>
                             <div className="m20">
                                 <label className="fl label-checkbox ">Average Rating : </label><br/>
@@ -364,6 +359,7 @@ class Landing extends React.Component{
                                 /> & up<br/>
                                 </div>
                             </div>
+                            <Button onClick={this.resetFilter.bind(this)}>Reset Filters</Button>
                             </div>
                             </div>
                         </Typography>

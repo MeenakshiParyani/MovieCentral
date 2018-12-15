@@ -62,7 +62,7 @@ class FinancialReportsPanel extends React.Component {
         const { financialData } = this.props;
         return (
             <div>
-                <ExpansionPanel  defaultExpanded={false}>
+                <ExpansionPanel  defaultExpanded={true}>
                     <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                         <Typography>View report for monthly subscription, pay-per-view, total unique and total unique active users</Typography>
                     </ExpansionPanelSummary>

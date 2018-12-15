@@ -381,37 +381,40 @@ class ViewMovieDetails extends React.Component {
 				<div class="bar">Ratings and Reviews</div>
 				<Grid container justify = "center">
 				<div class="w75">
-				
+				{sessionStorage.getItem("userRole") === 'CUSTOMER' ?
 				<form style={{maxWidth:'none'}} onSubmit={this.rateNow.bind(this)}>
-					<div>
-						<h2 style={{textAlign:'left'}}>Rate the movie</h2>
-						<StarRatingComponent
-							required
-							name="rate1"
-							starCount={5}
-							value={this.state.rating}
-							onStarClick={this.onStarClick.bind(this)}
-						/>
-					</div>
-					<div>
-					<TextField
-                        id="outlined-name"
-                        value={this.state.releaseYear}
-                        name="comment"
-                        required
-							onChange={(e) => this.setState({
-								comment : e.target.value
-							})}
-                        margin="normal"
-                        style = {{width: 500}}
-                        variant="outlined"
-						placeholder="Enter the review comment"
-                    />
-					</div>
-					<Button variant="contained" size="small" color="primary"  onClick={this.rateNow.bind(this)}>
-                        Submit Rating
-                    </Button>
-				</form>
+				<div>
+					<h2 style={{textAlign:'left'}}>Rate the movie</h2>
+					<StarRatingComponent
+						required
+						name="rate1"
+						starCount={5}
+						value={this.state.rating}
+						onStarClick={this.onStarClick.bind(this)}
+					/>
+				</div>
+				<div>
+				<TextField
+					id="outlined-name"
+					value={this.state.releaseYear}
+					name="comment"
+					required
+						onChange={(e) => this.setState({
+							comment : e.target.value
+						})}
+					margin="normal"
+					style = {{width: 500}}
+					variant="outlined"
+					placeholder="Enter the review comment"
+				/>
+				</div>
+				<Button variant="contained" size="small" color="primary"  onClick={this.rateNow.bind(this)}>
+					Submit Rating
+				</Button>
+			</form>
+			:
+			""}
+				
 				<hr/>
 				
 				{this.state.movieInfo.ratings && this.state.movieInfo.ratings.length >0 ?
