@@ -218,6 +218,13 @@ class AddNewMovie extends React.Component{
 	
 	render(){
         const { classes } = this.props;
+
+        if(!sessionStorage.getItem("userRole") || sessionStorage.getItem("userRole") === 'CUSTOMER'){
+            return (<Redirect to={{
+                pathname: '/errorPage'
+          }} />)
+        }
+
         if(this.state.redirectHome)
             return (<Redirect to={{
                 pathname: '/landing'

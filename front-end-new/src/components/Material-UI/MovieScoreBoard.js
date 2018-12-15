@@ -43,6 +43,12 @@ class MovieScoreBoard extends React.Component{
 
     render() {
 
+        if(!sessionStorage.getItem("userRole") || sessionStorage.getItem("userRole") === 'ADMIN'){
+            return (<Redirect to={{
+                pathname: '/errorPage'
+          }} />)
+        }
+
     if(this.state.redirectLogin)
         return (<Redirect to={{
             pathname: '/login'

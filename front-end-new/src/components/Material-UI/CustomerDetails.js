@@ -77,6 +77,13 @@ class CustomerDetails extends React.Component {
     render() {
         const { customerData } = this.props;
         // alert("asd");
+
+        if(!sessionStorage.getItem("userRole") || sessionStorage.getItem("userRole") === 'ADMIN'){
+            return (<Redirect to={{
+                pathname: '/errorPage'
+          }} />)
+        }
+
         if(this.state.redirectLogin)
             return (<Redirect to={{
                 pathname: '/login'
