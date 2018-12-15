@@ -181,7 +181,11 @@ class ViewMovieDetails extends React.Component {
 		if(!(sessionStorage.getItem("userRole") === 'ADMIN')){
 			this.props.getCustomerValidity(sessionStorage.getItem("userId"),this.props.match.params.movie_id).then(
 				(data) => {
-					
+					//alert("asd");
+					let playHis = {};
+					playHis.customerId = sessionStorage.getItem("userId");
+					playHis.movieId = this.props.match.params.movie_id;
+					this.props.playHistory(playHis);
 				},
 				(err) => {
 					console.log(err.response);

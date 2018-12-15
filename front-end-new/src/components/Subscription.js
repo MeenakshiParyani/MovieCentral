@@ -92,55 +92,43 @@ class Subscription extends Component {
         apiPayload.customerId = sessionStorage.getItem('userId');
         apiPayload.price = this.state.months * 10;
         this.props.subscribe(apiPayload).then(res => {
-            alert("Payment Successful");
+            //alert("Payment Successful");
             // do nothing
-            if(!this.props.match.params.movie_id){
-                this.setState({
-                    redirectUserDetails: true
-                })
-            }
-            else{
-                this.setState({
-                    redirectBack: true
-                })
-            }
+
+            this.setState({
+                open: false,
+                open1:true
+            })
             
           })
           .catch(err => {
             // redirect to login
-            alert("Payment Unsuccessful");
+            //alert("Payment Unsuccessful");
             this.setState({
                 redirectLanding: true,
                 open: true,
                 errMsg : "Payment unsuccessful"
             })
           });
-        //   .catch(err => {
-        //     // redirect to login
-        //     alert("Payment Unsuccessful");
-        //     this.setState({
-        //         redirectLanding: true
-        //     })
-        //   });
+            }
+    handleRedirect(){
+        this.setState({
+            
+          redirectBack: true
+        });
+    }
 
-        // let SubscriptionAPI = "/api/customer/subscribe";
-        // let apiPayload = {};
-        // apiPayload.customer_id = '';
-        // apiPayload.noOfMonths = '';
-        // apiPayload.price = '';
-
-
-        // axios.post(SubscriptionAPI, apiPayload)
-        //     .then(res => {
-        //         this.props.sendResult(res.data.result)
-        //     })
-        //     .catch(err => {
-        //         console.error(err);
-        //     });
-
-
-        // e.preventDefault();
-        // alert('Payment Successful');
+    handleLastFlow(){
+        if(!this.props.match.params.movie_id){
+            this.setState({
+                redirectUserDetails: true
+            })
+        }
+        else{
+            this.setState({
+                redirectBack: true
+            })
+        }
     }
 
     render() {
@@ -206,7 +194,7 @@ class Subscription extends Component {
                 <DialogTitle id="alert-dialog-title">{"Are you sure?"}</DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
-                        You will be charged once you click Pay Now.
+                        You will be charged once you click Subscribe Now.
             </DialogContentText>
                 </DialogContent>
                 <DialogActions>
@@ -214,11 +202,11 @@ class Subscription extends Component {
                         Cancel
             </Button>
                     <Button onClick={this.handleSubmit.bind(this)} color="primary" autoFocus>
-                        Pay Now
+                        Subscribe Now
             </Button>
                 </DialogActions>
             </Dialog>
-            <Dialog
+        <Dialog
           open={this.state.open1}
           onClose={this.handleClose}
           aria-labelledby="alert-dialog-title"
@@ -229,11 +217,11 @@ class Subscription extends Component {
           <DialogTitle id="alert-dialog-title">{"Payment status"}</DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
-              {this.state.errMsg}
+              Successful
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.handleRedirect.bind(this)} color="primary">
+            <Button onClick={this.handleLastFlow.bind(this)} color="primary">
               Okay
             </Button>
           </DialogActions>

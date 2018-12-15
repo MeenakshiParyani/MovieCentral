@@ -29,6 +29,7 @@ class Register extends React.Component {
     super(props);
     this.state = {
       open : false,
+      open1:false,
       redirectLogin:false
     };
   }
@@ -52,6 +53,7 @@ class Register extends React.Component {
     .then(res => {
       console.log(res);
       this.setState({
+        open1: true,
           redirectLogin: true
        });
     })
@@ -72,39 +74,22 @@ class Register extends React.Component {
     });
 
   }
-  //   e.preventDefault();
-  //   this.props.registerUser(this.state)
-  //   .then( res => {
 
-  //       console.log(res)
-  //       if(res &&  res.data && res.data.message)
-  //         alert(res.data.message)
-
-  //       this.setState({
-  //           redirectLogin: true
-  //        });
-
-  //   })
-  //   .catch(err => {
-  //     console.log(err)
-  //     if(err &&  err.data && err.data.message)
-  //       alert(err.response.data.message)
-  //     else
-  //       alert("Error registering user")
-  //   });
-  // }
-
+  handleOK(){
+    this.setState({
+      redirectLogin : true
+    });
+  }
 
   render() {
     const { customerData } = this.props;
 
-    //alert(sessionStorage.getItem("userRole") != null);
-    if(sessionStorage.getItem("userRole") === 'ADMIN' || sessionStorage.getItem("userId")==='CUSTOMER')
-      return (<Redirect to={{
-          pathname: '/landing'
-    }} />)
     
-    
+    if(sessionStorage.getItem("userRole")=="CUSTOMER" || sessionStorage.getItem("userRole")=="ADMIN")
+          return (<Redirect to={{
+                pathname: '/landing'
+          }} />)
+
     if(this.state.redirectLogin)
             return (<Redirect to={{
                 pathname: '/login'
@@ -170,7 +155,6 @@ class Register extends React.Component {
           <br />
 
           <br />
-          {/*<button className="btn btn-warning mt20" onClick={this.addMovie.bind(this)}>Add Movie</button>*/}
           <Button
             variant="contained"
             size="large"
@@ -189,7 +173,7 @@ class Register extends React.Component {
           disableEscapeKeyDown = {true}
           disableBackdropClick = {true}
         >
-          <DialogTitle id="alert-dialog-title">{"Unable to Login"}</DialogTitle>
+          <DialogTitle id="alert-dialog-title">{"Unable to Signup"}</DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
               {this.state.errMsg}
@@ -197,6 +181,26 @@ class Register extends React.Component {
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">
+              Okay
+            </Button>
+          </DialogActions>
+        </Dialog>
+        <Dialog
+          open={this.state.open1}
+          onClose={this.handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+          disableEscapeKeyDown = {true}
+          disableBackdropClick = {true}
+        >
+          <DialogTitle id="alert-dialog-title">{"User Registered Successfully"}</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Please check your email to activate the account.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleOK.bind(this)} color="primary">
               Okay
             </Button>
           </DialogActions>

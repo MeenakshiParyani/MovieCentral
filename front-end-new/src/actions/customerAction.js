@@ -70,6 +70,16 @@ export function registerUser(user) {
   };
 }
 
+export function playHistory(playHis) {
+  return dispatch => {
+    return axios.post("/api/movie/add-play-history", playHis).then(response => {
+      console.log(response)
+      //dispatch(register(response));
+      return response;
+    });
+  };
+}
+
 
 export function subscribePayPerView(payload) {
   return dispatch => {
