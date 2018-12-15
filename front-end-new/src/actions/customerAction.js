@@ -1,9 +1,11 @@
 import axios from "axios/index";
 
-export function getTopTenCustomers() {
+export function getTopTenCustomers(type) {
   return dispatch => {
     return axios
-      .get("/api/customer/get_most_active_customers")
+      .get("/api/customer/get_most_active_customers",{
+        params: { type: type }
+      })
       .then(response => {
         dispatch(topTenCustomers(response.data));
       });

@@ -53,8 +53,8 @@ class ScoreBoardNavTabs extends React.Component {
                 <div className={classes.root}>
                     <AppBar position="static">
                         <Tabs fullWidth value={value} onChange={this.handleChange}>
-                            <LinkTab label="Highly Rated Movies" href="page1"/>
-                            <LinkTab label="Most Popular Movies" href="page2" />
+                            <LinkTab label="Highly Rated Movies (Last 30 days)" href="page1"/>
+                            <LinkTab label="Most Popular Movies (Last 30 days)" href="page2" />
                         </Tabs>
                     </AppBar>
                     {value === 0 && <TabContainer>

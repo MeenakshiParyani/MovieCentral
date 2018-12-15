@@ -16,7 +16,7 @@ class ErrorPage extends React.Component{
         return (
             <div className="container-fluid">
             <PrimarySearchAppBar/>
-               Oye dont mess with the routes.
+               <h1 style={{textAlign:'center'}}>Invalid Request!</h1>
             </div>
         )
     }

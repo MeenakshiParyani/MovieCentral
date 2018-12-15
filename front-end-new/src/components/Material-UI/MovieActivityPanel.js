@@ -29,7 +29,8 @@ class MovieActivityPanel extends React.Component {
         super(props);
         this.state= {
             playPerViewList: [],
-            topTenMovies : []
+            topTenMovies : [],
+            period:""
         }
     }
 
@@ -45,9 +46,20 @@ class MovieActivityPanel extends React.Component {
     componentWillMount(){
         console.log(this.props);
         this.props.getPlaysPerMovie();
-        this.props.getTopTenMovies();
+        //this.props.getTopTenMovies();
         //this.props.getMovieDetails(movie_id);
     }
+
+    getCusts(type){
+        this.props.getTopTenMovies(type);
+    }
+
+    updatePeriod(e){
+        this.setState({
+            period : e.target.value
+        },this.getCusts(e.target.value));
+    }
+
 
     render() {
         const { movieData } = this.props;
@@ -80,6 +92,12 @@ class MovieActivityPanel extends React.Component {
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails>
                         <Typography>
+                        <select onChange={this.updatePeriod.bind(this)} value={this.state.period}>
+                            <option>Select Period</option>
+                            <option value="DAY">Last 24 hours</option>
+                            <option value="WEEK">Last one week</option>
+                            <option value="YEAR">Last one month</option>
+                        </select>
                             {/*{this.state.topTenMovies.length}*/}
                             <TableViewDetails viewList={this.state.topTenMovies}/>
                         </Typography>

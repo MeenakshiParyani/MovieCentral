@@ -94,9 +94,11 @@ export function getAllMovies() {
 }
 
 
-  export function getTopTenMovies() {
+  export function getTopTenMovies(type) {
     return dispatch => {
-      return axios.get('/api/movie/most_played_movies').then(response => {
+      return axios.get('/api/movie/most_played_movies',{
+        params: { type: type }
+      }).then(response => {
         dispatch(topTenMovies(response.data));
       });
     };

@@ -323,7 +323,9 @@ class ViewMovieDetails extends React.Component {
 						<div class="m10">Release Year : {this.state.movieInfo.releaseYear}</div>
 						<div class="m10">MPAA Rating : {this.state.movieInfo.mpaaRating}</div>
 						<div class="m10">Synopsys : {this.state.movieInfo.synopsys}</div>
-						
+						<div class="m10">Studio : {this.state.movieInfo.studio}</div>
+						{/* <div class="m10">Director : {this.state.movieInfo.director && this.state.movieInfo.director.map((dir) => {return dir.name})}</div> */}
+						<div class="m10">Director : {this.state.movieInfo.director && this.state.movieInfo.director.name}</div>
 						<div class="m10">Actors : 
 							{this.state.movieInfo.actors && this.state.movieInfo.actors.map((row,i) => {
 											return (

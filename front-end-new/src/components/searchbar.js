@@ -307,6 +307,7 @@ class PrimarySearchAppBar extends React.Component {
             </div>
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
+            
             {sessionStorage.getItem('userRole') === 'CUSTOMER'?
             <div class="display-inline-flex">
             <Typography

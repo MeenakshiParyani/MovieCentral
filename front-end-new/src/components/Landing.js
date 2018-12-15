@@ -20,6 +20,12 @@ import PrimarySearchAppBar from "./searchbar";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import { Button } from '@material-ui/core';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
 
 
 const styles = {
@@ -74,8 +80,8 @@ class Landing extends React.Component{
             movieFilter :{
                 keywords : "",
                 releaseYear : "",
-                actors : [],
-                directors : [],
+                actor : "",
+                director : "",
                 mpaaRatings : [],
                 genres :[],
                 averageRating : ""
@@ -139,7 +145,9 @@ class Landing extends React.Component{
                 keywords:this.state.movieFilter.keywords,
                 releaseYear : this.state.movieFilter.releaseYear,
                 mpaaRatings : this.state.movieFilter.mpaaRatings,
-                averageRating : this.state.movieFilter.averageRating
+                averageRating : this.state.movieFilter.averageRating,
+                actor : this.state.movieFilter.actor,
+                director : this.state.movieFilter.director
             }
         },this.applyFilters);
         
@@ -154,7 +162,9 @@ class Landing extends React.Component{
                 genres: this.state.movieFilter.genres,
                 releaseYear : this.state.movieFilter.releaseYear,
                 mpaaRatings : this.state.movieFilter.mpaaRatings,
-                averageRating : this.state.movieFilter.averageRating
+                averageRating : this.state.movieFilter.averageRating,
+                actor : this.state.movieFilter.actor,
+                director : this.state.movieFilter.director
             }
         },this.applyFilters);
         
@@ -185,7 +195,9 @@ class Landing extends React.Component{
             keywords: this.state.movieFilter.keywords,
             genres: this.state.movieFilter.genres,
             releaseYear : this.state.movieFilter.releaseYear,
-            averageRating : this.state.movieFilter.averageRating
+            averageRating : this.state.movieFilter.averageRating,
+            actor : this.state.movieFilter.actor,
+            director : this.state.movieFilter.director
         }
         },this.applyFilters);
     }
@@ -198,7 +210,9 @@ class Landing extends React.Component{
             mpaaRatings: this.state.movieFilter.mpaaRatings,
             keywords: this.state.movieFilter.keywords,
             genres: this.state.movieFilter.genres,
-            releaseYear : this.state.movieFilter.releaseYear
+            releaseYear : this.state.movieFilter.releaseYear,
+            actor : this.state.movieFilter.actor,
+            director : this.state.movieFilter.director
             }
         },this.applyFilters);
     }
@@ -218,7 +232,9 @@ class Landing extends React.Component{
                     keywords: this.state.movieFilter.keywords,
                     genres: this.state.movieFilter.genres,
                     releaseYear : event.target.value,
-                    averageRating : this.state.movieFilter.averageRating
+                    averageRating : this.state.movieFilter.averageRating,
+                    actor : this.state.movieFilter.actor,
+                    director : this.state.movieFilter.director
                 },
                 errorText: ''
             },this.applyFilters);
@@ -229,7 +245,9 @@ class Landing extends React.Component{
                 keywords: this.state.movieFilter.keywords,
                 genres: this.state.movieFilter.genres,
                 releaseYear : event.target.value,
-                averageRating : this.state.movieFilter.averageRating
+                averageRating : this.state.movieFilter.averageRating,
+                actor : this.state.movieFilter.actor,
+                director : this.state.movieFilter.director
             },
             errorText: ''
         },this.applyFilters);
@@ -248,14 +266,44 @@ class Landing extends React.Component{
             movieFilter :{
                 keywords : "",
                 releaseYear : "",
-                actors : [],
-                directors : [],
                 mpaaRatings : [],
                 genres :[],
-                averageRating : ""
+                averageRating : "",
+                actor : "",
+                director : ""
             }
           },this.applyFilters);
       }
+
+      onActorChange(e){
+        this.setState({
+            movieFilter :{
+                keywords: this.state.movieFilter.keywords,
+                genres: this.state.movieFilter.genres,
+                releaseYear : this.state.movieFilter.releaseYear,
+                mpaaRatings : this.state.movieFilter.mpaaRatings,
+                averageRating : this.state.movieFilter.averageRating,
+                actor : e.target.value,
+                director : this.state.movieFilter.director
+            }
+        },this.applyFilters);
+      }
+
+
+      onDirectorChange(e){
+        this.setState({
+            movieFilter :{
+                keywords: this.state.movieFilter.keywords,
+                genres: this.state.movieFilter.genres,
+                releaseYear : this.state.movieFilter.releaseYear,
+                mpaaRatings : this.state.movieFilter.mpaaRatings,
+                averageRating : this.state.movieFilter.averageRating,
+                actor : this.state.movieFilter.actor,
+                director : e.target.value
+            }
+        },this.applyFilters);
+        
+    }
 
     render(){
         const { movieData } = this.props;
@@ -278,6 +326,7 @@ class Landing extends React.Component{
         <PrimarySearchAppBar/>
             <div  style={styles.container}>
                 <div>
+              
                 <ExpansionPanel>
                     <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                         <Typography><label class="appbar-label">Filters</label>
@@ -290,7 +339,140 @@ class Landing extends React.Component{
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails>
                         <Typography>
-                            <div class="disp-inline-flex">
+
+                        <Paper >
+                       
+                    <Table>
+                        <TableBody>
+                                    <TableRow>
+                                        <TableCell component="th" scope="row">
+                                        <label className="label-checkbox ">Actor : </label><br/>
+                                    <div className="inline-block"><TextField
+                                        id="outlined-name"
+                                        value={this.state.movieFilter.actor}
+                                        placeholder="Enter Actor"
+                                        name="actor"
+                                        onChange={this.onActorChange.bind(this)}
+                                        margin="normal"
+                                        // errorText= {this.state.errorText.length === 0 ? false : true }
+                                        // helperText={this.state.errorText}
+                                        style = {{width: 500}}
+                                        variant="outlined"
+                                    /></div>
+                                        
+                                        </TableCell >
+                                        <TableCell>
+                                        <label className="label-checkbox ">Director : </label><br/>
+                                        <div className="inline-block"><TextField
+                                            id="outlined-name"
+                                            value={this.state.movieFilter.director}
+                                            placeholder="Enter Director"
+                                            name="director"
+                                            onChange={this.onDirectorChange.bind(this)}
+                                            margin="normal"
+                                            // errorText= {this.state.errorText.length === 0 ? false : true }
+                                            // helperText={this.state.errorText}
+                                            style = {{width: 500}}
+                                            variant="outlined"
+                                        /></div>
+                                        </TableCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableCell component="th" scope="row">
+
+                                        <label className="label-checkbox ">Release Year : </label><br/>
+                                    <div className="inline-block"><TextField
+                                        id="outlined-name"
+                                        value={this.state.yearVal}
+                                        placeholder="Enter Release Year"
+                                        name="name"
+                                        onChange={this.onYearChange.bind(this)}
+                                        margin="normal"
+                                        errorText= {this.state.errorText.length === 0 ? false : true }
+                                        helperText={this.state.errorText}
+                                        style = {{width: 500}}
+                                        variant="outlined"
+                                    />
+                                    </div>
+                                        </TableCell >
+                                        <TableCell>
+                                        <label class="label-checkbox ">MPAA Rating : </label><br/>
+                            <div class="inline-block">{outputCheckboxes}</div>
+
+                                        
+                                        </TableCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableCell component="th" scope="row">
+                                        <label className="label-checkbox ">Genre : </label><br/>
+                                        <div>
+                                            <Select
+                                            value={selectedOption}
+                                            onChange={this.handleValueChange}
+                                            options={this.state.genreList}
+                                            isMulti
+                                        /></div>
+                                        </TableCell >
+                                        <TableCell>
+                                        <label className="label-checkbox ">Average Rating : </label><br/>
+                                <div class="display-inline-block">
+                                <StarRatingComponent
+                                    name="rate1"
+                                    starCount={5}
+                                    value={1}
+                                    onStarClick={this.onStarClick.bind(this)}
+                                /> & up<br/>
+                                <StarRatingComponent
+                                    name="rate1"
+                                    starCount={5}
+                                    value={2}
+                                    onStarClick={this.onStarClick.bind(this)}
+                                /> & up<br/>
+                                <StarRatingComponent
+                                    name="rate1"
+                                    starCount={5}
+                                    value={3}
+                                    onStarClick={this.onStarClick.bind(this)}
+                                /> & up<br/>
+                                <StarRatingComponent
+                                    name="rate1"
+                                    starCount={5}
+                                    value={4}
+                                    onStarClick={this.onStarClick.bind(this)}
+                                /> & up<br/>
+                                <StarRatingComponent
+                                    name="rate1"
+                                    starCount={5}
+                                    value={5}
+                                    onStarClick={this.onStarClick.bind(this)}
+                                /> & up<br/>
+                                </div>
+                                <Button style={{marginTop:80, float:'right'}} onClick={this.resetFilter.bind(this)}>Reset Filters</Button>
+                                        </TableCell>
+                                    </TableRow>
+                        </TableBody>
+                    </Table>
+                   
+                </Paper>
+               
+                 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            {/* <div class="disp-inline-flex">
                             <div>
                             <div class="m20">
                             <label class="fl label-checkbox ">MPAA Rating : </label>
@@ -306,24 +488,57 @@ class Landing extends React.Component{
                                     isMulti
                                 /></div>
                             </div><br/>
+                            <div className="m20">
+                                    <label className="fl label-checkbox ">Director : </label>
+                                    <div className="inline-block"><TextField
+                                        id="outlined-name"
+                                        value={this.state.director}
+                                        placeholder="Enter Director"
+                                        name="director"
+                                        onChange={this.onDirectorChange.bind(this)}
+                                        margin="normal"
+                                        // errorText= {this.state.errorText.length === 0 ? false : true }
+                                        // helperText={this.state.errorText}
+                                        style = {{width: 500}}
+                                        variant="outlined"
+                                    />
+                                    </div>
+                                </div><br/>
                             </div>
                             <div class="ml160">
-                            <div className="m20">
-                                <label className="fl label-checkbox ">Release Year : </label>
-                                <div className="inline-block"><TextField
-                                    id="outlined-name"
-                                    value={this.state.yearVal}
-                                    placeholder="Enter Release Year"
-                                    name="name"
-                                    onChange={this.onYearChange.bind(this)}
-                                    margin="normal"
-                                    errorText= {this.state.errorText.length === 0 ? false : true }
-                                    helperText={this.state.errorText}
-                                    style = {{width: 500}}
-                                    variant="outlined"
-                                />
+                                <div className="m20">
+                                    <label className="fl label-checkbox ">Release Year : </label>
+                                    <div className="inline-block"><TextField
+                                        id="outlined-name"
+                                        value={this.state.yearVal}
+                                        placeholder="Enter Release Year"
+                                        name="name"
+                                        onChange={this.onYearChange.bind(this)}
+                                        margin="normal"
+                                        errorText= {this.state.errorText.length === 0 ? false : true }
+                                        helperText={this.state.errorText}
+                                        style = {{width: 500}}
+                                        variant="outlined"
+                                    />
+                                    </div>
                                 </div>
-                            </div><br/>
+                                <div className="m20">
+                                    <label className="fl label-checkbox ">Actor : </label>
+                                    <div className="inline-block"><TextField
+                                        id="outlined-name"
+                                        value={this.state.actor}
+                                        placeholder="Enter Actor"
+                                        name="actor"
+                                        onChange={this.onActorChange.bind(this)}
+                                        margin="normal"
+                                        // errorText= {this.state.errorText.length === 0 ? false : true }
+                                        // helperText={this.state.errorText}
+                                        style = {{width: 500}}
+                                        variant="outlined"
+                                    />
+                                    </div>
+                                </div>
+                            <br/>
                             <div className="m20">
                                 <label className="fl label-checkbox ">Average Rating : </label><br/>
                                 <div class="display-inline-block">
@@ -361,7 +576,7 @@ class Landing extends React.Component{
                             </div>
                             <Button onClick={this.resetFilter.bind(this)}>Reset Filters</Button>
                             </div>
-                            </div>
+                            </div> */}
                         </Typography>
                     </ExpansionPanelDetails>
                 </ExpansionPanel>
