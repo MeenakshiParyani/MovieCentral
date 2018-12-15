@@ -60,8 +60,8 @@ public class SampleData implements ApplicationRunner {
         saveMovie4();
         saveCustomer1();
         saveCustomer2();
-        addPlayHistory1();
-        addPlayHistory2();
+//        addPlayHistory1();
+//        addPlayHistory2();
     }
 
     public void saveMovie1(){
@@ -73,13 +73,17 @@ public class SampleData implements ApplicationRunner {
         actorRepository.save(actor1);
         actorRepository.save(actor2);
         List<Actor> actors = new ArrayList<>(Arrays.asList(actor1,actor2));
+        String imageUrl = "https://m.media-amazon.com/images/M/MV5BNDljNWM1MzctM2E5NC00YjFkLWI2MDUtNzJkNGIyMGZmN2MwXkEyXkFqcGdeQXVyODE5NzE3OTE@._V1_SY1000_CR0,0,700,1000_AL_.jpg";
+        String videoUrl = "https://www.youtube.com/watch?v=_6-9_iGz2Q8";
 
         String synopsys = "A man (Ranveer Singh) from a crime family falls in love with a woman (Deepika Padukone) who is resistant to her family's choice of a husband for her.";
 
 
         movieRepository.save(Movie.builder().title("Ramleela").synopsys(synopsys).country("India").averageRating(0.0)
                 .director(director).actors(actors).genre(Genre.DRAMA).imageUrl("").movieUrl("").mpaaRating(MpaaRating.G)
-                .price(0.0).releaseYear(2015).studio("abc").status(Status.ACTIVE).type(MovieType.SUBSCRIPTION_ONLY).build());
+                .price(0.0).releaseYear(2015).studio("abc").status(Status.ACTIVE).type(MovieType.SUBSCRIPTION_ONLY)
+                .imageUrl(imageUrl).movieUrl(videoUrl)
+                .build());
     }
 
     public void saveMovie2(){
@@ -93,14 +97,17 @@ public class SampleData implements ApplicationRunner {
         actorRepository.save(actor2);
         actorRepository.save(actor3);
         List<Actor> actors = new ArrayList<>(Arrays.asList(actor1,actor2, actor3));
+        String imageUrl = "https://m.media-amazon.com/images/M/MV5BMTkxNzg4NDI0OV5BMl5BanBnXkFtZTcwNzIyMjk5MQ@@._V1_SY1000_CR0,0,666,1000_AL_.jpg";
+        String videoUrl = "https://www.youtube.com/watch?v=sxLnf-B7-3w";
 
         String synopsys = "Meghna (Priyanka Chopra) has always dreamed of getting out of her small Indian town and making it in the world of high fashion, but her parents have different ideas for her future. When she wins a local pageant, though, she picks up and moves to Mumbai to try to turn her dreams into reality. Although she initially finds success with modeling, she slips up when she gets impregnated by her married boss. Scared and alone, she must then decide if it is time to leave the big city.";
 
 
         movieRepository.save(Movie.builder().title("Fashion").synopsys(synopsys).country("India").averageRating(0.0)
                 .director(director).actors(actors).genre(Genre.DRAMA).imageUrl("").movieUrl("").mpaaRating(MpaaRating.PG)
-                .price(0.0).releaseYear(2008).studio("def").status(Status.ACTIVE).type(MovieType.PAY_PER_VIEW).build());
-
+                .price(0.0).releaseYear(2008).studio("def").status(Status.ACTIVE).type(MovieType.PAY_PER_VIEW)
+                .imageUrl(imageUrl).movieUrl(videoUrl)
+                .build());
     }
 
     public void saveMovie3(){
@@ -114,11 +121,14 @@ public class SampleData implements ApplicationRunner {
         List<Actor> actors = new ArrayList<>(Arrays.asList(actor1,actor2));
 
         String synopsys = "Bunny (Ranbir Kapoor) and Naina (Deepika Padukone) meet when they graduate from college and again in their late 20s.";
-
+        String imageUrl = "https://m.media-amazon.com/images/M/MV5BM2UwY2M3NjctM2E1Ni00MGExLWJmZmQtNGViZThiNjYxMjJjXkEyXkFqcGdeQXVyNDYwMjI1MzI@._V1_.jpg";
+        String videoUrl = "https://www.youtube.com/watch?v=II2EO3Nw4m0";
 
         movieRepository.save(Movie.builder().title("Yeh Jawaani Hai Deewani").synopsys(synopsys).country("India").averageRating(0.0)
                 .director(director).actors(actors).genre(Genre.COMEDY).imageUrl("").movieUrl("").mpaaRating(MpaaRating.PG_13)
-                .price(0.0).releaseYear(2013).studio("geh").status(Status.ACTIVE).type(MovieType.PAY_PER_VIEW).build());
+                .price(0.0).releaseYear(2013).studio("geh").status(Status.ACTIVE).type(MovieType.PAY_PER_VIEW)
+                .imageUrl(imageUrl).movieUrl(videoUrl)
+                .build());
     }
 
 
@@ -132,6 +142,8 @@ public class SampleData implements ApplicationRunner {
         actorRepository.save(actor1);
         actorRepository.save(actor2);
         actorRepository.save(actor3);
+        String imageUrl = "https://m.media-amazon.com/images/M/MV5BMDdmZGU3NDQtY2E5My00ZTliLWIzOTUtMTY4ZGI1YjdiNjk3XkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_SY1000_CR0,0,671,1000_AL_.jpg";
+        String videoUrl = "https://www.youtube.com/watch?v=KffX-8tx_Jw";
         List<Actor> actors = new ArrayList<>(Arrays.asList(actor1,actor2,actor3));
 
         String synopsys = "A seventeen-year-old aristocrat falls in love with a kind but poor artist aboard the luxurious, ill-fated R.M.S. Titanic.";
@@ -139,7 +151,9 @@ public class SampleData implements ApplicationRunner {
 
         movieRepository.save(Movie.builder().title("Titanic").synopsys(synopsys).country("USA").averageRating(0.0)
                 .director(director).actors(actors).genre(Genre.ADVENTURE).imageUrl("").movieUrl("").mpaaRating(MpaaRating.PG_13)
-                .price(0.0).releaseYear(1997).studio("Hollywood").status(Status.ACTIVE).type(MovieType.SUBSCRIPTION_ONLY).build());
+                .price(0.0).releaseYear(1997).studio("Hollywood").status(Status.ACTIVE).type(MovieType.SUBSCRIPTION_ONLY)
+                .imageUrl(imageUrl).movieUrl(videoUrl)
+                .build());
 
     }
 
@@ -158,59 +172,59 @@ public class SampleData implements ApplicationRunner {
         customerRepository.save(customer);
     }
 
-    public void addPlayHistory1(){
-        Director director = new Director("abc director");
-        directorRepository.save(director);
-
-        Actor actor1 = new Actor("actor1");
-        Actor actor2 = new Actor("actor2");
-        Actor actor3 = new Actor("actor3");
-        actorRepository.save(actor1);
-        actorRepository.save(actor2);
-        actorRepository.save(actor3);
-        List<Actor> actors = new ArrayList<>(Arrays.asList(actor1,actor2, actor3));
-        String password = bCryptPasswordEncoder.encode("password");
-        Customer customer = Customer.builder().authType(AuthType.LOCAL).password(password).email("meenakshi.paryani33@gmail.com")
-                .screenName("meenu33").name("Meenakshi Paryani33").userRole(UserRole.CUSTOMER).registrationDateTime(LocalDateTime.now(ZoneId.systemDefault())).build();
-        customer = customerRepository.save(customer);
-
-        Movie movie = movieRepository.save(Movie.builder().title("abcxyz").synopsys("").country("India").averageRating(0.0)
-                .genre(Genre.DRAMA).imageUrl("").movieUrl("").mpaaRating(MpaaRating.PG)
-                .price(0.0).releaseYear(2008).studio("def55").status(Status.ACTIVE).type(MovieType.PAY_PER_VIEW)
-                .actors(actors).director(director).build());
-
-        playHistoryRepository.save(PlayHistory.builder().customer(customer).movie(movie).playTime(LocalDateTime.now(ZoneId.systemDefault())).build());
-        playHistoryRepository.save(PlayHistory.builder().customer(customer).movie(movie).playTime(LocalDateTime.now(ZoneId.systemDefault())).build());
-
-    }
-
-    public void addPlayHistory2(){
-
-        Director director = new Director("xyz director");
-        directorRepository.save(director);
-
-        Actor actor1 = new Actor("actorx");
-        Actor actor2 = new Actor("actory");
-        Actor actor3 = new Actor("actorz");
-        actorRepository.save(actor1);
-        actorRepository.save(actor2);
-        actorRepository.save(actor3);
-        List<Actor> actors = new ArrayList<>(Arrays.asList(actor1,actor2, actor3));
-
-        String password = bCryptPasswordEncoder.encode("password");
-        Customer customer = Customer.builder().authType(AuthType.LOCAL).password(password).email("meenakshi.paryani44@gmail.com")
-                .screenName("meenu44").name("Meenakshi Paryani44").userRole(UserRole.CUSTOMER).registrationDateTime(LocalDateTime.now(ZoneId.systemDefault())).build();
-        customer = customerRepository.save(customer);
-
-        Movie movie = movieRepository.save(Movie.builder().title("abcxyzaa").synopsys("").country("India").averageRating(0.0)
-                .genre(Genre.DRAMA).imageUrl("").movieUrl("").mpaaRating(MpaaRating.PG)
-                .price(0.0).releaseYear(2008).studio("def55").status(Status.ACTIVE).type(MovieType.PAY_PER_VIEW)
-                .actors(actors).director(director).build());
-
-        playHistoryRepository.save(PlayHistory.builder().customer(customer).movie(movie).playTime(LocalDateTime.now(ZoneId.systemDefault()).minusMonths(1)).build());
-        playHistoryRepository.save(PlayHistory.builder().customer(customer).movie(movie).playTime(LocalDateTime.now(ZoneId.systemDefault()).minusMonths(1)).build());
-
-    }
+//    public void addPlayHistory1(){
+//        Director director = new Director("abc director");
+//        directorRepository.save(director);
+//
+//        Actor actor1 = new Actor("actor1");
+//        Actor actor2 = new Actor("actor2");
+//        Actor actor3 = new Actor("actor3");
+//        actorRepository.save(actor1);
+//        actorRepository.save(actor2);
+//        actorRepository.save(actor3);
+//        List<Actor> actors = new ArrayList<>(Arrays.asList(actor1,actor2, actor3));
+//        String password = bCryptPasswordEncoder.encode("password");
+//        Customer customer = Customer.builder().authType(AuthType.LOCAL).password(password).email("meenakshi.paryani33@gmail.com")
+//                .screenName("meenu33").name("Meenakshi Paryani33").userRole(UserRole.CUSTOMER).registrationDateTime(LocalDateTime.now(ZoneId.systemDefault())).build();
+//        customer = customerRepository.save(customer);
+//
+//        Movie movie = movieRepository.save(Movie.builder().title("abcxyz").synopsys("").country("India").averageRating(0.0)
+//                .genre(Genre.DRAMA).imageUrl("").movieUrl("").mpaaRating(MpaaRating.PG)
+//                .price(0.0).releaseYear(2008).studio("def55").status(Status.ACTIVE).type(MovieType.PAY_PER_VIEW)
+//                .actors(actors).director(director).build());
+//
+//        playHistoryRepository.save(PlayHistory.builder().customer(customer).movie(movie).playTime(LocalDateTime.now(ZoneId.systemDefault())).build());
+//        playHistoryRepository.save(PlayHistory.builder().customer(customer).movie(movie).playTime(LocalDateTime.now(ZoneId.systemDefault())).build());
+//
+//    }
+//
+//    public void addPlayHistory2(){
+//
+//        Director director = new Director("xyz director");
+//        directorRepository.save(director);
+//
+//        Actor actor1 = new Actor("actorx");
+//        Actor actor2 = new Actor("actory");
+//        Actor actor3 = new Actor("actorz");
+//        actorRepository.save(actor1);
+//        actorRepository.save(actor2);
+//        actorRepository.save(actor3);
+//        List<Actor> actors = new ArrayList<>(Arrays.asList(actor1,actor2, actor3));
+//
+//        String password = bCryptPasswordEncoder.encode("password");
+//        Customer customer = Customer.builder().authType(AuthType.LOCAL).password(password).email("meenakshi.paryani44@gmail.com")
+//                .screenName("meenu44").name("Meenakshi Paryani44").userRole(UserRole.CUSTOMER).registrationDateTime(LocalDateTime.now(ZoneId.systemDefault())).build();
+//        customer = customerRepository.save(customer);
+//
+//        Movie movie = movieRepository.save(Movie.builder().title("abcxyzaa").synopsys("").country("India").averageRating(0.0)
+//                .genre(Genre.DRAMA).imageUrl("").movieUrl("").mpaaRating(MpaaRating.PG)
+//                .price(0.0).releaseYear(2008).studio("def55").status(Status.ACTIVE).type(MovieType.PAY_PER_VIEW)
+//                .actors(actors).director(director).build());
+//
+//        playHistoryRepository.save(PlayHistory.builder().customer(customer).movie(movie).playTime(LocalDateTime.now(ZoneId.systemDefault()).minusMonths(1)).build());
+//        playHistoryRepository.save(PlayHistory.builder().customer(customer).movie(movie).playTime(LocalDateTime.now(ZoneId.systemDefault()).minusMonths(1)).build());
+//
+//    }
 
 
 

@@ -18,7 +18,7 @@ public class DirectorService {
     private MovieService movieService;
 
     public Director processDirector(String directorName){
-        Director director = directorRepository.findByName(directorName);
+        Director director = directorRepository.findDistinctByNameEqualsIgnoreCase(directorName);
 
         if(director == null){
             Director savedDirector = Director.builder().name(directorName).build();

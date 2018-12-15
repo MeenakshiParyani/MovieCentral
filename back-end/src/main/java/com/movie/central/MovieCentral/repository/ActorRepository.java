@@ -16,6 +16,8 @@ public interface ActorRepository extends JpaRepository<Actor, Integer> {
     public Actor findById(Long id);
     Actor findOneByName(String name);
 
+    public Actor findDistinctByNameEqualsIgnoreCase(String name);
+
     List<Actor> findDistinctByNameContainingIgnoreCase(String name);
 
     default Set<Movie> findMoviesByActor(String actorName){

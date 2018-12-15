@@ -33,10 +33,8 @@ import java.util.List;
 import java.util.Map;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
-//@Controller
-//@CrossOrigin(origins = "http://localhost:3000")
-//@RequestMapping("/movie")
 @RestController
 @RequestMapping("/api/movie")
 public class MovieResource {
@@ -123,11 +121,11 @@ public class MovieResource {
             List<String> actorsList = Arrays.asList((input.get("actors")).split("\\s*,\\s*"));
             List<Actor> actors = new ArrayList<Actor>();
             for (String actor : actorsList) {
-                Actor actorDetails = actorService.processActor(actor.toLowerCase());
+                Actor actorDetails = actorService.processActor(actor);
                 actors.add(actorDetails);
             }
             String director = input.get("director");
-            Director saveDirector = directorService.processDirector(director.toLowerCase());
+            Director saveDirector = directorService.processDirector(director);
             Movie movie = Movie.builder().title(title).genre(genre).releaseYear(releaseYear).studio(studio).synopsys(synopsys).imageUrl(imageUrl).movieUrl(movieUrl)
                     .averageRating(averageRating).status(status).country(country).type(type).price(price).director(saveDirector).mpaaRating(mpaaRating).actors(actors).build();
             movieService.addMovie(movie);
@@ -141,6 +139,7 @@ public class MovieResource {
     @RequestMapping(value = "/searchAll", method = RequestMethod.GET)
     public ResponseEntity<?> searchAllMovies(HttpSession session) throws Exception {
         List<Movie> movies = new ArrayList<>(movieService.findAllMovies());
+        movies = movies.stream().filter(movie -> movie.getStatus().equals(Status.ACTIVE)).collect(Collectors.toList());
         Map<String, List<Movie>> response = new HashMap<>();
         response.put("result", movies);
         return new ResponseEntity<Object>(response, HttpStatus.OK);
@@ -151,6 +150,7 @@ public class MovieResource {
     @RequestMapping(value = "/filter", method = RequestMethod.POST)
     public ResponseEntity<?> filterByAttributeAndOrKeywords(@RequestBody MovieFilter movieFilter, HttpSession session) throws Exception{
         List<Movie> movies = movieService.filterMoviesByMovieFilter(movieFilter);
+        movies = movies.stream().filter(movie -> movie.getStatus().equals(Status.ACTIVE)).collect(Collectors.toList());
         Map<String, List<Movie>> response = new HashMap<>();
         response.put("result", movies);
         return new ResponseEntity<Object>(response, HttpStatus.OK);

@@ -12,6 +12,8 @@ import java.util.Set;
 
 public interface DirectorRepository extends JpaRepository<Director, Long>{
 
+    public Director findDistinctByNameEqualsIgnoreCase(String name);
+
     List<Director> findDistinctByNameContainingIgnoreCase(String name);
 	public Director findByName(String name);
 
