@@ -12,5 +12,6 @@ public enum Genre implements Serializable {
     EPICS,
     HORROR,
     SCIENCE_FICTION,
-    WAR
+    WAR,
+    ROMANTIC
 }
