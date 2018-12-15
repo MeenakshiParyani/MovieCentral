@@ -16,7 +16,6 @@ export const data = (
         ...state,
         customerInfo: action.payload.result
       };
-      break;
 
     case "REGISTER_USER":
       console.log("In Register user");

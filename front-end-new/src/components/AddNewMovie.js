@@ -30,7 +30,7 @@ class AddNewMovie extends React.Component{
 			averageRating:"",
 			country:"",
 			type:"PAY_PER_VIEW",
-			price:"",
+			price:0,
 			mpaaRating:"G",
             actors:"",
             status:"ACTIVE",
@@ -38,30 +38,30 @@ class AddNewMovie extends React.Component{
 			mpaaRatingData: [
                 {key:'G',value: 'G'},
                 {key:'PG',value: 'PG'},
-                {key:'PG_13',value: 'PG_13'},
+                {key:'PG_13',value: 'PG 13'},
                 {key:'R',value: 'R'},
-                {key:'NC_17',value: 'NC_17'}
+                {key:'NC_17',value: 'NC 17'}
             ],
 			genreData: [
-                {key:'ACTION',value: 'ACTION'},
-                {key:'ADVENTURE',value: 'ADVENTURE'},
-                {key:'COMEDY',value: 'COMEDY'},
-                {key:'DRAMA',value: 'DRAMA'},
-                {key:'CRIME',value: 'CRIME'},
-                {key:'EPICS',value: 'EPICS'},
-                {key:'HORROR',value: 'HORROR'},
-                {key:'SCIENCE_FICTION',value: 'SCIENCE FICTION'},
-                {key:'WAR',value: 'WAR'}
+                {key:'ACTION',value: 'Action'},
+                {key:'ADVENTURE',value: 'Adventur'},
+                {key:'COMEDY',value: 'Comedy'},
+                {key:'DRAMA',value: 'Drama'},
+                {key:'CRIME',value: 'Crime'},
+                {key:'EPICS',value: 'Epics'},
+                {key:'HORROR',value: 'Horror'},
+                {key:'SCIENCE_FICTION',value: 'Science Fiction'},
+                {key:'WAR',value: 'War'},
+                {key:'ROMANTIC',value: 'Romantic'}
             ],
 			movieTypeData: [
-                {key:'PAY_PER_VIEW',value: 'PAY PER VIEW'},
-                {key:'SUBSCRIPTION_ONLY',value: 'SUBSCRIPTION ONLY'},
-                {key:'FREE',value: 'FREE'},
-                {key:'PAID',value: 'PAID'}
+                {key:'PAY_PER_VIEW',value: 'Pay Per View'},
+                {key:'SUBSCRIPTION_ONLY',value: 'Subscription Only'},
+                {key:'FREE',value: 'Free'}
             ],
 			statusData: [
-                {key:'ACTIVE',value: 'ACTIVE'},
-                {key:'INACTIVE',value: 'INACTIVE'}
+                {key:'ACTIVE',value: 'Active'},
+                {key:'INACTIVE',value: 'Inactive'}
             ],
         }
 
@@ -368,7 +368,7 @@ class AddNewMovie extends React.Component{
                                     <option key={key} value={data.key}>{data.value}</option> )
                                 })}
                             </select><br />
-                    <label>Enter Movie Price</label><br />
+                    {/* <label>Enter Movie Price</label><br />
                     <input
                         id="outlined-name"
                         label="Price of movie"
@@ -379,7 +379,7 @@ class AddNewMovie extends React.Component{
                         type='number'
                         style = {{width: 500}}
                         variant="outlined"
-                    /><br />
+                    /><br /> */}
                     <label>Select MPAA Rating</label><br />
                     <select className="select-style" name="mpaaRating" required value={this.state.mpaaRating} onChange={this.onChange.bind(this)}>
                                 {this.state.mpaaRatingData.map(function(data, key){  return (

@@ -21,6 +21,9 @@ import MoreIcon from "@material-ui/icons/MoreVert";
 import { Redirect } from "react-router-dom";
 import {customerData} from "./../reducers/reducer_customer";
 import * as getData from "./../actions/customerAction";
+import red from '@material-ui/core/colors/red';
+import blue from '@material-ui/core/colors/blue';
+import SvgIcon from '@material-ui/core/SvgIcon';
 
 const styles = theme => ({
   root: {
@@ -91,6 +94,14 @@ const styles = theme => ({
     }
   }
 });
+
+function HomeIcon(props) {
+  return (
+    <SvgIcon {...props}  style={{cursor:'pointer !important'}}>
+      <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+    </SvgIcon>
+  );
+}
 
 class PrimarySearchAppBar extends React.Component {
 
@@ -278,18 +289,13 @@ class PrimarySearchAppBar extends React.Component {
       <div className={classes.root}>
         <AppBar position="static">
           <Toolbar>
-            <IconButton
-              className={classes.menuButton}
-              color="inherit"
-              aria-label="Open drawer"
-            >
-              <MenuIcon />
-            </IconButton>
+          <HomeIcon className={classes.iconHover} color="error" style={{ fontSize: 30 }} onClick={this.onLanding.bind(this)}></HomeIcon>
             <Typography
               className={classes.title}
               variant="h6"
               color="inherit"
               noWrap
+              style={{cursor:'pointer'}}
               onClick={this.onLanding.bind(this)}
             >
               Movies
