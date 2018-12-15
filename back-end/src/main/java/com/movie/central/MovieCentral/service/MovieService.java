@@ -310,7 +310,7 @@ public class MovieService {
     public List<PlayDetails> getMostPlayedMovies() throws Exception {
         List<Object[]> playDetails = playHistoryRepository.getMostPlayedMovies();
         List<PlayDetails> playDetailsNew = new ArrayList<PlayDetails>();
-
+        playDetailsNew = playDetailsNew.stream().sorted((p1,p2)-> p2.getPlayCount().compareTo(p1.getPlayCount())).collect(Collectors.toList());
         try {
             if (playDetails != null && playDetails.size() > 0) {
                 for (Object[] obj : playDetails) {
