@@ -173,6 +173,7 @@ public class CustomerService {
 
     public List<PlayDetails> getMostActiveCustomers() throws Exception {
         List<Object[]> playDetails = playHistoryRepository.getMostActiveCustomers();
+
         List<PlayDetails> playDetailsNew = new ArrayList<PlayDetails>();
 
         try {
@@ -188,6 +189,7 @@ public class CustomerService {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        playDetailsNew = playDetailsNew.stream().sorted((p1,p2)-> p2.getPlayCount().compareTo(p1.getPlayCount())).collect(Collectors.toList());
         return playDetailsNew;
     }
 
