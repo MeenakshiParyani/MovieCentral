@@ -165,10 +165,8 @@ public class CustomerResource {
     }
 
     @RequestMapping(value = "/get_most_active_customers", method = RequestMethod.GET)
-    public ResponseEntity<?> getMostActiveCustomers(HttpSession session) throws Exception{
-
-        List<PlayDetails> play_details = customerService.getMostActiveCustomers();
-
+    public ResponseEntity<?> getMostActiveCustomers(@RequestParam String type , HttpSession session) throws Exception{
+        List<PlayDetails> play_details = customerService.getMostActiveCustomers(type);
         Map<String,List<PlayDetails>> response = new HashMap<>();
         response.put("result" , play_details);
         return new ResponseEntity<Object>(response, HttpStatus.OK);

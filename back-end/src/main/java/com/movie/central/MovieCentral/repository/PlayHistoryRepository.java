@@ -25,8 +25,11 @@ public interface PlayHistoryRepository extends JpaRepository<PlayHistory, Long> 
     @Query(value = "select p.movie_id, m.title, count(p.movie_id) as playcount from play_history p, movie m where p.movie_id = m.id group by p.movie_id order by playcount desc limit 10", nativeQuery = true)
     List<Object[]> getMostPlayedMovies();
 
-    @Query(value = "select p.customer_id, m.name, count(p.customer_id) as playcount from play_history p, customer m where p.customer_id = m.id group by customer_id order by playcount desc limit 10", nativeQuery = true)
-    List<Object[]> getMostActiveCustomers();
+    @Query(value = "select p.movie_id, m.title, count(p.movie_id) as playcount from play_history p, movie m where p.movie_id = m.id and p.play_time between ?1 and ?2 group by p.movie_id order by playcount desc limit 10", nativeQuery = true)
+    List<Object[]> getMostPlayedMoviesByPlayTime(LocalDateTime startDateTime, LocalDateTime endDateTime);
+
+    @Query(value = "select p.customer_id, m.name, count(p.customer_id) as playcount from play_history p, customer m where p.customer_id = m.id and p.play_time between ?1 and ?2 group by customer_id order by playcount desc limit 10", nativeQuery = true)
+    List<Object[]> getMostActiveCustomersByPlayTime(LocalDateTime startDateTime, LocalDateTime endDateTime);
 
     @Query(value = "select count(distinct p.customer_id) as playcount from play_history p, customer c where p.customer_id = c.id and p.play_time between ?1 and ?2", nativeQuery = true)
     Long getActiveCustomersByPlayTime(LocalDateTime startDateTime, LocalDateTime endDateTime);

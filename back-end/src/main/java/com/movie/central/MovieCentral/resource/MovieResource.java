@@ -205,11 +205,11 @@ public class MovieResource {
     }
 
     @RequestMapping(value = "/most_played_movies", method = RequestMethod.GET)
-    public ResponseEntity<?> mostPlayedMovies(HttpSession session) throws Exception{
+    public ResponseEntity<?> mostPlayedMovies(@RequestParam String type, HttpSession session) throws Exception{
 
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-        List<PlayDetails> play_details = movieService.getMostPlayedMovies();
+        List<PlayDetails> play_details = movieService.getMostPlayedMovies(type);
 
         Map<String,List<PlayDetails>> response = new HashMap<>();
         response.put("result" , play_details);

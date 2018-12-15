@@ -171,9 +171,18 @@ public class CustomerService {
         }
     }
 
-    public List<PlayDetails> getMostActiveCustomers() throws Exception {
-        List<Object[]> playDetails = playHistoryRepository.getMostActiveCustomers();
-
+    public List<PlayDetails> getMostActiveCustomers(String type) throws Exception {
+        List<Object[]> playDetails = new ArrayList<>();
+        LocalDateTime now = LocalDateTime.now(ZoneId.systemDefault());
+        LocalDateTime startTime = now;
+        if(type.toLowerCase().equals("day")){
+            startTime = now.minusHours(24);
+        }else if (type.toLowerCase().equals("week")){
+            startTime = now.minusDays(7);
+        }else if (type.toLowerCase().equals("month")){
+            startTime = now.minusMonths(1);
+        }
+        playDetails = playHistoryRepository.getMostActiveCustomersByPlayTime(startTime, now);
         List<PlayDetails> playDetailsNew = new ArrayList<PlayDetails>();
 
         try {
@@ -189,6 +198,7 @@ public class CustomerService {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         playDetailsNew = playDetailsNew.stream().sorted((p1,p2)-> p2.getPlayCount().compareTo(p1.getPlayCount())).collect(Collectors.toList());
         return playDetailsNew;
     }
