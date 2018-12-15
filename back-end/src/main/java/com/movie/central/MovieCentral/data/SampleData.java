@@ -143,7 +143,7 @@ public class SampleData implements ApplicationRunner {
         actorRepository.save(actor2);
         actorRepository.save(actor3);
         String imageUrl = "https://m.media-amazon.com/images/M/MV5BMDdmZGU3NDQtY2E5My00ZTliLWIzOTUtMTY4ZGI1YjdiNjk3XkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_SY1000_CR0,0,671,1000_AL_.jpg";
-        String videoUrl = "https://www.youtube.com/watch?v=kRC4e3pEIpI";
+        String videoUrl = "https://www.youtube.com/watch?v=KffX-8tx_Jw";
         List<Actor> actors = new ArrayList<>(Arrays.asList(actor1,actor2,actor3));
 
         String synopsys = "A seventeen-year-old aristocrat falls in love with a kind but poor artist aboard the luxurious, ill-fated R.M.S. Titanic.";
