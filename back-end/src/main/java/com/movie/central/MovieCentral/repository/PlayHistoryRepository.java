@@ -29,7 +29,7 @@ public interface PlayHistoryRepository extends JpaRepository<PlayHistory, Long> 
     Long getActiveCustomersByPlayTime(LocalDateTime startDateTime, LocalDateTime endDateTime);
 
     @Query(value = "select distinct m.id, m.title, COUNT(p.id) as playcount, m.average_rating, m.image_url\n" +
-            "from  play_history p  join movie m on  p.movie_id = m.id  and p.play_time between ?1 AND ?2\n" +
+            "from  play_history p  join movie m on  p.movie_id = m.id  and p.play_time between ?1 AND ?2 and m.status = 'ACTIVE'\n" +
             "group by m.id, m.title\n" +
             "order by playcount desc\n" +
             "limit 10", nativeQuery = true)
