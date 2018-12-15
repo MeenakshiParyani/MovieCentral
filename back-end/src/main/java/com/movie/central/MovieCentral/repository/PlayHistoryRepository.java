@@ -19,7 +19,7 @@ public interface PlayHistoryRepository extends JpaRepository<PlayHistory, Long> 
     @Query(value = "select * from play_history p, movie m, customer c where p.customer_id = ?1 and p.movie_id = ?2 and p.movie_id = m.id and p.customer_id = c.id", nativeQuery = true)
     List<PlayHistory> findPlayHistoryByCustomerIdAndMovieId(Long customerId, Long movieId);
 
-    @Query(value = "select m.id, m.title, count(p.movie_id) as playcount from movie m  left join play_history p on m.id = p.movie_id group by m.id , m.title", nativeQuery = true)
+    @Query(value = "select m.id, m.title, count(p.movie_id) as playcount from movie m  left join play_history p on m.id = p.movie_id group by m.id , m.title order by playcount desc", nativeQuery = true)
     List<Object[]> getPlayPerMovie();
 
     @Query(value = "select p.movie_id, m.title, count(p.movie_id) as playcount from play_history p, movie m where p.movie_id = m.id group by p.movie_id order by playcount desc limit 10", nativeQuery = true)
