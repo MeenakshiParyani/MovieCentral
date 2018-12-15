@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -33,16 +34,17 @@ public class PlayHistoryService {
         Optional<Customer> customer = customerRepository.findById(customerId);
         Movie movie = movieRepository.findMovieById(movieId);
         if(customer.isPresent() && movie != null){
-            Customer c = customer.get();
-            PlayHistory playHistory = new PlayHistory();
-            playHistory.setCustomer(c);
-            playHistory.setMovie(movie);
-            LocalDateTime playTime = LocalDateTime.now(ZoneId.systemDefault());
-            playHistory.setPlayTime(playTime);
+            List<PlayHistory> playHistory = playHistoryRepository.findPlayHistoryByCustomerIdAndMovieId(customerId, movieId);
+            playHistory.stream().filter(history -> history.getPlayTime().isAfter(LocalDateTime.now(ZoneId.systemDefault()).minusDays(1)));
+            if(playHistory.size()<=0){
+                PlayHistory playHistory1 = new PlayHistory();
+                playHistory1.setCustomer(customer.get());
+                playHistory1.setMovie(movie);
+                LocalDateTime playTime = LocalDateTime.now(ZoneId.systemDefault());
+                playHistory1.setPlayTime(playTime);
 
-            playHistoryRepository.save(playHistory);
-        }else{
-            throw new MovieCentralException(Error.INVALID_CUSTOMER_OR_MOVIE);
+                playHistoryRepository.save(playHistory1);
+            }
         }
 
     }

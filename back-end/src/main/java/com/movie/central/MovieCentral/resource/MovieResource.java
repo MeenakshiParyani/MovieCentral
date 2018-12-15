@@ -156,6 +156,8 @@ public class MovieResource {
         return new ResponseEntity<Object>(response, HttpStatus.OK);
     }
 
+
+
     @RequestMapping(value = "/review", method = RequestMethod.POST)
     public ResponseEntity<?> reviewMovie(@RequestBody Map<String,String> input, HttpSession session) throws Exception{
         Long customerId = Long.valueOf(input.get("customerId"));

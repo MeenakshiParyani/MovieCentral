@@ -16,6 +16,9 @@ public interface PlayHistoryRepository extends JpaRepository<PlayHistory, Long> 
     @Query(value = "select * from play_history p, movie m where p.customer_id = ?1 and p.movie_id = m.id", nativeQuery = true)
     List<PlayHistory> findMovieAndPlayHistoryByCustomer_Id(Long customerId);
 
+    @Query(value = "select * from play_history p, movie m, customer c where p.customer_id = ?1 and p.movie_id = ?2 and p.movie_id = m.id and p.customer_id = c.id", nativeQuery = true)
+    List<PlayHistory> findPlayHistoryByCustomerIdAndMovieId(Long customerId, Long movieId);
+
     @Query(value = "select m.id, m.title, count(p.movie_id) as playcount from movie m  left join play_history p on m.id = p.movie_id group by m.id , m.title", nativeQuery = true)
     List<Object[]> getPlayPerMovie();
 
@@ -34,4 +37,7 @@ public interface PlayHistoryRepository extends JpaRepository<PlayHistory, Long> 
             "order by playcount desc\n" +
             "limit 10", nativeQuery = true)
     List<Object[]> getTopTenMoviesPlayCountInMonth(LocalDateTime startDateTime, LocalDateTime endDateTime);
+
+
+
 }
