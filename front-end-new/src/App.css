@@ -66,7 +66,8 @@
     padding: 10px;
     border-radius: 12px;
     width: 50%;
-    height: 100px;
+    height:auto;
+    /* height: 135px; */
 }
 .bold-font{
 	font-weight: 600;
