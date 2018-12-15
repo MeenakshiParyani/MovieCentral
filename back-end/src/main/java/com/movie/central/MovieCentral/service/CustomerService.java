@@ -50,9 +50,6 @@ public class CustomerService {
 
     public void register(Customer customer) throws Exception {
 
-        LocalDateTime startTime = LocalDateTime.now(ZoneId.systemDefault());
-        LocalDateTime endTime = getSubscriptionEndDate(startTime, 1).withHour(0).withMinute(0).withSecond(0);
-        customer.setSubscriptionEndTime(endTime);
         customer = customerRepository.save(customer);
         String appUrl = "/api/customer/";
         eventPublisher.publishEvent(new OnRegistrationCompleteEvent(customer, appUrl));
