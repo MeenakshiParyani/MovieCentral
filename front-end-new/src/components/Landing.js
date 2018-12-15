@@ -395,9 +395,9 @@ class Landing extends React.Component{
                                                 }}
                                             /><br/>
                                             <div>
-                                            <label> Movie Title : {movie.title}</label><br/>
+                                            <label> {movie.title}</label><br/>
                                             <label> Release Year : {movie.releaseYear}</label><br/>
-                                            <label> Rating -<br/>
+                                            <label> <br/>
                                                 <StarRatingComponent
                                                     name="rate1"
                                                     starCount={5}
