@@ -29,7 +29,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-@Component
+//@Component
 public class SampleData implements ApplicationRunner {
 
     @Autowired
