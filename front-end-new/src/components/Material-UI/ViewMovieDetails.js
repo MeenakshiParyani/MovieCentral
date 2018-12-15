@@ -17,6 +17,11 @@ import Fab from '@material-ui/core/Fab';
 import Modal from '@material-ui/core/Modal';
 import Typography from '@material-ui/core/Typography';
 import ReactPlayer from 'react-player';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 function rand() {
   return Math.round(Math.random() * 20) - 10;
@@ -62,7 +67,16 @@ class ViewMovieDetails extends React.Component {
 			playing: true,
 			open:false
 		}
-    }
+	}
+	
+	handleClickOpen = () => {
+        this.setState({ open: true });
+      };
+    
+      handleClose = () => {
+        this.setState({ open: false });
+      };
+
 
     componentWillReceiveProps(nextProps) {
         console.log(nextProps.movieData);
@@ -292,7 +306,31 @@ class ViewMovieDetails extends React.Component {
 	
 				</Grid>
 				</div>
-				<Modal
+
+				<Dialog
+          open={this.state.open}
+          onClose={this.handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">{"Are you sure?"}</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+               There seems to be a problem.
+            </DialogContentText>
+			<DialogContentText id="alert-dialog-description">
+               {this.state.errMsg}
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+		  {this.state.errMsg == "Movie needs pay per view, please pay to view the movie"?
+					<Link to={'/payperview/'+this.props.match.params.movie_id}  target="_blank">Pay Now</Link>
+					:
+					<Link to={'/subscribe/'+this.props.match.params.movie_id}  target="_blank">Subscribe</Link>
+										}
+          </DialogActions>
+        </Dialog>
+				{/* <Modal
 				  aria-labelledby="simple-modal-title"
 				  aria-describedby="simple-modal-description"
 				  disableBackdropClick={true}
@@ -312,7 +350,7 @@ class ViewMovieDetails extends React.Component {
 					<Link to={'/subscribe/'+this.props.match.params.movie_id}  target="_blank">Subscribe</Link>
 										}
 				  </div>
-				</Modal>
+				</Modal> */}
             </div>
         );
     }
