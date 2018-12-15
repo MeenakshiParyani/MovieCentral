@@ -9,6 +9,7 @@ import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import {movieData} from "../../reducers/reducer-movie";
 import * as getData from "../../actions/movieAction";
+import StarRatingComponent from 'react-star-rating-component';
 
 
 const styles = {
@@ -77,7 +78,12 @@ class ViewInUser extends React.Component {
 								<div style={{marginTop:10}}><label>Director : {movieObj.director}</label></div>
                                 <div style={{marginTop:10}}><label>Genre : {movieObj.genre}</label></div>
                                 {movieObj.playCount ? <div style={{marginTop:10}}><label>Play Count : {movieObj.playCount}</label></div> : ""}
-                                {movieObj.averageRating ? <div style={{marginTop:10}}><label>Average Rating : {movieObj.averageRating}</label></div> : ""}
+                                {movieObj.averageRating ? <div style={{marginTop:10}}><label>Average Rating : 
+                                <StarRatingComponent
+                                    name="rating"
+                                    starCount={5}
+                                    value={movieObj.averageRating}
+                                /> </label></div> : ""}
 								</div>
 								
 								</div>
