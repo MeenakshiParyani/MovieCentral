@@ -13,7 +13,7 @@ import java.util.List;
 @Repository
 public interface PlayHistoryRepository extends JpaRepository<PlayHistory, Long> {
 
-    @Query(value = "select * from play_history p, movie m where p.customer_id = ?1 and p.movie_id = m.id", nativeQuery = true)
+    @Query(value = "select * from play_history p, movie m where p.customer_id = ?1 and p.movie_id = m.id order by p.play_time DESC ", nativeQuery = true)
     List<PlayHistory> findMovieAndPlayHistoryByCustomer_Id(Long customerId);
 
     @Query(value = "select * from play_history p, movie m, customer c where p.customer_id = ?1 and p.movie_id = ?2 and p.movie_id = m.id and p.customer_id = c.id", nativeQuery = true)
