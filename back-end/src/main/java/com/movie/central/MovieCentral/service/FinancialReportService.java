@@ -96,6 +96,8 @@ public class FinancialReportService {
             years.add(year);
             now = now.minusMonths(1);
         }
+        Collections.reverse(months);
+        Collections.reverse(years);
         if(months.size() == years.size()){
             for(int i=0; i<months.size(); i++){
                 int month = months.get(i);
@@ -125,6 +127,8 @@ public class FinancialReportService {
             years.add(year);
             now = now.minusMonths(1);
         }
+        Collections.reverse(months);
+        Collections.reverse(years);
         if(months.size() == years.size()){
             for(int i=0; i<months.size(); i++){
                 int month = months.get(i);
