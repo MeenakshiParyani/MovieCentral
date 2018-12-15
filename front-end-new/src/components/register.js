@@ -54,7 +54,7 @@ class Register extends React.Component {
       console.log(res);
       this.setState({
         open1: true,
-          redirectLogin: true
+        open:false
        });
     })
     .catch(err => {
