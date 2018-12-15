@@ -19,7 +19,7 @@ public class ActorService {
     private MovieRepository movieRepository;
 
     public Actor processActor(String actorName){
-        Actor actor = actorRepository.findActorByName(actorName);
+        Actor actor = actorRepository.findDistinctByNameEqualsIgnoreCase(actorName);
 
         if(actor == null){
             Actor savedActor = Actor.builder().name(actorName).build();

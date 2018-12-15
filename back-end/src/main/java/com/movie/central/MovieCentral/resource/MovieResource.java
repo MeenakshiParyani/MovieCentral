@@ -121,11 +121,11 @@ public class MovieResource {
             List<String> actorsList = Arrays.asList((input.get("actors")).split("\\s*,\\s*"));
             List<Actor> actors = new ArrayList<Actor>();
             for (String actor : actorsList) {
-                Actor actorDetails = actorService.processActor(actor.toLowerCase());
+                Actor actorDetails = actorService.processActor(actor);
                 actors.add(actorDetails);
             }
             String director = input.get("director");
-            Director saveDirector = directorService.processDirector(director.toLowerCase());
+            Director saveDirector = directorService.processDirector(director);
             Movie movie = Movie.builder().title(title).genre(genre).releaseYear(releaseYear).studio(studio).synopsys(synopsys).imageUrl(imageUrl).movieUrl(movieUrl)
                     .averageRating(averageRating).status(status).country(country).type(type).price(price).director(saveDirector).mpaaRating(mpaaRating).actors(actors).build();
             movieService.addMovie(movie);
