@@ -23,6 +23,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CustomerService {
@@ -120,6 +121,7 @@ public class CustomerService {
                 newCustomer.setPassword("");
                 responseCustomerList.add(newCustomer);
             }
+            responseCustomerList = responseCustomerList.stream().filter(customer -> customer.getUserRole().equals(UserRole.CUSTOMER)).collect(Collectors.toList());
             return responseCustomerList;
         }else{
             throw new MovieCentralException(Error.USER_NOT_FOUND);
