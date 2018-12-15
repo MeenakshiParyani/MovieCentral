@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class PlayHistoryService {
@@ -35,7 +36,7 @@ public class PlayHistoryService {
         Movie movie = movieRepository.findMovieById(movieId);
         if(customer.isPresent() && movie != null){
             List<PlayHistory> playHistory = playHistoryRepository.findPlayHistoryByCustomerIdAndMovieId(customerId, movieId);
-            playHistory.stream().filter(history -> history.getPlayTime().isAfter(LocalDateTime.now(ZoneId.systemDefault()).minusDays(1)));
+            playHistory = playHistory.stream().filter(history -> history.getPlayTime().isAfter(LocalDateTime.now(ZoneId.systemDefault()).minusDays(1))).collect(Collectors.toList());
             if(playHistory.size()<=0){
                 PlayHistory playHistory1 = new PlayHistory();
                 playHistory1.setCustomer(customer.get());
