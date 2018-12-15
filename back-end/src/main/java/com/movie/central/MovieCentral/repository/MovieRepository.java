@@ -7,6 +7,8 @@ import com.movie.central.MovieCentral.model.Movie;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import org.springframework.data.jpa.repository.Query;
+
 
 public interface MovieRepository extends JpaRepository<Movie, Long>{
 
@@ -28,5 +30,8 @@ public interface MovieRepository extends JpaRepository<Movie, Long>{
     List<Movie> findDistinctByMpaaRatingIsIn(List<MpaaRating> mpaaRatings);
 
     List<Movie> findDistinctByAverageRatingIsGreaterThanEqual(Double rating);
+
+    @Query(value = "update movie set status = 'INACTIVE' where id = ?1", nativeQuery = true)
+    void updateToInactive(Long id);
 
 }

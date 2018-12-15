@@ -12,6 +12,11 @@ import Button from "@material-ui/core/Button";
 import PrimarySearchAppBar from "./searchbar";
 import { customerData } from "./../reducers/reducer_customer";
 import * as getData from "./../actions/customerAction";
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 const styles = {
   container: {
@@ -22,7 +27,14 @@ const styles = {
 class Register extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      open : false,
+      redirectLogin:false
+    };
+  }
+
+  componentWillMount(){
+    //this.handleIsLoggedIn();
   }
 
   onChange(e) {
@@ -31,36 +43,73 @@ class Register extends React.Component {
     });
   }
 
+  handleClose = () => {
+    this.setState({ open: false });
+};
   register(e) {
     e.preventDefault();
     this.props.registerUser(this.state)
-    .then( res => {
-
-        console.log(res)
-        if(res &&  res.data && res.data.message)
-          alert(res.data.message)
-
-        this.setState({
-            redirectLogin: true
-         });
-
+    .then(res => {
+      console.log(res);
+      this.setState({
+          redirectLogin: true
+       });
     })
     .catch(err => {
-      console.log(err)
-      if(err &&  err.data && err.data.message)
-        alert(err.response.data.message)
+      console.log(this.state.message);
+      if(err &&  err.response && err.response.data)
+      this.setState({
+        open : true,
+        errMsg : err.response.data.message
+      });
+        // alert(err.response.data.message)
       else
-        alert("Error registering user")
+      this.setState({
+        open : true,
+        errMsg : "Error registering user"
+      });
+        // alert("Error logging in user")
     });
+
   }
+  //   e.preventDefault();
+  //   this.props.registerUser(this.state)
+  //   .then( res => {
+
+  //       console.log(res)
+  //       if(res &&  res.data && res.data.message)
+  //         alert(res.data.message)
+
+  //       this.setState({
+  //           redirectLogin: true
+  //        });
+
+  //   })
+  //   .catch(err => {
+  //     console.log(err)
+  //     if(err &&  err.data && err.data.message)
+  //       alert(err.response.data.message)
+  //     else
+  //       alert("Error registering user")
+  //   });
+  // }
+
 
   render() {
     const { customerData } = this.props;
 
-    if(this.state.redirectLogin)
+    //alert(sessionStorage.getItem("userRole") != null);
+    if(sessionStorage.getItem("userRole") === 'ADMIN' || sessionStorage.getItem("userId")==='CUSTOMER')
       return (<Redirect to={{
-          pathname: '/login'
+          pathname: '/landing'
     }} />)
+    
+    
+    if(this.state.redirectLogin)
+            return (<Redirect to={{
+                pathname: '/login'
+          }} />)
+
 
     return (
       <div>
@@ -132,6 +181,26 @@ class Register extends React.Component {
           </Button>
         </form>
       </div>
+      <Dialog
+          open={this.state.open}
+          onClose={this.handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+          disableEscapeKeyDown = {true}
+          disableBackdropClick = {true}
+        >
+          <DialogTitle id="alert-dialog-title">{"Unable to Login"}</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              {this.state.errMsg}
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleClose} color="primary">
+              Okay
+            </Button>
+          </DialogActions>
+        </Dialog>
       </div>
     );
   }

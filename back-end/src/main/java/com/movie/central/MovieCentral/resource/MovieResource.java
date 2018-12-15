@@ -232,4 +232,13 @@ public class MovieResource {
         return new ResponseEntity<Object>(response, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/deleteMovie", method = RequestMethod.GET)
+    public ResponseEntity<?> deleteMovie(String id, HttpSession session) throws Exception{
+        Long movieId = Long.parseLong(id);
+        movieService.deleteMovieById(movieId);
+        Map<String, String> response = new HashMap<>();
+        response.put("result", "Movie Deleted Successfully");
+        return new ResponseEntity<Object>(response, HttpStatus.OK);
+    }
+
 }

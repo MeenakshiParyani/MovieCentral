@@ -16,12 +16,14 @@ import EditIcon from '@material-ui/icons/Edit';
 import Fab from '@material-ui/core/Fab';
 import Modal from '@material-ui/core/Modal';
 import Typography from '@material-ui/core/Typography';
+import * as getCustomerData from '../../actions/customerAction';
 import ReactPlayer from 'react-player';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import PrimarySearchAppBar from "./../searchbar";
 
 function rand() {
   return Math.round(Math.random() * 20) - 10;
@@ -65,7 +67,8 @@ class ViewMovieDetails extends React.Component {
         this.state= {
 			movieInfo:{},
 			playing: true,
-			open:false
+			open:false,
+			showMovie:false
 		}
 	}
 	
@@ -81,14 +84,27 @@ class ViewMovieDetails extends React.Component {
     componentWillReceiveProps(nextProps) {
         console.log(nextProps.movieData);
 		if(nextProps.movieData.data.movieInfo){
+			if(nextProps.movieData.data.movieInfo.status === 'INACTIVE'){
+				this.setState({
+					invalidMovie : true
+				});
+			}
+
             this.setState({
                 movieInfo : nextProps.movieData.data.movieInfo
 			});
-			// ReactPlayer.canPlay(nextProps.movieData.data.movieInfo.movieUrl);
+
+			if(ReactPlayer.canPlay(nextProps.movieData.data.movieInfo.movieUrl)){
+				 	this.setState({
+						 showMovie : true
+						 
+				 	});
+				 }
         }
     }
     componentWillMount(){
 		console.log(this.props);
+		this.handleIsLoggedIn();
         this.props.getMovieInfo(this.props.match.params.movie_id);
     }
 	
@@ -110,7 +126,24 @@ class ViewMovieDetails extends React.Component {
                 (err) => {}
             );
         }
-    }
+	}
+	
+	handleIsLoggedIn(){
+        this.props.getIsLoggedIn()
+        .then(res => {
+          // do nothing
+          this.setState({
+            redirectLogin : false
+          })
+        })
+        .catch(err => {
+          // redirect to login
+          this.setState({
+            redirectLogin : true
+          })
+  
+        })
+      }
 	
 	onStarClick(nextValue, prevValue, name) {
         this.setState({rating: nextValue});
@@ -118,24 +151,55 @@ class ViewMovieDetails extends React.Component {
 	
 	editMovie(){
 		this.setState({
-			playing:false
+			editNow:true
+		});
+	}
+
+	deleteMovie(){
+		this.props.deleteMovie(this.props.match.params.movie_id).then(
+			(data) => {
+				alert("Movie Deleted Successfully");
+				this.setState({
+					toLanding : true
+				});
+			},
+			(err) => {
+				console.log(err.response);
+				alert("Unable to delete movie. Please try again later.")
+			}
+		);
+	}
+
+	deleteMovieModal(){
+		this.setState({
+			deleteModal : true
 		});
 	}
 	
 	checkValidity(){
-	this.props.getCustomerValidity(2,this.props.match.params.movie_id).then(
-		(data) => {
-			
-		},
-		(err) => {
-			console.log(err.response);
-			this.setState({
-			playing:false,
-			errMsg:err.response.data.message
-		});
-		this.handleOpen();
+		//alert(sessionStorage.getItem("userRole"));
+		if(!(sessionStorage.getItem("userRole") === 'ADMIN')){
+			this.props.getCustomerValidity(sessionStorage.getItem("userId"),this.props.match.params.movie_id).then(
+				(data) => {
+					
+				},
+				(err) => {
+					console.log(err.response);
+					this.setState({
+					playing:false,
+					errMsg:err.response.data.message
+				});
+				this.handleOpen();
+				}
+			);
 		}
-	);
+
+	}
+	checkPlayValidity(){
+		// this.setState({
+		// 	playing:true
+		// });
+		this.checkValidity();
 	}
 
 	payNow(){
@@ -160,12 +224,55 @@ class ViewMovieDetails extends React.Component {
 		this.setState({ open: false });
 	  };
 
+	  handleDeleteClose = () => {
+        this.setState({ deleteModal: false });
+	  };
+	  
+	  componentDidMount(){
+		  if(ReactPlayer.canPlay(this.state.movieInfo.movieUrl)){
+			  alert("showmovie");
+			  this.setState({
+				  showMovie : true
+			  });
+		  }
+	  }
+
     render() {
 		const { movieData } = this.props;
 		console.log(this.state.movieInfo.title);
 		this.state.isAdmin = sessionStorage.getItem("userRole");
+		let routeUrl = "/editMovie/"+this.props.match.params.movie_id;
+
+		// if(ReactPlayer.canPlay(this.state.movieInfo.movieUrl)){
+		// 	this.setState({
+		// 		showMovie : true
+		// 	});
+		// }
+
+        if(this.state.editNow)
+        return (<Redirect to={{
+            pathname: routeUrl
+        }} />)
+
+		if(this.state.toLanding)
+        return (<Redirect to={{
+            pathname: '/landing'
+		}} />)
+		
+		if(this.state.invalidMovie)
+        return (<Redirect to={{
+            pathname: '/errorPage'
+		}} />)
+		
+		if(this.state.redirectLogin)
+            return (<Redirect to={{
+                pathname: '/login'
+          }} />)
+
 		//alert(this.state.isAdmin && this.state.isAdmin === 'CUSTOMER');
         return (
+			<div>
+				<PrimarySearchAppBar/>
             <div class="mt40">
 			<div>
 			<div class="bar">Movie Details</div>
@@ -193,7 +300,7 @@ class ViewMovieDetails extends React.Component {
  					    </Fab>
 						<div class="mt10"></div>
 						<Fab aria-label="Delete">
-							<DeleteIcon />
+							<DeleteIcon onClick={this.deleteMovieModal.bind(this)} />
 						</Fab>
 						</div>
 						:
@@ -234,6 +341,23 @@ class ViewMovieDetails extends React.Component {
 				<div class="mt30">
 				<div class="bar">Watch Movie</div>
 				<Grid container justify = "center">
+				{this.state.showMovie ?
+				<ReactPlayer 
+				id="react-player"
+				url={this.state.movieInfo.movieUrl} 
+				width={1000} 
+				height={500} 
+				controls={true}
+				playing={this.state.playing}
+				onError={this.unableToPlay.bind(this)}
+				onStart={this.checkValidity.bind(this)}
+				onPlay={this.checkValidity.bind(this)}/>
+				:
+				<label>There is some problem with movie video. Sorry for inconvnience. Please try other movie options.</label>
+				}
+				
+				{/* {this.state.movieInfo.movieUrl && (!ReactPlayer.canPlay(this.state.movieInfo.movieUrl)) ?
+
 					<ReactPlayer 
 					id="react-player"
 					url={this.state.movieInfo.movieUrl} 
@@ -242,7 +366,11 @@ class ViewMovieDetails extends React.Component {
 					controls={true}
 					playing={this.state.playing}
 					onError={this.unableToPlay.bind(this)}
-					onStart={this.checkValidity.bind(this)}/>
+					onStart={this.checkValidity.bind(this)}
+					onPlay={this.checkValidity.bind(this)}/>
+					:
+					<label>There is some problem with movie video. Sorry for inconvnience. Please try other movie options.</label>
+				} */}
 				</Grid>
 				</div>
 				<div class="mt30">
@@ -311,12 +439,14 @@ class ViewMovieDetails extends React.Component {
           open={this.state.open}
           onClose={this.handleClose}
           aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
+		  aria-describedby="alert-dialog-description"
+		  disableEscapeKeyDown = {true}
+          disableBackdropClick = {true}
         >
-          <DialogTitle id="alert-dialog-title">{"Are you sure?"}</DialogTitle>
+          <DialogTitle id="alert-dialog-title">{"There seems to be a problem."}</DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
-               There seems to be a problem.
+               
             </DialogContentText>
 			<DialogContentText id="alert-dialog-description">
                {this.state.errMsg}
@@ -330,28 +460,32 @@ class ViewMovieDetails extends React.Component {
 										}
           </DialogActions>
         </Dialog>
-				{/* <Modal
-				  aria-labelledby="simple-modal-title"
-				  aria-describedby="simple-modal-description"
-				  disableBackdropClick={true}
-				  open={this.state.open}
-				  onClose={this.handleClose}
-				>
-				<div className="modal-style">
-					<Typography variant="h6" id="modal-title" class="title-modal">
-					 There is a problem!!  
-					</Typography>
-					<Typography variant="subtitle1" id="simple-modal-description" class="main-text-font">
-					  {this.state.errMsg}
-					</Typography>
-					{this.state.errMsg == "Movie needs pay per view, please pay to view the movie"?
-					<Link to={'/payperview/'+this.props.match.params.movie_id}  target="_blank">Pay Now</Link>
-					:
-					<Link to={'/subscribe/'+this.props.match.params.movie_id}  target="_blank">Subscribe</Link>
-										}
-				  </div>
-				</Modal> */}
+				<Dialog
+					open={this.state.deleteModal}
+					onClose={this.handleClose}
+					aria-labelledby="alert-dialog-title"
+					aria-describedby="alert-dialog-description"
+					disableEscapeKeyDown = {true}
+          disableBackdropClick = {true}
+					>
+					<DialogTitle id="alert-dialog-title">{"Are you sure?"}</DialogTitle>
+					<DialogContent>
+						<DialogContentText id="alert-dialog-description">
+						Are you sure you want to delete the movie? 
+						</DialogContentText>
+					</DialogContent>
+					<DialogActions>
+						<Button onClick={this.handleDeleteClose} color="primary">
+						Cancel
+						</Button>
+						<Button onClick={this.deleteMovie.bind(this)} color="primary" autoFocus>
+						Delete
+						</Button>
+					</DialogActions>
+					</Dialog>
+
             </div>
+			</div>
         );
     }
 }
@@ -364,8 +498,9 @@ function mapStateToProps(state){
 }
 
 function mapDispatchToProps(dispatch){
-    return bindActionCreators(getData,dispatch)
+    return bindActionCreators(Object.assign({}, getData,getCustomerData),dispatch)
 
 }
+
 
 export default connect(mapStateToProps,mapDispatchToProps)(ViewMovieDetails);

@@ -9,15 +9,54 @@ import {BrowserRouter, Route, Link} from 'react-router-dom';
 import {bindActionCreators} from "redux";
 import NavTabs from './Material-UI/NavTabs';
 import PrimarySearchAppBar from "./searchbar";
+import * as getCustomerData from '../actions/customerAction';
 
 
 class AdminDashboard extends React.Component{
-    render() {
-        if(!sessionStorage.getItem("userRole") || sessionStorage.getItem("userRole") === 'CUSTOMER'){
-            return (<Redirect to={{
-                pathname: '/errorPage'
-          }} />)
+
+    constructor(props){
+        super(props);
+        this.state = {
+            redirectLogin : false
         }
+    }
+
+    componentWillMount(){
+        this.handleIsLoggedIn();
+    }
+
+    handleIsLoggedIn(){
+        this.props.getIsLoggedIn()
+        .then(res => {
+          // do nothing
+          this.setState({
+            redirectLogin : false
+          })
+          
+        })
+        .catch(err => {
+          // redirect to login
+          this.setState({
+            redirectLogin : true
+          })
+  
+        })
+      }
+
+    render() {
+        if(this.state.redirectLogin){return (<Redirect to={{
+            pathname: '/login'
+      }} />)}
+        else{
+            if(!sessionStorage.getItem("userRole") || sessionStorage.getItem("userRole") === 'CUSTOMER'){
+                return (<Redirect to={{
+                    pathname: '/errorPage'
+              }} />)
+            }
+        }
+            
+
+        
         return (
             <div>
                 <PrimarySearchAppBar/>
@@ -36,7 +75,7 @@ function mapStateToProps(state){
 }
 
 function mapDispatchToProps(dispatch){
-    return bindActionCreators(getData,dispatch)
+    return bindActionCreators(Object.assign({}, getData,getCustomerData),dispatch)
 
 }
 export default connect(mapStateToProps,mapDispatchToProps)(AdminDashboard);

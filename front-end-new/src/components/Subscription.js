@@ -16,6 +16,7 @@ import DialogTitle from '@material-ui/core/DialogTitle'
 import { Redirect } from "react-router-dom";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
+import PrimarySearchAppBar from "./searchbar";
 import * as getData from "./../actions/customerAction";
 
 
@@ -64,6 +65,26 @@ class Subscription extends Component {
     }
 
 
+    componentWillMount(){
+        this.handleIsLoggedIn();
+    }
+
+    handleIsLoggedIn(){
+        this.props.getIsLoggedIn()
+        .then(res => {
+          // do nothing
+          this.setState({
+            redirectLogin : false
+          })
+        })
+        .catch(err => {
+          // redirect to login
+          this.setState({
+            redirectLogin : true
+          })
+  
+        })
+      }
 
     handleSubmit(e) {
 
@@ -117,8 +138,14 @@ class Subscription extends Component {
 
         if(this.state.redirectLanding)
         return (<Redirect to={{
+            pathname: '/landing'
+        }} />)
+
+        if(this.state.redirectLogin)
+        return (<Redirect to={{
             pathname: '/login'
         }} />)
+        
         return (<div>
             <Grid container justify="center">
                 <h4>Subscribe now for just $10/month.</h4>
@@ -152,6 +179,8 @@ class Subscription extends Component {
                 onClose={this.handleClose}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
+                disableEscapeKeyDown = {true}
+          disableBackdropClick = {true}
             >
                 <DialogTitle id="alert-dialog-title">{"Are you sure?"}</DialogTitle>
                 <DialogContent>

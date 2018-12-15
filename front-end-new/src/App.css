@@ -164,9 +164,9 @@ input, select{
   color: #d67612 !important;
     float:left;
 }
-select{
+/* select{
   margin-left: -33px;
-}
+} */
 .inline-block{
     display: inline-flex;
     float: left;
@@ -202,9 +202,9 @@ input[type="checkbox" i]{
 .MuiAppBar-colorPrimary-212, .MuiAppBar-colorPrimary-182, .MuiAppBar-colorPrimary-376, .MuiAppBar-colorPrimary-530, [class*="MuiAppBar-colorPrimary-"]{
     background-color: #d67612 !important;
 }
-.css-10nd86i{
+/* .css-10nd86i{
     width:400px !important;
-}
+} */
 .css-wqgs6e {
     background-color: #eaaf8c !important;
     color: inherit;
@@ -220,6 +220,9 @@ input[type="checkbox" i]{
     -webkit-tap-highlight-color: rgba(0,0,0,0);
     box-sizing: border-box;
 }
+/* Dialog{
+    color:red;
+} */
 .css-1g6gooi input{
     diplay:none !important;
 }
@@ -241,4 +244,7 @@ input[type="checkbox" i]{
     width: 50%;
     margin: 100px 300px 10px 300px;
 }
+/* PrimarySearchAppBar{
+    position: fixed;
+} */
 /* PrimarySearchAppBar-root-165, MuiPaper-root-184 MuiPaper-elevation4-190 MuiAppBar-root-175 MuiAppBar-positionStatic-179 MuiAppBar-colorPrimary-182,MuiToolbar-root-211 MuiToolbar-regular-213 MuiToolbar-gutters-212 */

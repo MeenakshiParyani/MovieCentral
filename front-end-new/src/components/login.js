@@ -12,6 +12,11 @@ import Button from "@material-ui/core/Button";
 import { loginData } from "./../reducers/reducer_customer";
 import PrimarySearchAppBar from "./searchbar";
 import * as getData from "./../actions/customerAction";
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 const styles = {
   container: {
@@ -25,7 +30,7 @@ class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      open:false
     };
   }
 
@@ -69,9 +74,17 @@ class Login extends React.Component {
     .catch(err => {
       console.log(this.state.message);
       if(err &&  err.response && err.response.data)
-        alert(err.response.data.message)
+      this.setState({
+        open : true,
+        errMsg : err.response.data.message
+      });
+        // alert(err.response.data.message)
       else
-        alert("Error logging in user")
+      this.setState({
+        open : true,
+        errMsg : "Error logging in user"
+      });
+        // alert("Error logging in user")
     });
 
   }
@@ -79,6 +92,9 @@ class Login extends React.Component {
   componentWillMount(){
     this.handleIsLoggedIn();
   }
+  handleClose = () => {
+    this.setState({ open: false });
+};
 
   render() {
     const { loginData } = this.props;
@@ -95,7 +111,7 @@ class Login extends React.Component {
       <div style={styles.container}>
         <h1>Login</h1>
         <form style={{ marginBottom: "40px" }}>
-          <TextField
+          <input
             id="outlined-name"
             label="Email"
             value={this.state.email}
@@ -103,10 +119,11 @@ class Login extends React.Component {
             onChange={this.onChange.bind(this)}
             margin="normal"
             variant="outlined"
+            type="email"
             style={{ width: 500 }}
           />
           <br />
-          <TextField
+          <input
             id="outlined-name"
             label="Password"
             type="password"
@@ -130,7 +147,28 @@ class Login extends React.Component {
             Login
           </Button>
         </form>
+        
       </div>
+      <Dialog
+          open={this.state.open}
+          onClose={this.handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+          disableEscapeKeyDown = {true}
+          disableBackdropClick = {true}
+        >
+          <DialogTitle id="alert-dialog-title">{"Unable to Login"}</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              {this.state.errMsg}
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleClose} color="primary">
+              Ok
+            </Button>
+          </DialogActions>
+        </Dialog>
       </div>
     );
   }

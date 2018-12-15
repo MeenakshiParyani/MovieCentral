@@ -40,6 +40,7 @@ class CustomerDetails extends React.Component {
     }
     componentWillMount(){
         console.log(this.props);
+    this.handleIsLoggedIn();
         
         let userId = sessionStorage.getItem("userId");
         
@@ -47,9 +48,30 @@ class CustomerDetails extends React.Component {
         //this.props.getMovieDetails(movie_id);
     }
 
+    handleIsLoggedIn(){
+        this.props.getIsLoggedIn()
+        .then(res => {
+          // do nothing
+          this.setState({
+            redirectLogin : false
+          })
+        })
+        .catch(err => {
+          // redirect to login
+          this.setState({
+            redirectLogin : true
+          })
+  
+        })
+      }
+
     render() {
         const { customerData } = this.props;
         // alert("asd");
+        if(this.state.redirectLogin)
+            return (<Redirect to={{
+                pathname: '/login'
+          }} />)
         return (
             <div>
                 <PrimarySearchAppBar/>

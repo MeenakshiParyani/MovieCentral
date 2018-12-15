@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {bindActionCreators} from "redux";
+import {Redirect} from 'react-router-dom';
 import {connect} from "react-redux";
 import { withStyles } from '@material-ui/core/styles';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
@@ -12,6 +13,7 @@ import AddNewMovie from './../AddNewMovie';
 import UserTableView from './UserTableView';
 import {customerData} from "../../reducers/reducer_customer";
 import * as getData from "../../actions/customerAction";
+import PrimarySearchAppBar from "./../searchbar";
 
 const styles = {
     container: {
@@ -45,17 +47,42 @@ class CustomerPlayHistory extends React.Component {
         }
     }
     componentWillMount(){
-        console.log(this.props);
+		console.log(this.props);
+		this.handleIsLoggedIn();
         this.props.getPlayHistory(this.props.match.params.user_id);
         //this.props.getTopTenMovies();
         //this.props.getMovieDetails(movie_id);
-    }
+	}
+	
+	handleIsLoggedIn(){
+        this.props.getIsLoggedIn()
+        .then(res => {
+          // do nothing
+          this.setState({
+            redirectLogin : false
+          })
+        })
+        .catch(err => {
+          // redirect to login
+          this.setState({
+            redirectLogin : true
+          })
+  
+        })
+      }
 
 
     render() {
 		const { customerData } = this.props;
 
+		if(this.state.redirectLogin)
+            return (<Redirect to={{
+                pathname: '/login'
+          }} />)
+
         return (
+			<div>
+				<PrimarySearchAppBar/>
             <div style={styles.container} class="mt40">
 			<h2 >Movie Playing History</h2>
 			<div>  
@@ -89,11 +116,13 @@ class CustomerPlayHistory extends React.Component {
 								</div>
 								
 								</div>
+								
 						);
 					})}
 			</div>
 			
             </div>
+			>/</div>
         );
     }
 }

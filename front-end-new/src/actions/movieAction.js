@@ -102,6 +102,17 @@ export function getAllMovies() {
     };
   }
 
+
+  export function deleteMovie(id) {
+    return dispatch => {
+      return axios.get('/api/movie/deleteMovie',{
+          params: { id: id }
+        }).then(response => {
+            
+      });
+    };
+  }
+
 export function addMovie(res){
     return{
         type:"MOVIE_ADD",

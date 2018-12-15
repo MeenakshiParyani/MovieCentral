@@ -3,6 +3,7 @@ package com.movie.central.MovieCentral.service;
 import com.movie.central.MovieCentral.enums.Genre;
 import com.movie.central.MovieCentral.enums.MovieType;
 import com.movie.central.MovieCentral.enums.MpaaRating;
+import com.movie.central.MovieCentral.enums.Status;
 import com.movie.central.MovieCentral.model.*;
 import com.movie.central.MovieCentral.repository.*;
 import com.movie.central.MovieCentral.util.LocalDateTimeUtil;
@@ -89,6 +90,12 @@ public class MovieService {
 
     public Movie getMovieById(Long id){
         return movieRepository.findMovieById(id);
+    }
+
+    public void deleteMovieById(Long id){
+        Movie movie = getMovieById(id);
+        movie.setStatus(Status.INACTIVE);
+        movieRepository.save(movie);
     }
 
     public Movie findMovieById(Long movieId){

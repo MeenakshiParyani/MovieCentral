@@ -16,6 +16,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
+import PrimarySearchAppBar from "./searchbar";
 import {customerData} from "./../reducers/reducer_customer";
 import * as getData from "./../actions/customerAction";
 
@@ -37,13 +38,14 @@ class SubscribePayPerView extends Component {
         super();
         this.state = {
             movie_id: '',
-            price: '5.0'
+            price: '5.0',
+            open: false,
+            open1 : false,
+            errMsg : "",
+            redirectBack:false
         }
     }
 
-    state= {
-        open: false
-    };
 
     handleClickOpen = () => {
         this.setState({ open: true });
@@ -64,17 +66,21 @@ class SubscribePayPerView extends Component {
         apiPayload.customerId = sessionStorage.getItem('userId');
         apiPayload.price = '5';
         this.props.subscribePayPerView(apiPayload).then(res => {
-            alert("Payment Successful");
+            //alert("Payment Successful");
             // do nothing
             this.setState({
-                redirectBack: true
+                open1: true,
+                open:false,
+                errMsg : "Payment was successful"
             })
           })
           .catch(err => {
             // redirect to login
             alert("Payment Unsuccessful");
             this.setState({
-                redirectLanding: true
+                redirectLanding: true,
+                open: true,
+                errMsg : "Payment unsuccessful"
             })
           });
         
@@ -100,6 +106,7 @@ class SubscribePayPerView extends Component {
 
     componentWillMount() {
         console.log(this.props.match.params.movie_id);
+        this.handleIsLoggedIn();
         let movie_id = this.props.match.params.movie_id;
         this.setState({
             movieId: this.props.match.params.movie_id,
@@ -107,6 +114,29 @@ class SubscribePayPerView extends Component {
         });
     }
 
+    handleIsLoggedIn(){
+        this.props.getIsLoggedIn()
+        .then(res => {
+          // do nothing
+          this.setState({
+            redirectLogin : false
+          })
+        })
+        .catch(err => {
+          // redirect to login
+          this.setState({
+            redirectLogin : true
+          })
+  
+        })
+      }
+
+      handleRedirect(){
+          this.setState({
+              
+            redirectBack: true
+          });
+      }
     render() {
         const classes = this.props;
         let routeUrl = "/movie-details/"+this.props.match.params.movie_id;
@@ -117,9 +147,13 @@ class SubscribePayPerView extends Component {
 
         if(this.state.redirectLanding)
         return (<Redirect to={{
-            pathname: '/login'
+            pathname: '/landing'
         }} />)
 
+        if(this.state.redirectLogin)
+        return (<Redirect to={{
+            pathname: '/login'
+        }} />)
         return (<div>
             <Grid container justify="center">
             <h4>Pay-per-view rate for this movie is $5.</h4>
@@ -133,6 +167,8 @@ class SubscribePayPerView extends Component {
           onClose={this.handleClose}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
+          disableEscapeKeyDown = {true}
+          disableBackdropClick = {true}
         >
           <DialogTitle id="alert-dialog-title">{"Are you sure?"}</DialogTitle>
           <DialogContent>
@@ -149,7 +185,26 @@ class SubscribePayPerView extends Component {
             </Button>
           </DialogActions>
         </Dialog>
-
+        <Dialog
+          open={this.state.open1}
+          onClose={this.handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+          disableEscapeKeyDown = {true}
+          disableBackdropClick = {true}
+        >
+          <DialogTitle id="alert-dialog-title">{"Payment status"}</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              {this.state.errMsg}
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleRedirect.bind(this)} color="primary">
+              Okay
+            </Button>
+          </DialogActions>
+        </Dialog>
 
 
 

@@ -5,6 +5,7 @@ import * as getData from '../actions/movieAction';
 import {bindActionCreators} from "redux";
 import Button from '@material-ui/core/Button';
 import PrimarySearchAppBar from "./searchbar";
+import * as getCustomerData from '../actions/customerAction';
 
 const styles = {
     container: {
@@ -21,7 +22,7 @@ class AddNewMovie extends React.Component{
             editFlow:false,
             title:"",
             synopsys:"",
-            genre:"",
+            genre:"ACTION",
             releaseYear:"",
             studio:"",
 			imageUrl:"",
@@ -49,12 +50,12 @@ class AddNewMovie extends React.Component{
                 {key:'CRIME',value: 'CRIME'},
                 {key:'EPICS',value: 'EPICS'},
                 {key:'HORROR',value: 'HORROR'},
-                {key:'SCIENCE_FICTION',value: 'SCIENCE_FICTION'},
+                {key:'SCIENCE_FICTION',value: 'SCIENCE FICTION'},
                 {key:'WAR',value: 'WAR'}
             ],
 			movieTypeData: [
-                {key:'PAY_PER_VIEW',value: 'PAY_PER_VIEW'},
-                {key:'SUBSCRIPTION_ONLY',value: 'SUBSCRIPTION_ONLY'},
+                {key:'PAY_PER_VIEW',value: 'PAY PER VIEW'},
+                {key:'SUBSCRIPTION_ONLY',value: 'SUBSCRIPTION ONLY'},
                 {key:'FREE',value: 'FREE'},
                 {key:'PAID',value: 'PAID'}
             ],
@@ -94,7 +95,7 @@ class AddNewMovie extends React.Component{
     }
 	
 	    componentWillMount(){
-        
+            this.handleIsLoggedIn();
         if(this.props.match.params.movie_id){
             let movie_id = this.props.match.params.movie_id;
             this.setState({
@@ -159,7 +160,7 @@ class AddNewMovie extends React.Component{
             "synopsys":this.state.synopsys,
             "imageUrl":this.state.imageUrl,
             "movieUrl":this.state.movieUrl,
-            "averageRating":this.state.averageRating,
+            "averageRating":0,
             "country":this.state.country,
             "type":this.state.type,
             "price":this.state.price,
@@ -169,7 +170,8 @@ class AddNewMovie extends React.Component{
             "status":"ACTIVE"
             };
             this.props.newMovie(movie).then(
-                (data) => {
+                (response) => {
+                    console.log(response);
                     this.setState({
                         redirectHome: true
                      });
@@ -197,6 +199,22 @@ class AddNewMovie extends React.Component{
     }
 
 
+    handleIsLoggedIn(){
+        this.props.getIsLoggedIn()
+        .then(res => {
+          // do nothing
+          this.setState({
+            redirectLogin : false
+          })
+        })
+        .catch(err => {
+          // redirect to login
+          this.setState({
+            redirectLogin : true
+          })
+  
+        })
+      }
 	
 	render(){
         const { classes } = this.props;
@@ -205,6 +223,11 @@ class AddNewMovie extends React.Component{
                 pathname: '/adminDashboard'
             }} />)
             const {errors} = this.state;
+
+            if(this.state.redirectLogin)
+            return (<Redirect to={{
+                pathname: '/login'
+          }} />)
         
 
 		return(
@@ -230,7 +253,7 @@ class AddNewMovie extends React.Component{
                         variant="outlined"
                         style = {{width: 500}}
                     /><br />
-                    <label>Enter Movie Genre</label><br />
+                    {/* <label>Enter Movie Genre</label><br />
                     <input
                         id="outlined-name"
                         label="Movie Genre"
@@ -240,7 +263,13 @@ class AddNewMovie extends React.Component{
                         margin="normal"
                         style = {{width: 500}}
                         variant="outlined"
-                    /><br />
+                    /><br /> */}
+                    <label>Select Movie Genre</label><br />
+                    <select className="select-style" name="genre" required value={this.state.genre} onChange={this.onChange.bind(this)}>
+                                {this.state.genreData.map(function(data, key){  return (
+                                    <option key={key} value={data.key}>{data.value}</option> )
+                                })}
+                            </select><br />
                     <label>Enter Country</label><br />
                     <input
                         id="outlined-name"
@@ -261,6 +290,9 @@ class AddNewMovie extends React.Component{
                         onChange={this.onChange.bind(this)}
                         margin="normal"
                         style = {{width: 500}}
+                        type="number" 
+                        min="1900" 
+                        max="2018"
                         variant="outlined"
                     /><br />
                     <label>Enter Description</label><br />
@@ -318,7 +350,7 @@ class AddNewMovie extends React.Component{
                         style = {{width: 500}}
                         variant="outlined"
                     /><br />
-                    <label>Enter Average Rating</label><br />
+                    {/* <label>Enter Average Rating</label><br />
                     <input
                         id="outlined-name"
                         label="Average rating"
@@ -328,7 +360,7 @@ class AddNewMovie extends React.Component{
                         onChange={this.onChange.bind(this)}
                         margin="normal"
                         variant="outlined"
-                    /><br />
+                    /><br /> */}
                     <label>Select Movie Type</label><br />
 	
                     <select className="select-style" name="type" required value={this.state.type} onChange={this.onChange.bind(this)}>
@@ -344,6 +376,7 @@ class AddNewMovie extends React.Component{
                         name="price"
                         onChange={this.onChange.bind(this)}
                         margin="normal"
+                        type='number'
                         style = {{width: 500}}
                         variant="outlined"
                     /><br />
@@ -391,7 +424,7 @@ function mapStateToProps(state){
 }
 
 function mapDispatchToProps(dispatch){
-    return bindActionCreators(getData,dispatch)
+    return bindActionCreators(Object.assign({}, getData,getCustomerData),dispatch)
 
 }
 export default connect(mapStateToProps,mapDispatchToProps)(AddNewMovie);
